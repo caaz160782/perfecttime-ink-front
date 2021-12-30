@@ -1,10 +1,13 @@
 import Header from "./Header"
 import Head from "next/head";
-import { Typography } from "@material-ui/core";
+import { Typography, ThemeProvider } from "@material-ui/core";
+import theme from './../utils/temaConfig'
+
+//usar el ThemeProvider donde este el componente principal y envolver todos los componentes
 
 const Layout = ({ title, children }) => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
         <title>
           {title ? `${title} - Perfect Time Ink` : "Perfect Time Ink"}
@@ -16,7 +19,7 @@ const Layout = ({ title, children }) => {
       <footer>
         <Typography>All rights reserved. Perfect Time Ink.</Typography>
       </footer>
-    </div>
+    </ThemeProvider>
   );
 };
 

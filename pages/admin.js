@@ -35,11 +35,11 @@ const Admin = () => {
             //  document.querySelector("#form").reset();
           })
           .catch((err) => {
-            console.log(respuesta);
+            console.log(err);
           });
   };
   return (
-    <Layout>
+    <Layout title={'admin'}>
       <form id="form" onSubmit={handlerSubmit}>
         <Typography component="h1" variant="h1">
           ingresar administrador

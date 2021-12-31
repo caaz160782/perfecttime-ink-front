@@ -6,7 +6,7 @@ import {
     Typography,
     TextField,
     Button,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { useForm } from "../hooks/useForm";
 import clienteAxios from "../utils/axios";

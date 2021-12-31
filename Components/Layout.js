@@ -1,6 +1,6 @@
 import Header from "./Header"
 import Head from "next/head";
-import { Typography } from "@material-ui/core";
+import { Typography }  from "@mui/material";
 
 const Layout = (props)=>{
   return (

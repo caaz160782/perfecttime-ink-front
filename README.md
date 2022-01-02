@@ -32,3 +32,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+      <Tabs
+        indicatorColor="primary"
+        value={value}
+        onChange={handleChange}
+        className={classes.tabContainer}
+      >
+        <Tab className={classes.tab} label="Home">
+          {" "}
+        </Tab>
+        <Tab className={classes.tab} label="Galeria">
+          {" "}
+        </Tab>
+        <Tab className={classes.tab} label="Contacto">
+          {" "}
+        </Tab>
+        <Tab className={classes.tab} label="Servicios" component={Link}>
+          {" "}
+        </Tab>
+        {/* <LinkTab  /> */}
+        {/* <LinkTab label="Page Two" href="/bar" /> */}
+      </Tabs>
+      <Button className={classes.btn} variant="contained" color="primary">
+        Login
+      </Button>

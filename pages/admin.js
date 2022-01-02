@@ -35,7 +35,7 @@ const Admin = () => {
             //  document.querySelector("#form").reset();
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err.response.data);
           });
   };
   return (

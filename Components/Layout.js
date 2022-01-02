@@ -1,4 +1,4 @@
-import Header from "./Header"
+import Header from "./header/Header"
 import Head from "next/head";
 import { Typography, ThemeProvider } from "@material-ui/core";
 import theme from './../utils/temaConfig'
@@ -12,6 +12,14 @@ const Layout = ({ title, children }) => {
         <title>
           {title ? `${title} - Perfect Time Ink` : "Perfect Time Ink"}
         </title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Sancreek:400|Roboto:300,400,500.700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Pacifico|Raleway:100,400,400i,700|Roboto:300,400,500,700&display=swap"
+        />
       </Head>
 
       <Header></Header>

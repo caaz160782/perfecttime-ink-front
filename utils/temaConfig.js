@@ -23,9 +23,13 @@ const theme = createTheme({
       fontFamily: "Raleway",
       textTransform: "none",
       fontSize: "1.5rem",
-      fontWeight: 700
+      fontWeight: 700,
     },
   },
+  fuente:{
+
+    fontFamily: "Raleway",
+  }
 });
 
 export default theme

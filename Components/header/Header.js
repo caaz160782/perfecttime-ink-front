@@ -1,7 +1,8 @@
 import NextLink from "next/link";
 import Image from "next/image";
 
-import React, { useState } from "react";
+import { CRMContext, CRMProvider } from "../../utils/CRMContext";
+import React ,{ useState, useContext } from "react";
 
 import { makeStyles } from "@material-ui/core";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -9,26 +10,15 @@ import {
   AppBar,
   Toolbar,
   Link,
-  Tabs,
-  Tab,
-  CssBaseline,
-  createTheme,
-  Button,
-  Switch,
-  ThemeProvider,
   List,
   ListItem,
-  ListItemText,
 } from "@material-ui/core";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
-import { useRouter } from "next/router";
-//import { Store } from "../utils/Store";
 import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
 import { SwipeableDrawer } from "@material-ui/core";
@@ -94,11 +84,13 @@ function ElevationScroll(props) {
 }
 
 const Header = (props) => {
+  const [auth, guardarAuth] = useContext(CRMContext);
+  console.log("auth", auth);
+
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  //const matches = true;
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const [openDrawer, setOpenDrawer] = React.useState(false);
 

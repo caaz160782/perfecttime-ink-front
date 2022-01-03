@@ -1,11 +1,14 @@
 import Header from "./header/Header"
 import Head from "next/head";
-import { Typography, ThemeProvider } from "@material-ui/core";
+import { Typography, ThemeProvider, Container } from "@material-ui/core";
 import theme from './../utils/temaConfig'
+import { CRMContext, CRMProvider } from "../utils/CRMContext";
+import { useContext } from "react";
 
 //usar el ThemeProvider donde este el componente principal y envolver todos los componentes
 
 const Layout = ({ title, children }) => {
+
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -22,11 +25,12 @@ const Layout = ({ title, children }) => {
         />
       </Head>
 
-      <Header></Header>
-      <div>{children}</div>
-      <footer>
-        <Typography>All rights reserved. Perfect Time Ink.</Typography>
-      </footer>
+        <Header></Header>
+        <Container>{children}</Container>
+        <footer>
+          <Typography>All rights reserved. Perfect Time Ink.</Typography>
+        </footer>
+
     </ThemeProvider>
   );
 };

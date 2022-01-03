@@ -67,6 +67,9 @@ export const Nav = () => {
       <NextLink href="/contacto" passHref>
         <Link className={classes.tab}>Contacto</Link>
       </NextLink>
+      <NextLink href="/staff" passHref>
+        <Link className={classes.tab}>staff</Link>
+      </NextLink>
       <NextLink href="/login" passHref>
         <Link>
           <Button className={classes.btn} variant="contained" color="primary">

@@ -16,7 +16,7 @@ const oneStaff = ({ staffMember }) => {
   return (
     <Layout>
       <Typography>{`nombre completo: ${staffMember.name} ${staffMember.lastName} `}</Typography>
-      <EditCustomizedDialogs staffMember={staffMember} classes={classes}></EditCustomizedDialogs>
+      <EditCustomizedDialogs staffMember={staffMember} classes={classes} id={id}></EditCustomizedDialogs>
     </Layout>
   );
 };

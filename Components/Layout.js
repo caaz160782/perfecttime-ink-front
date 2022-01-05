@@ -1,21 +1,38 @@
-import Header from "./Header"
+import Header from "./header/Header"
 import Head from "next/head";
-import { Typography }  from "@mui/material";
+import { Typography, ThemeProvider, Container } from "@mui/material";
+import theme from './../utils/temaConfig'
+import { CRMContext, CRMProvider } from "../utils/CRMContext";
+import { useContext } from "react";
 
-const Layout = (props)=>{
+//usar el ThemeProvider donde este el componente principal y envolver todos los componentes
+
+const Layout = ({ title, children }) => {
+
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
-        <title>Perfect Time Ink</title>
+        <title>
+          {title ? `${title} - Perfect Time Ink` : "Perfect Time Ink"}
+        </title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Sancreek:400|Roboto:300,400,500.700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Pacifico|Raleway:100,400,400i,700|Roboto:300,400,500,700&display=swap"
+        />
       </Head>
 
-      <Header></Header>
-      <div>{props.children}</div>
-      <footer>
-        <Typography>All rights reserved. Perfect Time Ink.</Typography>
-      </footer>
-    </div>
+        <Header></Header>
+        <Container>{children}</Container>
+        <footer>
+          <Typography>All rights reserved. Perfect Time Ink.</Typography>
+        </footer>
+
+    </ThemeProvider>
   );
-}
+};
 
 export default Layout

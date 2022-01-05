@@ -5,6 +5,8 @@ import "@fullcalendar/timegrid/main.css";
 import  {AuthContext, AuthProvider} from "../Context/AuthContext";
 import { useContext } from "react";
 
+
+
 function MyApp({ Component, pageProps }) {
 
   const [auth, guardarAuth] = useContext(AuthContext);
@@ -12,7 +14,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider value={[auth, guardarAuth]}>
       <Component {...pageProps} />
-    </AuthProvider> 
+    </AuthProvider>
   );
 }
 

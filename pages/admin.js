@@ -95,7 +95,7 @@ const Admin = () => {
                 onChange={actualizarState}
               ></TextField>
             </div>
-            <div > 
+            <div >
               <TextField
                 sx={{ m: 1, width: '25ch' }}
                 //  variant="outlined"

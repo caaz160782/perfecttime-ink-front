@@ -34,7 +34,7 @@ const Studio = () => {
     const handlerSubmit = (e) => {
         e.preventDefault();
           clienteAxios
-              .post("/studio", tatstudio)
+              .patch("/studio", tatstudio)
               .then((respuesta) => {
                 console.log(respuesta);
               })
@@ -108,50 +108,6 @@ const Studio = () => {
                     <TextField
                     fullWidth
                     required
-                    id="municipality"
-                    label="Municipio"
-                    name="municipality"
-                    inputProps={{ type: "text" }}
-                    onChange={actualizarState}
-                    ></TextField>
-                </ListItem>
-                <ListItem>
-                    <TextField
-                    fullWidth
-                    required
-                    id="state"
-                    label="Estado"
-                    name="state"
-                    inputProps={{ type: "text" }}
-                    onChange={actualizarState}
-                    ></TextField>
-                </ListItem>  
-                <ListItem>
-                    <TextField
-                    fullWidth
-                    required
-                    id="city"
-                    label="Ciudad"
-                    name="city"
-                    inputProps={{ type: "text" }}
-                    onChange={actualizarState}
-                    ></TextField>
-                </ListItem>   
-                <ListItem>
-                    <TextField
-                    fullWidth
-                    required
-                    id="address"
-                    label="Domicilio"
-                    name="address"
-                    inputProps={{ type: "text" }}
-                    onChange={actualizarState}
-                    ></TextField>
-                </ListItem>   
-                <ListItem>
-                    <TextField
-                    fullWidth
-                    required
                     id="phoneStudio"
                     label="Telefono"
                     name="phoneStudio"
@@ -183,7 +139,7 @@ const Studio = () => {
                 </ListItem>   
                 <ListItem>
                     <Button variant="contained" type="submit" fullWidth color="primary">
-                    Register
+                    Modify
                     </Button>
                 </ListItem>
                 </List>  

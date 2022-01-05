@@ -1,5 +1,6 @@
 import Header from "./header/Header"
 import Head from "next/head";
+<<<<<<< HEAD
 import { Typography, ThemeProvider, Container } from "@material-ui/core";
 import theme from './../utils/temaConfig'
 import { CRMContext, CRMProvider } from "../utils/CRMContext";
@@ -8,6 +9,9 @@ import { useContext } from "react";
 //usar el ThemeProvider donde este el componente principal y envolver todos los componentes
 
 const Layout = ({ title, children }) => {
+=======
+import { Typography }  from "@mui/material";
+>>>>>>> develop
 
   return (
     <ThemeProvider theme={theme}>

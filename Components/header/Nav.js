@@ -1,56 +1,14 @@
 import NextLink from "next/link";
-import {
-  Link,
-  Tabs,
-  Tab,
-  Button,
-  makeStyles,
-} from "@material-ui/core";
+import { Link, Tabs, Tab, Button, makeStyles } from "@mui/material";
 
 import theme from "./../../utils/temaConfig";
 //import LinkTab from "./LinkTab";
 import { useState } from "react";
+import useStyles from "./style";
 
-const useStyles = makeStyles((theme) => ({
-  tabContainer: {
-    marginLeft: "auto",
-  },
-  tab: {
-    ...theme.typography.tab,
-    color: "#000",
-    marginLeft: "40px",
-    "&:hover": {
-      transition: "color 0.7s ease",
-      textDecoration: "underline #F8F8F8",
-      color: theme.palette.primary.dark,
-    },
-    [theme.breakpoints.down("md")]: {
-
-    },
-
-  },
-  btn: {
-    color: "#fff",
-    fontFamily: "Pacifico",
-    textTransform: "none",
-    fontSize: "1.6rem",
-    borderRadius: "40px",
-    marginLeft: "50px",
-    marginRight: "25px",
-    padding: "2px 20px",
-    "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
-    },
-    [theme.breakpoints.down("sm")]: {
-
-    },
-  },
-}));
 
 export const Nav = () => {
   const classes = useStyles()
-
-
 
   return (
     <div className={classes.tabContainer}>

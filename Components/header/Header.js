@@ -1,76 +1,27 @@
 import NextLink from "next/link";
 import Image from "next/image";
 
-import { CRMContext, CRMProvider } from "../../utils/CRMContext";
 import React ,{ useState, useContext } from "react";
 
-import { makeStyles } from "@material-ui/core";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import {useScrollTrigger} from "@mui/material";
 import {
   AppBar,
   Toolbar,
   Link,
   List,
   ListItem,
-} from "@material-ui/core";
+  IconButton,
+  SwipeableDrawer
+} from "@mui/material";
 
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 //import useMediaQuery from "@mui/material/useMediaQuery";
-import MenuIcon from "@material-ui/icons/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
 import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
-import { SwipeableDrawer } from "@material-ui/core";
-
-//una funcion que recibe un objeto con ciertas propiedades
-const useStyles = makeStyles((theme) => ({
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-    marginBottom: "7em",
-  },
-  logo: {
-    height: "7em",
-    [theme.breakpoints.down("sm")]: {
-      height: "5em",
-    },
-  },
-  //DRAWER
-  drawer: {
-    backgroundColor: theme.palette.secondary.dark,
-  },
-  drawerIconContainer: {
-    marginLeft: "auto",
-    "&:hover": {
-      //backgroundColor: "transparent",
-    },
-  },
-  drawerIcon: {
-    width: 40,
-    height: 40,
-    // color: "#fff"
-  },
-  linkDrawer: {
-    fontFamily: "Raleway",
-    color: "#fff",
-    fontWeight: 550,
-    fontSize: "1.3rem",
-    "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
-    },
-  },
-  linkDrawerLogin: {
-    fontFamily: "Pacifico",
-    fontSize: "1.5rem",
-    color: "#fff",
-    "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
-    },
-  },
-  loginContainer: {
-    backgroundColor: "#EFC437",
-  },
-}));
+import useStyles from "./style";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -84,8 +35,7 @@ function ElevationScroll(props) {
 }
 
 const Header = (props) => {
-  const [auth, guardarAuth] = useContext(CRMContext);
-  console.log("auth", auth);
+
 
   const iOS =
     typeof navigator !== "undefined" &&

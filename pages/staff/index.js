@@ -14,7 +14,7 @@ import {
   AlertTitle,
   Grid,
   Snackbar,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";

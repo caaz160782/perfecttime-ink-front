@@ -1,4 +1,4 @@
-import { createTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
 const gris = "#F8F8F8";
 const dorado = "#EFC437";//centralizando

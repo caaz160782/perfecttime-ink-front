@@ -1,8 +1,5 @@
-import {
-  makeStyles,
-} from "@material-ui/core";
-import theme from "../../utils/temaConfig"
-
+import { makeStyles } from "@mui/styles";
+import theme from "../../utils/temaConfig";
 
 const useStyles = makeStyles((theme) => ({
   btnLogin: {
@@ -14,16 +11,10 @@ const useStyles = makeStyles((theme) => ({
   imgBack: {
     border: "3px solid red",
   },
-  eliminar: {
-    color: theme.palette.error,
-  },
-  editar: {
-    color: theme.palette.primary.dark,
-  },
 
   // ingresar:{
   //   fontFamily:theme.typography.fuente
   // }
 }));
 
-export default useStyles
+export default useStyles;

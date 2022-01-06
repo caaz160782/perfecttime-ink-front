@@ -1,6 +1,6 @@
 
-import Layout from "../Components/Layout";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import Layout from "../../Components/Layout";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
 const Agenda = () => {

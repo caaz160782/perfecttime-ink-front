@@ -3,8 +3,11 @@ import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
+import MediaCard from "../../Components/staff/CardStaff";
 import useStyles from "./style";
-import { Typography } from "@mui/material";
+import { Typography, Container, Button, Link} from "@mui/material";
+import NextLink from "next/link"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const oneStaff = ({ staffMember }) => {
   console.log('este est!',staffMember);
@@ -15,8 +18,10 @@ const oneStaff = ({ staffMember }) => {
 
   return (
     <Layout>
-      <Typography>{`nombre completo: ${staffMember.name} ${staffMember.lastName} `}</Typography>
-      <EditCustomizedDialogs staffMember={staffMember} classes={classes} id={id}></EditCustomizedDialogs>
+      <Container align="center" maxWidth={600}>
+
+        <MediaCard classes={classes} staffMember={staffMember}></MediaCard>
+      </Container>
     </Layout>
   );
 };

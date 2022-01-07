@@ -14,7 +14,8 @@ import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
 import {useState, useEffect} from "react"
 import theme from "../../utils/temaConfig"
-
+import EditIcon from "@mui/icons-material/Edit";
+import SendIcon from "@mui/icons-material/Send";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -134,8 +135,8 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Editar
+      <Button  color="primary" onClick={handleClickOpen}>
+       <EditIcon></EditIcon> Editar
       </Button>
       <Snackbar
         open={alert.open}
@@ -290,13 +291,13 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                  Guardar cambios
+                  <SendIcon></SendIcon>  Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                Close
+               <CloseIcon></CloseIcon>  Close
               </Button>
             </DialogActions>
           </form>

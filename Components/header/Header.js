@@ -136,7 +136,7 @@ const Header = (props) => {
                 <Link>
                   <Image
                     className={classes.logo}
-                    src="/images/logo.jfif"
+                    src="/images/Logo.png"
                     alt="logo"
                     width={120}
                     height={100}

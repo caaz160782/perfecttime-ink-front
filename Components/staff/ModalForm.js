@@ -9,12 +9,13 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import {List, ListItem, TextField,Snackbar} from "@mui/material";
+import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import {useState} from "react"
-import theme from "../../utils/temaConfig"
-
+import { useState } from "react";
+import theme from "../../utils/temaConfig";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import SendIcon from "@mui/icons-material/Send";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -54,16 +55,18 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({classes}) {
-
-
+export default function CustomizedDialogs({ classes }) {
+  const [archivo, guardarArchivo] = useState("");
+      const leerArchivo = (e) => {
+        guardarArchivo(e.target.files[0]);
+      };
 
   const [open, setOpen] = React.useState(false);
-    const [alert, setAlert] = useState({
-      open: false,
-      message: "",
-      backgroundColor: "",
-    });
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,57 +74,75 @@ export default function CustomizedDialogs({classes}) {
   const handleClose = () => {
     setOpen(false);
   };
-    const initialForm = {
-      name: "",
-      lastName: "",
-      idRole: "",
-      email: "",
-      password: "",
-      phoneNumber: "",
-      curp: "",
-      rfc: " ",
-      phonePersonal: "",
-    };
-    const [user, actualizarState, reset] = useForm(initialForm);
+  const initialForm = {
+    name: "",
+    lastName: "",
+    idRole: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    curp: "",
+    rfc: " ",
+    phonePersonal: "",
+  };
+  const [user, actualizarState, reset] = useForm(initialForm);
 
-    const handlerSubmit = (e) => {
-      e.preventDefault();
-      console.log('submit');
-      clienteAxios
-        .post("/staff", user)
-        .then((respuesta) => {
-          // console.log(respuesta)
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+     formData.append("name", user.name);
+     formData.append("lastName", user.lastName);
+     formData.append("idRole", user.idRole);
+     formData.append("curp", user.curp);
+     formData.append("rfc", user.rfc);
+     formData.append("phoneNumber", user.phoneNumber);
+     formData.append("phonePersonal", user.phonePersonal);
+     formData.append("email", user.email);
+     formData.append("password", user.password);
+     formData.append("picture", archivo);
+
+     console.log("formData", formData);
+
+    clienteAxios
+      .post("/staff", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((respuesta) => {
+        console.log(respuesta)
+        setAlert({
+          open: true,
+          message: respuesta.data.message,
+          backgroundColor: "#4BB543",
+        });
+
+        // router.push("/"); //dirigir a la pagina de inicio
+        //  document.querySelector("#form").reset();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        if (err.response.data.errors) {
           setAlert({
             open: true,
-            message: respuesta.data.message,
-            backgroundColor: "#4BB543",
+            message: err.response.data.errors[0].msg,
+            backgroundColor: "#FF3232",
           });
-
-          // router.push("/"); //dirigir a la pagina de inicio
-          //  document.querySelector("#form").reset();
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-          if(err.response.data.errors){
-              setAlert({
-                open: true,
-                message: err.response.data.errors[0].msg,
-                backgroundColor: "#FF3232",
-              });
-              return
-          }
-           setAlert({
-             open: true,
-             message: err.response.data.error,
-             backgroundColor: "#FF3232",
-           });
+          return;
+        }
+        setAlert({
+          open: true,
+          message: err.response.data.error,
+          backgroundColor: "#FF3232",
         });
-    };
+      });
+  };
 
   return (
     <div>
       <Button color="primary" variant="outlined" onClick={handleClickOpen}>
-        crear
+        <AddCircleIcon></AddCircleIcon> crear
       </Button>
       <Snackbar
         open={alert.open}
@@ -170,6 +191,18 @@ export default function CustomizedDialogs({classes}) {
                   name="lastName"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
+                ></TextField>
+              </ListItem>
+              <ListItem>
+                <TextField
+                  //  variant="outlined"
+                  size="small"
+                  fullWidth
+                  id="picture"
+                  label="picture"
+                  name="picture"
+                  inputProps={{ type: "file" }}
+                  onChange={leerArchivo}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -267,13 +300,13 @@ export default function CustomizedDialogs({classes}) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                  Register
+                 <SendIcon></SendIcon>  Register
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                Close
+               <CloseIcon></CloseIcon>    Close
               </Button>
             </DialogActions>
           </form>

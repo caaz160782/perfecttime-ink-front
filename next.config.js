@@ -16,3 +16,9 @@ module.exports = withTM({
 });
 
 
+// module.exports = {
+//   images: {
+//     loader: "imgix",
+//     path: "http://localhost:8000/",
+//   },
+// };

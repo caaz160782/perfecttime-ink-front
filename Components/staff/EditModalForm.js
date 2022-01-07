@@ -14,7 +14,8 @@ import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
 import {useState, useEffect} from "react"
 import theme from "../../utils/temaConfig"
-
+import EditIcon from "@mui/icons-material/Edit";
+import SendIcon from "@mui/icons-material/Send";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -54,7 +55,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({classes, staffMember}) {
+export default function EditCustomizedDialogs({classes, staffMember, id}) {
   console.log('este es el que me envian desde la api', staffMember);
 
     // const consultarAPI = async () => {
@@ -85,56 +86,57 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
     const initialForm = {
       name: staffMember.name,
       lastName: staffMember.lastName,
-      idRole: staffMember.idRole,
+     // idRole: staffMember.idRole,
       email: staffMember.email,
       password: "",
-      phoneNumber: staffMember.phoneNumber,
+      phoneHome: staffMember.phoneHome,
       curp: staffMember.curp,
       rfc: staffMember.rfc,
       phonePersonal: staffMember.phonePersonal,
-
     };
     const [user, actualizarState, reset] = useForm(initialForm);
-    console.log('este es el user del state',user);
+    console.log("initialForm", initialForm);
+    console.log('user', user);
+
 
     const handlerSubmit = (e) => {
       e.preventDefault();
       console.log(user);
       clienteAxios
-        .post("/staff", user)
+        .patch(`/staff/${id}`, user)
         .then((respuesta) => {
-          // console.log(respuesta)
-          setAlert({
-            open: true,
-            message: respuesta.data.message,
-            backgroundColor: "#4BB543",
-          });
+          console.log(respuesta)
+          // setAlert({
+          //   open: true,
+          //   message: respuesta.data.message,
+          //   backgroundColor: "#4BB543",
+          // });
 
           // router.push("/"); //dirigir a la pagina de inicio
           //  document.querySelector("#form").reset();
         })
         .catch((err) => {
-          console.log(err.response.data);
-          if(err.response.data.errors){
-              setAlert({
-                open: true,
-                message: err.response.data.errors[0].msg,
-                backgroundColor: "#FF3232",
-              });
-              return
-          }
-           setAlert({
-             open: true,
-             message: err.response.data.error,
-             backgroundColor: "#FF3232",
-           });
-        });
+          console.log(err);
+        //   if(err.response.data.errors){
+        //       setAlert({
+        //         open: true,
+        //         message: err.response.data.errors[0].msg,
+        //         backgroundColor: "#FF3232",
+        //       });
+        //       return
+        //   }
+        //    setAlert({
+        //      open: true,
+        //      message: err.response.data.error,
+        //      backgroundColor: "#FF3232",
+        //    });
+         });
     };
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Editar
+      <Button  color="primary" onClick={handleClickOpen}>
+       <EditIcon></EditIcon> Editar
       </Button>
       <Snackbar
         open={alert.open}
@@ -169,7 +171,7 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="name"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={staffMember.name}
+                  value={user.name}
                   //  helperText={error ? "Name needs to be 'a'" : "Perfect!"}
                 ></TextField>
               </ListItem>
@@ -184,12 +186,12 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="lastName"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={staffMember.lastName}
+                  value={user.lastName}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
-                  required
+
                   fullWidth
                   size="small"
                   id="idRol"
@@ -197,9 +199,9 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="idRole"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={staffMember.idRole}
+                  value={user.idRole}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <TextField
                   required
@@ -210,7 +212,7 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="phonePersonal"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
-                  value={staffMember.phonePersonal}
+                  value={user.phonePersonal}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -223,7 +225,7 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="phoneHome"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
-                  value={staffMember.phoneHome}
+                  value={user.phoneHome}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -236,7 +238,7 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="email"
                   inputProps={{ type: "email" }}
                   onChange={actualizarState}
-                  value={staffMember.email}
+                  value={user.email}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -249,7 +251,7 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="curp"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={staffMember.curp}
+                  value={user.curp}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -262,12 +264,12 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   name="rfc"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={staffMember.rfc}
+                  value={user.rfc}
                 ></TextField>
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  // required
                   size="small"
                   id="password"
                   fullWidth
@@ -289,13 +291,13 @@ export default function EditCustomizedDialogs({classes, staffMember}) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                  Guardar cambios
+                  <SendIcon></SendIcon>  Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                Close
+               <CloseIcon></CloseIcon>  Close
               </Button>
             </DialogActions>
           </form>

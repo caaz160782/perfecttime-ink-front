@@ -22,7 +22,7 @@ export const Nav = () => {
       <NextLink href="/config" passHref>
         <Link className={classes.tab}>Configuracion</Link>
       </NextLink>
-      <NextLink href="/clienAdmin" passHref>
+      <NextLink href="/clientAdmin" passHref>
         <Link className={classes.tab}>Clientes</Link>
       </NextLink>
       <NextLink href="/staff" passHref>

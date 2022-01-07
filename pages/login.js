@@ -48,14 +48,14 @@ const Login = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+console.log(auth);
   const handlerSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     clienteAxios
       .post("/login", login)
       .then((response) => {
-        //console.log(response.data);
+        console.log(response.data);
         const { auth,token,infoUser } = response.data;
         if (auth) {
           guardarAuth({token,auth,infoUser});

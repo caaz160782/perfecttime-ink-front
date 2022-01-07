@@ -41,7 +41,7 @@ const Staff = () => {
    };
    const filtrar = (terminoBusqueda) => {
      var resultadosBusqueda = staffMentira.filter((elemento) => {
-       console.log(elemento.name);
+
        if (
          elemento.name
            .toString()

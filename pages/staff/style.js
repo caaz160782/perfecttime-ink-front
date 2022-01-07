@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.8rem",
   },
   foto: {
-    border: "6px solid rgb(173, 173, 173)",
+    //border: "6px solid rgb(173, 173, 173)",
   },
   fotoContainer: {
     backgroundColor: "#F8F8F8",

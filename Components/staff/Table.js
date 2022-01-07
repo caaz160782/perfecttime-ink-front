@@ -101,16 +101,17 @@ export default function CustomPaginationActionsTable({staff}) {
     return { name, lastName, _id };
   }
 
-  const [rows, setRows] = React.useState([])
-rows = staff.map(x=>createData(x.name,x.lastName,x._id))
-  console.log("mis rows", rows);
+ // const [rows, setRows] = React.useState([])
+  //const rows = staff.map(x=>createData(x.name,x.lastName,x._id))
+  staff.map(x=>createData(x.name,x.lastName,x._id))
+  console.log("mis rows", staff);
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - staff.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -123,59 +124,64 @@ rows = staff.map(x=>createData(x.name,x.lastName,x._id))
 
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {`${row.name} ${row.lastName}`}
-              </TableCell>
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <TableCell style={{ width: 100 }} align="left">
-                <Button>
-                  <DeleteIcon></DeleteIcon> eliminar
-                </Button>
-              </TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableBody>
+            {(rowsPerPage > 0
+              ? staff.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : staff
+            ).map((row) => (
+              <TableRow key={row._id}>
+                <TableCell component="th" scope="row">
+                  {`${row.name} ${row.lastName}`}
+                </TableCell>
+                <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" />
+                <TableCell style={{ width: 100 }} align="left">
+                  <Button>
+                    <DeleteIcon></DeleteIcon> eliminar
+                  </Button>
+                </TableCell>
 
-              <TableCell style={{ width: 100 }} align="left">
-                <Button onClick={(e) => Router.push(`/staff/${row._id}`)}>
-                  <EditIcon></EditIcon>editar
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell style={{ width: 100 }} align="left">
+                  <Button onClick={(e) => Router.push(`/staff/${row._id}`)}>
+                    <EditIcon></EditIcon>editar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 1, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={staff.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </>
   );
 }

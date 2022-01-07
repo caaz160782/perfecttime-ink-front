@@ -1,7 +1,8 @@
 
-import Layout from "../../Components/Layout";
+import LayoutApp from "../../Components/LayoutApp";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
+import { InfoOutlined } from "@material-ui/icons";
 
 const Agenda = () => {
   const [valToken] = useLocalStorage("userVal");
@@ -9,20 +10,19 @@ const Agenda = () => {
 
   if (valToken) {
     const { token, auth, infoUser } = valToken;
+    console.log(1,infoUser.name)
+    console.log(2,infoUser._id)
     return (
-      <Layout>
+      <LayoutApp>
         <h1>agenda</h1>
-      </Layout>
+      </LayoutApp>
     );
-  
   } else{
     return (
-      <Layout>
+      <LayoutApp>
         <h1>No autorizado</h1>
-      </Layout>
+      </LayoutApp>
     );
-    
-    
     //router.push("/agenda")
   }
   

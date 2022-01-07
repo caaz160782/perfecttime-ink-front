@@ -29,7 +29,11 @@ const Login = () => {
     email: "",
     password: "",
   };
+
+  
   const [login, actualizarState, reset] = useForm(initialForm);
+  
+  console.log(login)
   const [auth,guardarAuth] = useContext(AuthContext);
   const [valToken,setToken] = useLocalStorage('userVal');
 
@@ -38,13 +42,14 @@ const Login = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+console.log(values)
+
   const handleClickShowPassword = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
     });
   };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -60,7 +65,6 @@ const Login = () => {
         if (auth) {
           guardarAuth({token,auth,infoUser});
           setToken({token,auth,infoUser});
-          //console.log(token)
           router.push("/agenda"); //dirigir a la pagina de inicio
           //document.querySelector("#form").reset();
         }
@@ -84,7 +88,7 @@ const Login = () => {
             textAlign: "center",
             flexWrap: 'wrap',
             p: 1,
-            m: 1,
+            m: 15,
           }}
         >
           <Typography component="h6" variant="h6">
@@ -95,7 +99,6 @@ const Login = () => {
               <TextField
                 required
                 sx={{ m: 1, width: '25ch' }}
-                //fullWidth
                 size="small"
                 id="email"
                 label="Email"
@@ -108,7 +111,6 @@ const Login = () => {
               <TextField
                 required
                 sx={{ m: 1, width: '25ch' }}
-                //fullWidth
                 size="small"
                 id="password"
                 label="Password"
@@ -127,11 +129,13 @@ const Login = () => {
                size="small"
                 id="standard-adornment-password"
                 type={values.showPassword ? "text" : "password"}
-                value={values.password}
-               onChange={handleChange("password")}
+                name="password"
+                value={values.password}                
+                onChange={handleChange("password")}                
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
+                     name="password"
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
@@ -144,7 +148,6 @@ const Login = () => {
             </div>
             <div>
               <LoadingButton
-                //  onClick={handleClick}
                 endIcon={<SendIcon />}
                 loading={loading}
                 loadingPosition="end"

@@ -1,6 +1,8 @@
 import Layout from "../../Components/Layout";
 import Image from "next/image";
 import CustomizedDialogs from "../../Components/staff/ModalForm"
+import CustomPaginationActionsTable from "../../Components/staff/Table";
+import SearchIcon from "@mui/icons-material/Search";
 
 import Router from 'next/router'
 
@@ -23,12 +25,34 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 
 import axios from "axios";
+import CustomizedInputBase from "../../Components/staff/Busqueda";
 
 const Staff = () => {
   const classes = useStyles();
  let source = axios.CancelToken.source();
  const [staff, setStaff] = useState([])
+ const [staffMentira, setStaffMentira] = useState([])
  const [loading, setLoading] = useState(true);
+
+
+   const handleChangeBusqueda = ({ target }) => {
+     filtrar(target.value);
+     console.log(target.value);
+   };
+   const filtrar = (terminoBusqueda) => {
+     var resultadosBusqueda = staffMentira.filter((elemento) => {
+       console.log(elemento.name);
+       if (
+         elemento.name
+           .toString()
+           .toLowerCase()
+           .includes(terminoBusqueda.toLowerCase())
+       ) {
+         return elemento;
+       }
+     });
+     setStaff(resultadosBusqueda);
+   };
 
   useEffect(
     () => {
@@ -49,6 +73,7 @@ const Staff = () => {
             );
             const staffArray = respuesta.data.listUser.users;
             setStaff(staffArray);
+            setStaffMentira(staffArray)
             setLoading(false);
           } catch (error) {
             console.log(error);
@@ -81,10 +106,18 @@ const Staff = () => {
         <Typography>loading...</Typography>
       ) : (
         <div>
+          <div align="center">
+            <CustomizedInputBase
+              handleChangeBusqueda={handleChangeBusqueda}
+            ></CustomizedInputBase>
+          </div>
+
           <CustomizedDialogs classes={classes}></CustomizedDialogs>
+          <CustomPaginationActionsTable
+            staff={staff}
+          ></CustomPaginationActionsTable>
 
-
-          {staff.map((x) => {
+          {/* {staff.map((x) => {
             return (
               <ul>
                 <li>{`nombre completo: ${x.name} ${x.lastName} email: ${x.email}`}</li>
@@ -94,7 +127,7 @@ const Staff = () => {
                 <Button className={classes.eliminar}>eliminar</Button>
               </ul>
             );
-          })}
+          })} */}
         </div>
       )}
     </Layout>

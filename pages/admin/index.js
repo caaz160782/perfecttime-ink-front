@@ -1,50 +1,43 @@
 import React, { useState } from "react";
-import Layout from "../Components/Layout";
-import { Typography, TextField,Box } from "@mui/material";
+import Layout from "../../Components/Layout";
+import { Typography, TextField, Button, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import clienteAxios from "../utils/axios";
-import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
+import SendIcon from "@mui/icons-material/Send";
 import { useRouter } from "next/router";
-import { useForm } from "../hooks/useForm";
-import  {AuthContext, } from "../Context/AuthContext";
-import { useContext } from "react";
-import {useLocalStorage} from "../hooks/useLocalStorage"
+import { useForm } from "../../hooks/useForm";
+import clienteAxios from "../../utils/axios";
 
-
-const Login = () => {
+const Admin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [values, setValues] = React.useState({
     password: "",
     showPassword: false,
   });
-
   const initialForm = {
+    register: true,
+    name: "",
+    lastName: "",
     email: "",
     password: "",
   };
-  const [login, actualizarState, reset] = useForm(initialForm);
-  const [auth,guardarAuth] = useContext(AuthContext);
-  const [valToken,setToken] = useLocalStorage('userVal');
-
+  const [user, actualizarState, reset] = useForm(initialForm);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
     });
   };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -53,15 +46,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     clienteAxios
-      .post("/login", login)
+      .post("/admin", user)
       .then((response) => {
         //console.log(response.data);
-        const { auth,token,infoUser } = response.data;
-        if (auth) {
-          guardarAuth({token,auth,infoUser});
-          setToken({token,auth,infoUser});
-          //console.log(token)
-          router.push("/agenda"); //dirigir a la pagina de inicio
+        const { status } = response.data;
+        if (status) {
+          router.push("/login"); //dirigir a la pagina de inicio
           //document.querySelector("#form").reset();
         }
       })
@@ -84,13 +74,41 @@ const Login = () => {
             textAlign: "center",
             flexWrap: 'wrap',
             p: 1,
-            m: 1,
+            m: 20,
           }}
         >
           <Typography component="h6" variant="h6">
-            Inicia Sesion{" "}
+            Crea Cuenta{" "}
           </Typography>
           <form id="form" onSubmit={handlerSubmit}>
+            <div >
+              <TextField
+                 sx={{ m: 1, width: '25ch' }}
+                //  variant="outlined"
+                // fullWidth
+                size="small"
+                required
+                id="name"
+                label="Name"
+                name="name"
+                inputProps={{ type: "text" }}
+                onChange={actualizarState}
+              ></TextField>
+            </div>
+            <div >
+              <TextField
+                sx={{ m: 1, width: '25ch' }}
+                //  variant="outlined"
+                //fullWidth
+                size="small"
+                required
+                id="lastName"
+                label="last name"
+                name="lastName"
+                inputProps={{ type: "text" }}
+                onChange={actualizarState}
+              ></TextField>
+            </div>
             <div>
               <TextField
                 required
@@ -151,7 +169,7 @@ const Login = () => {
                 variant="contained"
                 type="submit"
               >
-                Enviar
+                Crear Cuenta
               </LoadingButton>
             </div>
           </form>
@@ -161,4 +179,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Admin;

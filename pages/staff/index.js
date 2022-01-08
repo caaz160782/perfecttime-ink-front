@@ -3,7 +3,6 @@ import Image from "next/image";
 import CustomizedDialogs from "../../Components/staff/ModalForm"
 import CustomPaginationActionsTable from "../../Components/staff/Table";
 import SearchIcon from "@mui/icons-material/Search";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Router from 'next/router'
 
 import {
@@ -27,17 +26,21 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
 
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 const Staff = () => {
+const [valToken, setToken] = useLocalStorage("userVal", "");
+
+
   const classes = useStyles();
  let source = axios.CancelToken.source();
  const [staff, setStaff] = useState([])
  const [staffMentira, setStaffMentira] = useState([])
  const [loading, setLoading] = useState(true);
- 
- 
+
+
    const handleChangeBusqueda = ({ target }) => {
      filtrar(target.value);
-     console.log(target.value);
    };
    const filtrar = (terminoBusqueda) => {
      var resultadosBusqueda = staffMentira.filter((elemento) => {
@@ -58,18 +61,9 @@ const Staff = () => {
         const consultarAPI = async () => {
           try {
             const respuesta = await clienteAxios.get(
-              "/staff",
-              {
-               // cancelToken: source.token,
-              }
-               , {
-               /*  headers: {
-                   //Authorization: `Bearer ${auth.token}`,
-                   apitoken:
-                  },*/
- 
-               }
-            );
+              "/staff", { headers: { apitoken: valToken.token } },
+
+              );
             console.log(respuesta)
             const staffArray = respuesta.data.listUser.users;
             setStaff(staffArray);

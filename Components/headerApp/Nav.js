@@ -7,7 +7,7 @@ import { useState } from "react";
 import useStyles from "./style";
 
 
-export const Nav = () => {
+export const Nav = ({logout}) => {
   const classes = useStyles()
 
   return (
@@ -28,13 +28,13 @@ export const Nav = () => {
       <NextLink href="/staff" passHref>
         <Link className={classes.tab}>staff</Link>
       </NextLink>
-      <NextLink href="/login" passHref>
-        <Link>
-          <Button className={classes.btn} variant="contained" color="primary">
-            Login
+      {/* <NextLink href="/login" passHref>
+        <Link> */}
+          <Button onClick={logout} className={classes.btn} variant="contained" color="primary">
+            Logout
           </Button>
-        </Link>
-      </NextLink>{" "}
+        {/* </Link>
+      </NextLink>{" "} */}
     </div>
   );
 };

@@ -20,8 +20,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import theme from "./../../utils/temaConfig";
+import { AuthContext } from "../../Context/AuthContext";
 import { Nav } from "./Nav";
 import useStyles from "./style";
+
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -34,9 +38,15 @@ function ElevationScroll(props) {
   });
 }
 
-const Header = (props) => {
+const HeaderApp = (props) => {
+
+  const {logout} = props
+  const [valToken, setToken] = useLocalStorage("userVal", "");
+  console.log("probando desde el header app", valToken.infoUser);
 
 
+  const [auth, guardarAuth] = useContext(AuthContext);
+  console.log("desde el header", auth);
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -126,6 +136,10 @@ const Header = (props) => {
     </>,
   ];
 
+  // const logout = () => {
+  //   setToken('')
+  // }
+
   return (
     <>
       <ElevationScroll>
@@ -144,12 +158,12 @@ const Header = (props) => {
                 </Link>
               </NextLink>
             </div>
-            {matches ? drawer : <Nav></Nav>}
+            {matches ? drawer : <Nav logout={logout}></Nav>}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
       <div className={classes.toolbarMargin} />
     </>
   );
-};
-export default Header;
+};;
+export default HeaderApp;

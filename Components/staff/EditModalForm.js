@@ -16,6 +16,7 @@ import {useState, useEffect} from "react"
 import theme from "../../utils/temaConfig"
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function EditCustomizedDialogs({classes, staffMember, id}) {
-  console.log('este es el que me envian desde la api', staffMember);
+  const [valToken, setToken] = useLocalStorage("userVal", "");
 
     // const consultarAPI = async () => {
     //   const clienteConsulta = await clienteAxios.get(`/staff/${id}`);
@@ -103,33 +104,33 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
       e.preventDefault();
       console.log(user);
       clienteAxios
-        .patch(`/staff/${id}`, user)
+        .patch(`/staff/${id}`, user, { headers: { apitoken: valToken.token } })
         .then((respuesta) => {
           console.log(respuesta)
-          // setAlert({
-          //   open: true,
-          //   message: respuesta.data.message,
-          //   backgroundColor: "#4BB543",
-          // });
+           setAlert({
+             open: true,
+             message: respuesta.data.message,
+             backgroundColor: "#4BB543",
+           });
 
           // router.push("/"); //dirigir a la pagina de inicio
           //  document.querySelector("#form").reset();
         })
         .catch((err) => {
           console.log(err);
-        //   if(err.response.data.errors){
-        //       setAlert({
-        //         open: true,
-        //         message: err.response.data.errors[0].msg,
-        //         backgroundColor: "#FF3232",
-        //       });
-        //       return
-        //   }
-        //    setAlert({
-        //      open: true,
-        //      message: err.response.data.error,
-        //      backgroundColor: "#FF3232",
-        //    });
+           if(err.response.data.errors){
+               setAlert({
+                 open: true,
+                 message: err.response.data.errors[0].msg,
+                 backgroundColor: "#FF3232",
+               });
+               return
+           }
+            setAlert({
+              open: true,
+              message: err.response.data.error,
+              backgroundColor: "#FF3232",
+            });
          });
     };
 

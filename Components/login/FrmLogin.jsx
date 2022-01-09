@@ -43,7 +43,14 @@ const FrmLogin = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [auth,guardarAuth] = useContext(AuthContext);
-  const [valToken,setToken] = useLocalStorage('userVal',"");
+  console.log("este el el auth desde logooin", auth);
+
+  //const [valToken,setToken] = useLocalStorage('userVal',"");
+  const [valToken, setToken] = useLocalStorage("userVal", {
+    token:"",
+    auth:"",
+    infoUser:"",
+  });
 
   const handlerSubmit = (e) => {
     e.preventDefault();

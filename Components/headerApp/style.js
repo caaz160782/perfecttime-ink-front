@@ -31,14 +31,14 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
-    fontSize: "1.3rem",
+    fontSize: "1rem",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
   },
   linkDrawerLogin: {
     fontFamily: "Pacifico",
-    fontSize: "1.5rem",
+    fontSize: "1rem",
     color: "#fff",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,

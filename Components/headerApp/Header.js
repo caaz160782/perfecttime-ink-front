@@ -42,11 +42,9 @@ const HeaderApp = (props) => {
 
   const {logout} = props
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  console.log("probando desde el header app", valToken.infoUser);
-
 
   const [auth, guardarAuth] = useContext(AuthContext);
-  console.log("desde el header", auth);
+  console.log("auth desde el headerApp", auth);
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -158,7 +156,12 @@ const HeaderApp = (props) => {
                 </Link>
               </NextLink>
             </div>
-            {matches ? drawer : <Nav logout={logout}></Nav>}
+            {matches ? (
+              drawer
+            ) : (
+            //  <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
+              <Nav logout={logout}></Nav>
+            )}
           </Toolbar>
         </AppBar>
       </ElevationScroll>

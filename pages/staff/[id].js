@@ -50,7 +50,7 @@ const oneStaff = () => {
         {loading ? (
           <Typography>loading...</Typography>
         ) : (
-          <MediaCard classes={classes} staffMember={staffMember}></MediaCard>
+          <MediaCard atras={"/staff"} classes={classes} staffMember={staffMember}></MediaCard>
         )}
       </Container>
     </Layout>

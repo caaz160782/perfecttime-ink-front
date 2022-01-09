@@ -64,7 +64,7 @@ const [valToken, setToken] = useLocalStorage("userVal", "");
               "/staff", { headers: { apitoken: valToken.token } },
 
               );
-            console.log(respuesta)
+       //     console.log(respuesta)
             const staffArray = respuesta.data.listUser.users;
             setStaff(staffArray);
             setStaffMentira(staffArray)

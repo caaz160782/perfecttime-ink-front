@@ -4,8 +4,11 @@ const AuthContext = React.createContext([ {}, () => {} ]);
 
 const AuthProvider = props => {
 
-    const [auth, guardarAuth ] = useState({
-         auth: false,
+    const [auth, guardarAuth] = useState({
+      token:"",
+      auth: false,
+      infoUser:{},
+      setReloadUser:()=>null
     });
 
     return (

@@ -38,8 +38,12 @@ function ElevationScroll(props) {
 
 const Header = (props) => {
 
-    const [valToken, setToken] = useLocalStorage("userVal", "");
-    console.log("probando desde el header", valToken.infoUser);
+    const [valToken, setToken] = useLocalStorage("userVal", {
+      token: "",
+      auth: "",
+      infoUser: "",
+    });
+   // console.log("probando desde el header", valToken.infoUser);
 
   const iOS =
     typeof navigator !== "undefined" &&

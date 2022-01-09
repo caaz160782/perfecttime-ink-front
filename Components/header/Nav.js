@@ -7,7 +7,7 @@ import { useState } from "react";
 import useStyles from "./style";
 
 
-export const Nav = () => {
+export const Nav = (props) => {
   const classes = useStyles()
 
   return (

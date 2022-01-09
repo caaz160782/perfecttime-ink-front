@@ -56,20 +56,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({classes, staffMember, id}) {
+export default function EditCustomizedDialogs({classes, staffMember, id, typeRol}) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-
-    // const consultarAPI = async () => {
-    //   const clienteConsulta = await clienteAxios.get(`/staff/${id}`);
-    //   console.log(clienteConsulta.data.listUser.userFound);
-
-    // };
-
-    // useEffect(() => {
-    //   consultarAPI();
-    // }, []);
-
-
 
   const [open, setOpen] = React.useState(false);
     const [alert, setAlert] = useState({
@@ -104,7 +92,7 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
       e.preventDefault();
       console.log(user);
       clienteAxios
-        .patch(`/staff/${id}`, user, { headers: { apitoken: valToken.token } })
+        .patch(`/${typeRol.ruta}/${id}`, user, { headers: { apitoken: valToken.token } })
         .then((respuesta) => {
           console.log(respuesta)
            setAlert({
@@ -136,8 +124,8 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
 
   return (
     <div>
-      <Button  color="primary" onClick={handleClickOpen}>
-       <EditIcon></EditIcon> Editar
+      <Button color="primary" onClick={handleClickOpen}>
+        <EditIcon></EditIcon> Editar
       </Button>
       <Snackbar
         open={alert.open}
@@ -156,7 +144,7 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Editar Staff
+         { `Editar ${typeRol.titulo}`}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
@@ -292,13 +280,13 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon>  Guardar cambios
+                  <SendIcon></SendIcon> Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-               <CloseIcon></CloseIcon>  Close
+                <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>
           </form>

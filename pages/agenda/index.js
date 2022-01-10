@@ -2,7 +2,7 @@
 import LayoutApp from "../../Components/LayoutApp";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
-import { InfoOutlined } from "@material-ui/icons";
+import { InfoOutlined } from "@mui/icons-material";
 
 const Agenda = () => {
   const [valToken] = useLocalStorage("userVal");
@@ -25,7 +25,7 @@ const Agenda = () => {
     );
     //router.push("/agenda")
   }
-  
+
 
 };
 export default Agenda;

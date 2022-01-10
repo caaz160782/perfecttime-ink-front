@@ -98,7 +98,8 @@ export default function CustomizedDialogs({ classes }) {
     const formData = new FormData();
      formData.append("name", user.name);
      formData.append("lastName", user.lastName);
-     formData.append("idRole", user.idRole);
+    // formData.append("idRole", user.idRole);
+     formData.append("idRole", 'staff');
      formData.append("curp", user.curp);
      formData.append("rfc", user.rfc);
      formData.append("phoneNumber", user.phoneNumber);

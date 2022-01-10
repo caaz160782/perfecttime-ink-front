@@ -12,6 +12,7 @@ import {
   ListItem,
   IconButton,
   SwipeableDrawer,
+  Switch,
   Button
 } from "@mui/material";
 
@@ -277,7 +278,7 @@ let drawer=[]
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary">
+        <AppBar position="fixed" color="primary" style>
           <Toolbar>
             <div>
               <NextLink href="/" passHref>
@@ -299,6 +300,7 @@ let drawer=[]
               //  <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
               <Nav logout={logout}></Nav>
             )}
+            <Switch></Switch>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

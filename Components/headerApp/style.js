@@ -7,9 +7,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "7em",
   },
   logo: {
-    height: "7em",
+    height: "6em",
     [theme.breakpoints.down("sm")]: {
-      height: "5em",
+      height: "5.5em",
     },
   },
   //DRAWER
@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   loginContainer: {
-    backgroundColor: "#EFC437",
+    //backgroundColor: "#EFC437",
+    backgroundColor: "#CAA345",
     //   alignItems: "left",
   },
   ///NAVEGACION

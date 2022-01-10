@@ -142,13 +142,14 @@ const Header = (props) => {
             <div>
               <NextLink href="/" passHref>
                 <Link>
-                  <Image
+                  <img
+                    style={{ borderRadius: "50%" }}
                     className={classes.logo}
-                    src="/images/Logo.png"
+                    src="/images/logo.jfif"
                     alt="logo"
                     width={120}
-                    height={100}
-                  ></Image>
+                    height={120}
+                  ></img>
                 </Link>
               </NextLink>
             </div>

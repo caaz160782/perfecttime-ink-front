@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import {
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-} from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 
-const RemSelect = ({handleChange}) => {
+const RemSelect = ({ handleChange }) => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [rem, setRem] = useState([]);
 
@@ -34,9 +29,11 @@ const RemSelect = ({handleChange}) => {
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 250 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Recordatorio</InputLabel>
+        <InputLabel id="demo-simple-select-autowidth-label">
+          Recordatorio
+        </InputLabel>
         <Select
-          defaultValue = ""
+          defaultValue=""
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           onChange={handleChange("notifications")}
@@ -46,11 +43,11 @@ const RemSelect = ({handleChange}) => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-         {
-            rem.map((r) => (
-            <MenuItem key={r._id} value={r._id}>{r.description}
+          {rem.map((r) => (
+            <MenuItem key={r._id} value={r._id}>
+              {r.description}
             </MenuItem>
-            ))}
+          ))}
         </Select>
       </FormControl>
     </div>

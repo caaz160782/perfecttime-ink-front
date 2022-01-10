@@ -1,5 +1,5 @@
 import React from "react";
-import LayoutApp from "../../Components/LayoutApp";
+import Layout from "../../Components/Layout";
 import FrmConfig from "../../Components/config/FrmConfig";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
@@ -11,15 +11,15 @@ const Config = () => {
 
   if (valToken) {
     return (
-      <LayoutApp>
+      <Layout>
         <FrmConfig />
-      </LayoutApp>
+      </Layout>
     );
   } else {
     return (
-      <LayoutApp>
+      <Layout>
         <h1>No autorizado</h1>
-      </LayoutApp>
+      </Layout>
     );
 
     //router.push("/agenda")

@@ -16,6 +16,7 @@ import {useState, useEffect} from "react"
 import theme from "../../utils/temaConfig"
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -55,20 +56,9 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({classes, staffMember, id}) {
-  console.log('este es el que me envian desde la api', staffMember);
-
-    // const consultarAPI = async () => {
-    //   const clienteConsulta = await clienteAxios.get(`/staff/${id}`);
-    //   console.log(clienteConsulta.data.listUser.userFound);
-
-    // };
-
-    // useEffect(() => {
-    //   consultarAPI();
-    // }, []);
-
-
+export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
+  const [valToken, setToken] = useLocalStorage("userVal", "");
+  console.log(staffMember);
 
   const [open, setOpen] = React.useState(false);
     const [alert, setAlert] = useState({
@@ -95,48 +85,50 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
       phonePersonal: staffMember.phonePersonal,
     };
     const [user, actualizarState, reset] = useForm(initialForm);
-    console.log("initialForm", initialForm);
-    console.log('user', user);
+    //console.log("initialForm", initialForm);
+    //console.log('user', user);
 
 
     const handlerSubmit = (e) => {
       e.preventDefault();
       console.log(user);
       clienteAxios
-        .patch(`/staff/${id}`, user)
+        .patch(`/${typeRol.ruta}/${staffMember._id}`, user, {
+          headers: { apitoken: valToken.token },
+        })
         .then((respuesta) => {
-          console.log(respuesta)
-          // setAlert({
-          //   open: true,
-          //   message: respuesta.data.message,
-          //   backgroundColor: "#4BB543",
-          // });
+          console.log(respuesta);
+          setAlert({
+            open: true,
+            message: respuesta.data.message,
+            backgroundColor: "#4BB543",
+          });
 
           // router.push("/"); //dirigir a la pagina de inicio
           //  document.querySelector("#form").reset();
         })
         .catch((err) => {
           console.log(err);
-        //   if(err.response.data.errors){
-        //       setAlert({
-        //         open: true,
-        //         message: err.response.data.errors[0].msg,
-        //         backgroundColor: "#FF3232",
-        //       });
-        //       return
-        //   }
-        //    setAlert({
-        //      open: true,
-        //      message: err.response.data.error,
-        //      backgroundColor: "#FF3232",
-        //    });
-         });
+          if (err.response.data.errors) {
+            setAlert({
+              open: true,
+              message: err.response.data.errors[0].msg,
+              backgroundColor: "#FF3232",
+            });
+            return;
+          }
+          setAlert({
+            open: true,
+            message: err.response.data.error,
+            backgroundColor: "#FF3232",
+          });
+        });
     };
 
   return (
     <div>
-      <Button  color="primary" onClick={handleClickOpen}>
-       <EditIcon></EditIcon> Editar
+      <Button color="primary" onClick={handleClickOpen}>
+        <EditIcon></EditIcon> Editar
       </Button>
       <Snackbar
         open={alert.open}
@@ -155,7 +147,7 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Editar Staff
+         { `Editar ${typeRol.titulo}`}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
@@ -291,13 +283,13 @@ export default function EditCustomizedDialogs({classes, staffMember, id}) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon>  Guardar cambios
+                  <SendIcon></SendIcon> Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-               <CloseIcon></CloseIcon>  Close
+                <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>
           </form>

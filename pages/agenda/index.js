@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import LayoutApp from "../../Components/LayoutApp";
+import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import Calendar from "../../Components/Calendar/Calendar";
 import { Box } from "@mui/material";
@@ -64,7 +64,7 @@ const Agenda = () => {
     // console.log(2, infoUser._id);
 
     return (
-      <LayoutApp>
+      <Layout>
         <Box sx={{ display: "flex", justifyContent: "center", m: 14 }}>
           <Calendar
 
@@ -72,13 +72,13 @@ const Agenda = () => {
           //timeToClose={timeToClose}
           />
         </Box>
-      </LayoutApp>
+      </Layout>
     );
   } else {
     return (
-      <LayoutApp>
+      <Layout>
         <h1>No autorizado</h1>
-      </LayoutApp>
+      </Layout>
     );
   }
 };

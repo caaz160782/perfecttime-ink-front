@@ -23,6 +23,8 @@ import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
 import useStyles from "./style";
 
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 function ElevationScroll(props) {
   const { children } = props;
   const trigger = useScrollTrigger({
@@ -36,6 +38,12 @@ function ElevationScroll(props) {
 
 const Header = (props) => {
 
+    const [valToken, setToken] = useLocalStorage("userVal", {
+      token: "",
+      auth: "",
+      infoUser: "",
+    });
+   // console.log("probando desde el header", valToken.infoUser);
 
   const iOS =
     typeof navigator !== "undefined" &&
@@ -134,13 +142,14 @@ const Header = (props) => {
             <div>
               <NextLink href="/" passHref>
                 <Link>
-                  <Image
+                  <img
+                    style={{ borderRadius: "50%" }}
                     className={classes.logo}
-                    src="/images/Logo.png"
+                    src="/images/logo.jfif"
                     alt="logo"
                     width={120}
-                    height={100}
-                  ></Image>
+                    height={120}
+                  ></img>
                 </Link>
               </NextLink>
             </div>

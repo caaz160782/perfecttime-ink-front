@@ -139,7 +139,7 @@ export default function CustomPaginationActionsTable({staff}) {
                 <TableCell component="th" scope="row">
                   {`${row.name} ${row.lastName}`}
                 </TableCell>
-                <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" />
+                {/* <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" /> */}
                 <TableCell style={{ width: 100 }} align="left">
                   <Button>
                     <DeleteIcon></DeleteIcon> eliminar

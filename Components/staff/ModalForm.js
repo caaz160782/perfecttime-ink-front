@@ -16,6 +16,7 @@ import { useState } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,6 +57,10 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes }) {
+  const [valToken, setToken] = useLocalStorage("userVal", "");
+
+
+
   const [archivo, guardarArchivo] = useState("");
       const leerArchivo = (e) => {
         guardarArchivo(e.target.files[0]);
@@ -108,6 +113,7 @@ export default function CustomizedDialogs({ classes }) {
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          apitoken: valToken.token
         },
       })
       .then((respuesta) => {

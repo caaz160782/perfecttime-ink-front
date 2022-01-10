@@ -1,5 +1,5 @@
 import React  from "react";
-import LayoutApp from "../../Components/LayoutApp";
+import Layout from "../../Components/Layout";
 import FrmConfig from "../../Components/config/FrmConfig";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
@@ -12,9 +12,9 @@ const Config = () => {
   if (valToken) {
     const { token, auth, infoUser } = valToken;
     return (
-      <LayoutApp>
+      <Layout>
         <FrmConfig  />
-      </LayoutApp>
+      </Layout>
     );
   } else {
     return (

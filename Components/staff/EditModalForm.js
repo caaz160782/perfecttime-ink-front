@@ -56,8 +56,9 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({classes, staffMember, id, typeRol}) {
+export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
+  console.log(staffMember);
 
   const [open, setOpen] = React.useState(false);
     const [alert, setAlert] = useState({
@@ -84,42 +85,44 @@ export default function EditCustomizedDialogs({classes, staffMember, id, typeRol
       phonePersonal: staffMember.phonePersonal,
     };
     const [user, actualizarState, reset] = useForm(initialForm);
-    console.log("initialForm", initialForm);
-    console.log('user', user);
+    //console.log("initialForm", initialForm);
+    //console.log('user', user);
 
 
     const handlerSubmit = (e) => {
       e.preventDefault();
       console.log(user);
       clienteAxios
-        .patch(`/${typeRol.ruta}/${id}`, user, { headers: { apitoken: valToken.token } })
+        .patch(`/${typeRol.ruta}/${staffMember._id}`, user, {
+          headers: { apitoken: valToken.token },
+        })
         .then((respuesta) => {
-          console.log(respuesta)
-           setAlert({
-             open: true,
-             message: respuesta.data.message,
-             backgroundColor: "#4BB543",
-           });
+          console.log(respuesta);
+          setAlert({
+            open: true,
+            message: respuesta.data.message,
+            backgroundColor: "#4BB543",
+          });
 
           // router.push("/"); //dirigir a la pagina de inicio
           //  document.querySelector("#form").reset();
         })
         .catch((err) => {
           console.log(err);
-           if(err.response.data.errors){
-               setAlert({
-                 open: true,
-                 message: err.response.data.errors[0].msg,
-                 backgroundColor: "#FF3232",
-               });
-               return
-           }
+          if (err.response.data.errors) {
             setAlert({
               open: true,
-              message: err.response.data.error,
+              message: err.response.data.errors[0].msg,
               backgroundColor: "#FF3232",
             });
-         });
+            return;
+          }
+          setAlert({
+            open: true,
+            message: err.response.data.error,
+            backgroundColor: "#FF3232",
+          });
+        });
     };
 
   return (

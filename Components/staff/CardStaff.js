@@ -90,7 +90,7 @@ export default function MediaCard({staffMember, classes, atras}) {
             <EditCustomizedDialogs
               staffMember={staffMember}
               classes={classes}
-              id={staffMember._id}
+             // id={staffMember._id}
               typeRol={typeRol}
             ></EditCustomizedDialogs>
             <NextLink href={atras} passHref>

@@ -73,7 +73,7 @@ export const Nav = ({ logout }) => {
         onClick={logout}
         className={classes.btn}
         variant="contained"
-        color="primary"
+        color="secondary"
       >
         Logout
       </Button>

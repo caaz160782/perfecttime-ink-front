@@ -19,7 +19,7 @@ const InfoPersonal = () => {
 
     const router = useRouter();
    // const { id } = router.query;
-    console.log("el id es", auth.infoUser._id);
+    //console.log("el id es", auth.infoUser._id);
     const classes = useStyles();
     const [staffMember, setStaffMember] = useState({});
 

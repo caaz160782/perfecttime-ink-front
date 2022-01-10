@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   //DRAWER
   drawer: {
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.primary.dark,
   },
   drawerIconContainer: {
     marginLeft: "auto",
@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   drawerIcon: {
     width: 40,
     height: 40,
-    // color: "#fff"
+
+    color: "#fff",
   },
   linkDrawer: {
     fontFamily: "Raleway",
@@ -37,8 +38,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   linkDrawerLogin: {
+    padding: 0,
+    margin: 0,
+    textTransform: "none",
     fontFamily: "Pacifico",
-    fontSize: "1rem",
+    fontSize: "1.1rem",
     color: "#fff",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,
@@ -46,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loginContainer: {
     backgroundColor: "#EFC437",
+    //   alignItems: "left",
   },
   ///NAVEGACION
   tabContainer: {
@@ -53,14 +58,20 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     ...theme.typography.tab,
-    color: "#000",
+    textDecoration: "none",
+    color: "#fff",
+    fontSize: "1.5rem",
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
-      textDecoration: "underline #F8F8F8",
-      color: theme.palette.primary.dark,
+      // textDecoration: "underline #F8F8F8",
+      textDecoration: "underline #334756",
+      color: theme.palette.secondary.light,
     },
-    [theme.breakpoints.down("md")]: {},
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.3rem",
+      marginLeft: "30px",
+    },
   },
   btn: {
     color: "#fff",
@@ -74,7 +85,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       textDecoration: `underline ${theme.palette.primary.dark}`,
     },
-    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.3rem",
+      marginLeft: "40px",
+      marginRight: "20px",
+      padding: "2px 10px",
+    },
   },
 }));
 

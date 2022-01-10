@@ -8,25 +8,25 @@ import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
 import { useContext, useEffect, useMemo } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Store } from "../utils/Store";
+//import { Store } from "../utils/Store";
 import { createTheme } from "@mui/material";
 
 const Layout = ({ title, children }) => {
- const darkMode = true;
-    const theme = createTheme({
-      palette: {
-        mode: darkMode ? "dark" : "light",
+//  const darkMode = true;
+//     const theme = createTheme({
+//       palette: {
+//         mode: darkMode ? "dark" : "light",
 
-        primary: {
-          main: "#334756",
+//         primary: {
+//           main: "#334756",
 
-        },
-        secondary: {
-          //  main: "#208080", VERDE BONITO
-          main: "#CAA345",
-        },
-      },
-    });
+//         },
+//         secondary: {
+//           //  main: "#208080", VERDE BONITO
+//           main: "#CAA345",
+//         },
+//       },
+//     });
 
 //const { state, dispatch } = useContext(Store);
 // const { darkMode } = state;
@@ -69,7 +69,7 @@ const Layout = ({ title, children }) => {
       console.log("auth desde layout", auth);
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline>
+
         <Head>
           <title>
             {title ? `${title} - Perfect Time Ink` : "Perfect Time Ink"}
@@ -94,7 +94,7 @@ const Layout = ({ title, children }) => {
         <footer>
           <Typography>All rights reserved. Perfect Time Ink.</Typography>
         </footer>
-      </CssBaseline>
+
     </ThemeProvider>
   );
 };

@@ -1,19 +1,18 @@
-import React  from "react";
+import React from "react";
 import LayoutApp from "../../Components/LayoutApp";
 import FrmConfig from "../../Components/config/FrmConfig";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 import { useRouter } from "next/router";
 
 const Config = () => {
-
-  const [valToken,setToken] = useLocalStorage('userVal',"");
+  const [valToken, setToken] = useLocalStorage("userVal", "");
   const router = useRouter();
 
   if (valToken) {
-    const { token, auth, infoUser } = valToken;
     return (
       <LayoutApp>
-        <FrmConfig  />
+        <FrmConfig />
       </LayoutApp>
     );
   } else {

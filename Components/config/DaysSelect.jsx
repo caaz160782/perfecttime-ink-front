@@ -20,13 +20,13 @@ const MenuProps = {
   },
 };
 const days = [
-  "Domingo",
-  "Lunes",
-  "Martes",
-  "Miercoles",
-  "Jueves",
-  "Viernes",
-  "Sabado",
+  { id: 0, day: "Domingo" },
+  { id: 1, day: "Lunes" },
+  { id: 2, day: "Martes" },
+  { id: 3, day: "Miercoles" },
+  { id: 4, day: "Jueves" },
+  { id: 5, day: "Viernes" },
+  { id: 6, day: "Sabado" },
 ];
 
 const DaysSelect = ({ handleChange, valuesConfig }) => {
@@ -51,8 +51,8 @@ const DaysSelect = ({ handleChange, valuesConfig }) => {
           MenuProps={MenuProps}
         >
           {days.map((day) => (
-            <MenuItem key={day} value={day}>
-              {day}
+            <MenuItem key={day.id} value={day.day} name={day.day}>
+              {day.day}
             </MenuItem>
           ))}
         </Select>

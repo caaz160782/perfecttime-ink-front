@@ -101,8 +101,8 @@ export default function CustomPaginationActionsTable({staff}) {
     return { name, lastName, _id };
   }
 
-  const [rows, setRows] = React.useState([])
-rows = staff.map(x=>createData(x.name,x.lastName,x._id))
+   let  [rows, setRows] = React.useState([])
+   rows = staff.map(x=>createData(x.name,x.lastName,x._id))
   console.log("mis rows", rows);
 
   const [page, setPage] = React.useState(0);

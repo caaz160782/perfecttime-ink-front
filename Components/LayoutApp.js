@@ -27,12 +27,16 @@ const Layout = ({ title, children }) => {
 
         <Header></Header>
         <Container>{children}</Container>
-        <footer>
-          <Typography>All rights reserved. Perfect Time Ink.</Typography>
-        </footer>
+        
+        
+        
 
     </ThemeProvider>
   );
 };
 
 export default Layout
+
+/*<footer>
+          <Typography>All rights reserved. Perfect Time Ink.</Typography>
+        </footer> */

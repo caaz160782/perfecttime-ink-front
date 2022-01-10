@@ -3,7 +3,6 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import {
   InputLabel,
   MenuItem,
-  FormHelperText,
   FormControl,
   Select,
 } from "@mui/material";
@@ -16,7 +15,8 @@ const RemSelect = ({handleChange}) => {
   useEffect(() => {
     clienteAxios
       .get("/clientRemember", { headers: { apitoken: valToken.token } })
-      .then((response) => {        
+      .then((response) => {
+        //console.log(response.data.payload)
         setRem(response.data.payload);
       })
       .catch((error) => {

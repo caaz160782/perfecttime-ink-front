@@ -9,7 +9,7 @@ const SelectTatuador = () => {
 
   useEffect(() => {
     clienteAxios
-      .get("/clientRemember", { headers: { apitoken: valToken.token } })
+      .get("/", { headers: { apitoken: valToken.token } })
       .then((response) => {
         //console.log(response.data.payload)
         setRem(response.data.payload);

@@ -34,7 +34,7 @@ const Studio = () => {
     const handlerSubmit = (e) => {
         e.preventDefault();
           clienteAxios
-              .patch("/studio", tatstudio)
+              .patch("/studio/61ce7372f5a8a9b236dc1801", tatstudio)
               .then((respuesta) => {
                 console.log(respuesta);
               })

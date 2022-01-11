@@ -16,7 +16,7 @@ const RemSelect = ({handleChange}) => {
   useEffect(() => {
     clienteAxios
       .get("/clientRemember", { headers: { apitoken: valToken.token } })
-      .then((response) => {        
+      .then((response) => {
         setRem(response.data.payload);
       })
       .catch((error) => {

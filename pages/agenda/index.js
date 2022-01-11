@@ -8,19 +8,16 @@ import clienteAxios from "../../utils/axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Agenda = () => {
-  const [valToken] = useLocalStorage("userVal", "");
+  const [valToken] = useLocalStorage("userVal");
   const [config, setConfig] = useState({});
   const [token, setToken] = useState({});
-
   const router = useRouter();
 
   useEffect(() => {
-    if (valToken) {
-      // console.log(0, valToken);
-      // console.log(2, valToken.token);
+    if (valToken !== "") {
       setToken(valToken.token);
     }
-  }, []);
+  }, [setToken, valToken]);
 
   useEffect(() => {
     clienteAxios
@@ -28,7 +25,7 @@ const Agenda = () => {
         headers: { apitoken: token },
       })
       .then((response) => {
-        console.log(7, response);
+        //console.log(2, response);
         setConfig(response.data.payload);
       })
       .catch((error) => {
@@ -38,38 +35,47 @@ const Agenda = () => {
           console.log(error);
         }
       });
-  }, []);
+  }, [setConfig, token]);
 
-  console.log(config);
-  if (valToken) {
-    // if (config) {
-    //   const { id_tatoostudios, timeToOpen, timeToClose, dayAvailables } =
-    //     config;
+  //console.log(3, config);
 
-    //   console.log(8, dayAvailables);
+  if (valToken !== "" && Object.keys(config).length !== 0) {
+    const { id_tatoostudios, timeToOpen, timeToClose, dayAvailables } = config;
 
-    //   let days1 = [];
-
-    //   dayAvailables.forEach((days) => {
-    //     console.log(days);
-    //     if (days === "Domingo") {
-    //       comnsole.log(0);
-    //     }
-    //   });
-
-    //   //console.log(2, days1);
-    // }
-    // //console.log(config);
-    // console.log(1, infoUser.name);
-    // console.log(2, infoUser._id);
+    let dayNum = [];
+    dayAvailables.forEach((days) => {
+      if (days === "domingo") {
+        dayNum.push(0);
+      }
+      if (days === "lunes") {
+        dayNum.push(1);
+      }
+      if (days === "martes") {
+        dayNum.push(2);
+      }
+      if (days === "miercoles") {
+        dayNum.push(3);
+      }
+      if (days === "jueves") {
+        dayNum.push(4);
+      }
+      if (days === "viernes") {
+        dayNum.push(5);
+      }
+      if (days === "sabado") {
+        dayNum.push(6);
+      }
+      return dayNum;
+    });
+    //console.log(dayNum);
 
     return (
       <Layout>
         <Box sx={{ display: "flex", justifyContent: "center", m: 14 }}>
           <Calendar
-
-          // timeToOpen={timeToOpen}
-          //timeToClose={timeToClose}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+            dayAvailables={dayNum}
           />
         </Box>
       </Layout>

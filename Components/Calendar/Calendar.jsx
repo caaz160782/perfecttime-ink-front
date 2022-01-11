@@ -1,30 +1,31 @@
-import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
 import FullCalendar, { formatDate } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
-//import { INITIAL_EVENTS, createEventId } from './event-utils';
+import ModalDate from "./ModalDate";
 
-import { useRef } from "react";
+const Calendar = ({ timeToOpen, timeToClose, dayAvailables }) => {
+  const [open, setOpen] = React.useState(false);
 
-const Calendar = ({timeToOpen,timeToClose} ) => {
-  //const calendarRef = useRef(null);
-
-  const handleDateClick = (arg) => {
-    // bind with an arrow function
-    //alert(arg.dateStr)
-    prompt("hora");
+  const handleClose = () => {
+    setOpen(false);
   };
 
- // let hrOpen = "10:00:00";
+  const handleDateClick = (arg) => {
+    setOpen(true);
+    //   console.log(arg.date);
+  };
 
   return (
     <div>
-     <FullCalendar
+      <div>
+        <ModalDate open={open} handleClose={handleClose} />
+      </div>
+      <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        
         dateClick={handleDateClick}
         events={[
           {
@@ -42,19 +43,14 @@ const Calendar = ({timeToOpen,timeToClose} ) => {
             end: "2021-12-28T15:30:00",
           },
         ]}
-
         headerToolbar={{
-          //left: 'prev,next today',
-          //left: '',
           start: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          //right: "dayGridMonth,timeGridWeek,timeGridDay",
+          right: "dayGridMonth,timeGridDay",
         }}
-
         contentHeight={650}
-        //slotDuration={ '2:00' }//intervalo de  tiempo que se muestra
-        //slotMinTime={'08:00:00'}
-        hiddenDays= {[ 2, 4] } 
+        hiddenDays={dayAvailables}
         slotMinTime={timeToOpen}
         slotMaxTime={timeToClose}
         eventDurationEditable={true}

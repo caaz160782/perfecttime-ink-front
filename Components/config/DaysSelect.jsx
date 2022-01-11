@@ -33,7 +33,7 @@ const DaysSelect = ({ handleChange, valuesConfig }) => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="chip-label">Días Laborales</InputLabel>
+        <InputLabel id="chip-label">Días No Laborales</InputLabel>
         <Select
           labelId="chip-label"
           id="multiple-chip"

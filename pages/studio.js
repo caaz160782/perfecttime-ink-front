@@ -47,7 +47,11 @@ const Studio = () => {
         console.log(respuesta);
       })
       .catch((error) => {
-        console.log(error.respuesta.data);
+        if (error.response) {
+          console.log(error.response.data);
+        } else {
+          console.log(error);
+        }
       });
   };
 

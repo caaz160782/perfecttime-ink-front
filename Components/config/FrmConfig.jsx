@@ -12,12 +12,6 @@ import { useRouter } from "next/router";
 const FrmConfig = () => {
   const router = useRouter();
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [auth, guardarAuth] = useContext();
-
-  useEffect(() => {
-    //const { token, auth, infoUser } = valToken;
-    guardarAuth(valToken);
-  }, [guardarAuth, valToken]);
 
   const Input = styled("input")({
     display: "none",

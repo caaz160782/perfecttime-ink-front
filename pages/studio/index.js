@@ -5,20 +5,23 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
 const Studio = () => {
-  if (valToken) {
-    const { token, auth, infoUser } = valToken;
-    return (
-      <LayoutApp>
-        <FrmStudio  />
-      </LayoutApp>
-    );
-  } else {
-    return (
-      <LayoutApp>
-        <h1>No autorizado</h1>
-      </LayoutApp>
-    );
-  }
+    const [valToken,setToken] = useLocalStorage('userVal',"");
+    const router = useRouter();
+    
+    if (valToken) {
+        const { token, auth, infoUser } = valToken;
+        return (
+        <LayoutApp>
+            <FrmStudio  />
+        </LayoutApp>
+        );
+    } else {
+        return (
+        <LayoutApp>
+            <h1>No autorizado</h1>
+        </LayoutApp>
+        );
+    }
   
 };
 

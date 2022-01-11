@@ -7,6 +7,9 @@ import {
   styled
 } from "@mui/material";
 import clienteAxios from "../../utils/axios";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import SendIcon from "@mui/icons-material/Send";
+import { LoadingButton } from "@mui/lab";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
@@ -32,19 +35,36 @@ const FrmStudio = () => {
     rfc: "",
     social: "",
   };
+  console.log(initialForm)
   const [tatstudio,actualizarState,reset] =useState(initialForm)
     
   const handlerSubmit = (e) => {
-    e.preventDefault();
-      clienteAxios
-      .post("/studio", tatstudio)
-      .then((respuesta) => {
-        console.log(respuesta.data);
-      })
-      .catch((error) => {
-        console.log(error.respuesta.data);
-      });
-  };
+            e.preventDefault();
+              clienteAxios
+                  .post("/studio", tatstudio)
+                  .then((respuesta) => {
+                    console.log(respuesta);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+        };
+
+  // const handlerSubmit = (e) => {
+  //   e.preventDefault();
+  //     clienteAxios
+  //     .post("/studio", tatstudio)
+  //     .then((respuesta) => {
+  //       console.log(respuesta.data);
+  //     })
+  //     .catch((error) => {
+  //       if (error.respuesta) {
+  //         console.log(error.respuesta.data);
+  //       } else {
+  //         console.log(error);
+  //       }
+  //     });
+  // };
   const [loading, setLoading] = useState(false);
   
   return (
@@ -64,10 +84,8 @@ const FrmStudio = () => {
         </Typography>
         <form id="form" onSubmit={handlerSubmit}>
           <Box sx={{ m: 2 }}>
-          {/* <List>
-              <ListItem> */}
                   <TextField
-                  sx={{ m: 2, width: "30ch" }}
+                  fullWidth
                   required
                   id="name"
                   label="Nombre del estudio"
@@ -75,12 +93,10 @@ const FrmStudio = () => {
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
                   ></TextField>
-              {/* </ListItem> */}
           </Box>
           <Box sx={{ m: 2 }}>
-              {/* <ListItem> */}
                   <TextField
-                  sx={{ m: 2, width: "30ch" }}
+                  fullWidth
                   required
                   id="description"
                   label="Description"
@@ -88,7 +104,6 @@ const FrmStudio = () => {
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
                   ></TextField>
-              {/* </ListItem> */}
             </Box>
             <Box sx={{ p: 1, m: 2 }}>
               <label htmlFor="icon-button-file">
@@ -96,7 +111,7 @@ const FrmStudio = () => {
                   accept="image/*"
                   id="icon-button-file"
                   type="file"
-                  onChange={handleChange("logo")}
+                  onChange={actualizarState}
                 />
                 <IconButton
                   color="primary"
@@ -107,15 +122,6 @@ const FrmStudio = () => {
                 </IconButton>
               </label>
             </Box>
-                  {/* <TextField
-                  fullWidth
-                  id="licenseImage"
-                  label="Imagen del estudio"
-                  name="licenseImage"
-                  inputProps={{ type: "file" }}
-                  onChange={actualizarState}
-                  ></TextField> 
-            </Box>  */}
             <Box sx={{ m: 2 }}> 
                   <TextField
                   fullWidth
@@ -216,9 +222,19 @@ const FrmStudio = () => {
                   ></TextField>
               </Box>   
               <Box sx={{ m: 2 }}>
-                  <Button variant="contained" type="submit" fullWidth color="primary">
+                <LoadingButton
+                  fullWidth
+                  endIcon={<SendIcon />}
+                  loading={loading}
+                  loadingPosition="end"
+                  variant="contained"
+                  type="submit"
+                >
+                  Registrar
+                </LoadingButton>
+                  {/* <Button variant="contained" type="submit" fullWidth color="primary">
                   Register
-                  </Button>
+                  </Button> */}
               </Box>
         </form>  
       </Box>  

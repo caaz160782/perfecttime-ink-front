@@ -36,7 +36,7 @@ const FrmStudio = () => {
     social: "",
   };
   console.log(initialForm)
-  const [tatstudio,actualizarState,reset] =useState(initialForm)
+  const [tatstudio,actualizarState,reset] =useForm(initialForm)
     
   const handlerSubmit = (e) => {
             e.preventDefault();

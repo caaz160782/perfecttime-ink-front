@@ -2,13 +2,14 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import SelectTatuador from "./SelectTatuador";
+import SelectDuracion from "./SelectDuracion";
+import SelectClient from "./SelectClient";
+import SelectSize from "./SelectSize";
 import {
-  Typography,
   InputLabel,
   Button,
   TextField,
@@ -57,7 +58,7 @@ const ModalDate = ({
               <SelectTatuador handleChangeDate={handleChangeDate} />
             </Box>
             <Box>
-              <SelectTatuador handleChangeDate={handleChangeDate} />
+              <SelectClient handleChangeDate={handleChangeDate} />
             </Box>
             <Box>
               <TextField
@@ -66,7 +67,7 @@ const ModalDate = ({
                 label="Hora Cita"
                 type="time"
                 defaultValue="09:00"
-                //onChange={handleChange("timeToClose")}
+                onChange={handleChangeDate("start")}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -80,7 +81,7 @@ const ModalDate = ({
                 id="descripcion"
                 label="Descripcion"
                 type="text"
-                //onChange={handleChangeDate("hora")}
+                onChange={handleChangeDate("descripcion")}
               />
             </Box>
             <Box
@@ -98,7 +99,7 @@ const ModalDate = ({
                   accept="image/*"
                   id="icon-button-file"
                   type="file"
-                  //    onChange={handleChange("logo")}
+                  onChange={handleChangeDate("imgMuestra")}
                 />
                 <IconButton
                   color="primary"
@@ -121,27 +122,29 @@ const ModalDate = ({
                     value="color"
                     control={<Radio />}
                     label="Color"
+                    onChange={handleChangeDate("tipeTattoo")}
                   />
                   <FormControlLabel
                     value="bn"
                     control={<Radio />}
                     label="Blanco y Negro"
+                    onChange={handleChangeDate("tipeTattoo")}
                   />
                 </RadioGroup>
               </FormControl>
             </Box>
             <Box>
-              <SelectTatuador handleChangeDate={handleChangeDate} />
+              <SelectSize handleChangeDate={handleChangeDate} />
             </Box>
             <Box>
-              <SelectTatuador handleChangeDate={handleChangeDate} />
+              <SelectDuracion handleChangeDate={handleChangeDate} />
             </Box>
             <Box>
               <TextField
                 id="costoAprox"
                 label="Costo Aprox"
                 type="text"
-                //onChange={handleChangeDate("hora")}
+                onChange={handleChangeDate("costoAprox")}
               />
             </Box>
             <Box>
@@ -150,7 +153,7 @@ const ModalDate = ({
                 id="adelanto"
                 label="Adelanto"
                 type="text"
-                //onChange={handleChangeDate("hora")}
+                onChange={handleChangeDate("adelanto")}
               />
             </Box>
           </Box>

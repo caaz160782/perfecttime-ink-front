@@ -7,7 +7,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [valStudio] = useLocalStorage("studioVal", "");
 
-  const [rem, setRem] = useState([]);
+  const [tatuadorValue, setValueTatuador] = useState([]);
 
   //.get("/findStaffByStudy", { headers: { apitoken: valToken.token } })
   useEffect(() => {
@@ -15,7 +15,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
       .get(`/findStaffByStudy/${valStudio}`)
       .then((response) => {
         //console.log(response.data.payload);
-        setRem(response.data.payload);
+        setValueTatuador(response.data.payload);
       })
       .catch((error) => {
         if (error.response) {
@@ -27,13 +27,14 @@ const SelectTatuador = ({ handleChangeDate }) => {
     return () => {
       //   cleanup
     };
-  }, [valToken.token]);
+  }, [valStudio, valToken.token]);
 
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 230 }}>
         <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
+          defaultValue=""
           labelId="lblInpTat"
           id="tatuador"
           onChange={handleChangeDate("tatuador")}
@@ -43,9 +44,9 @@ const SelectTatuador = ({ handleChangeDate }) => {
           <MenuItem value="">
             <em>Selecciona un tatuador</em>
           </MenuItem>
-          {rem.map((r) => (
-            <MenuItem key={r._id} value={r._id}>
-              {r.name}
+          {tatuadorValue.map((t) => (
+            <MenuItem key={t._id} value={t._id}>
+              {t.name}
             </MenuItem>
           ))}
         </Select>

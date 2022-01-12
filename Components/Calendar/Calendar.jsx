@@ -33,7 +33,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
 
   const handleChangeDate = (prop) => (event) => {
     setValuDate({ ...valueDate, [prop]: event.target.value });
-    console.log(valueDate);
 
     /* if (prop[0] === "dayNotAvailables") {
       const {
@@ -42,6 +41,8 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
     }*/
   };
+
+  console.log(valueDate);
 
   const handleGuardar = (event) => {
     //setValuesConfig({ ...valuesConfig, [prop]: event.target.value });

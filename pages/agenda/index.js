@@ -52,7 +52,6 @@ const Agenda = () => {
 
     let dayNum = [];
     if (dayNotAvailables.length !== 0) {
-      console.log(2);
       dayNotAvailables.forEach((days) => {
         if (days === "Domingo") {
           dayNum.push(0);
@@ -82,13 +81,11 @@ const Agenda = () => {
     return (
       <Layout>
         <div style={{ width: "100%" }}>
-          <Box sx={{ display: "flex", justifyContent: "center", m: 14 }}>
-            <Calendar
-              timeToOpen={timeToOpen}
-              timeToClose={timeToClose}
-              dayNotAvailables={dayNum}
-            />
-          </Box>
+          <Calendar
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+            dayNotAvailables={dayNum}
+          />
         </div>
       </Layout>
     );

@@ -61,6 +61,7 @@ export default function CustomizedDialogs({ classes }) {
   const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
+
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
   };
@@ -108,7 +109,6 @@ export default function CustomizedDialogs({ classes }) {
     formData.append("picture", archivo);
 
     console.log("formData", formData);
-
     clienteAxios
       .post("/staff", formData, {
         headers: {
@@ -210,18 +210,7 @@ export default function CustomizedDialogs({ classes }) {
                   onChange={leerArchivo}
                 ></TextField>
               </ListItem>
-              <ListItem>
-                <TextField
-                  //required
-                  fullWidth
-                  size="small"
-                  id="idRol"
-                  label="idRol"
-                  name="idRole"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                ></TextField>
-              </ListItem>
+              <ListItem></ListItem>
               <ListItem>
                 <TextField
                   required

@@ -31,21 +31,17 @@ const SelectTatuador = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 250 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">
-          Tatuador
-        </InputLabel>
+      <FormControl sx={{ m: 1, minWidth: 230 }}>
+        <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
-          defaultValue=""
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          //onChange={handleChange("notifications")}
+          labelId="lblInpTat"
+          id="tatuador"
           onChange={handleChangeDate("tatuador")}
-          //autoWidth
-          label="Recordatorio"
+          autoWidth
+          label="tatuador"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Selecciona un tatuador</em>
           </MenuItem>
           {rem.map((r) => (
             <MenuItem key={r._id} value={r._id}>

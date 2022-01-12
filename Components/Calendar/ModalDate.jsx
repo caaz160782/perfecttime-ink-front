@@ -1,13 +1,27 @@
 import * as React from "react";
-import { Button, Modal } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import SelectTatuador from "./SelectTatuador";
+import {
+  Typography,
+  InputLabel,
+  Button,
+  TextField,
+  Box,
+  IconButton,
+  styled,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const ModalDate = ({
   open,
@@ -16,95 +30,131 @@ const ModalDate = ({
   handleGuardar,
   handleChangeDate,
 }) => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
-  };
-
-  function ChildModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-      setOpen(true);
-    };
-    const handleClose = () => {
-      setOpen(false);
-    };
-
-    return (
-      <React.Fragment>
-        <Button onClick={handleOpen}>Info tatuaje</Button>
-        <Modal
-          hideBackdrop
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <Box sx={{ ...style, width: 500 }}>
-            <TextField
-              autoFocus
-              id="description"
-              label="Descripcion"
-              type="text"
-              // onChange={handleChangeDate("descripcion")}
-            />
-
-            <TextField
-              margin="dense"
-              size="small"
-              fullWidth
-              id="picture"
-              name="picture"
-              inputProps={{ type: "file" }}
-              //onChange={leerArchivo}
-              // onChange={handleChangeDate("picture")}
-            ></TextField>
-
-            <Button onClick={handleClose}>Close Child Modal</Button>
-          </Box>
-        </Modal>
-      </React.Fragment>
-    );
-  }
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const Input = styled("input")({
+    display: "none",
+  });
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Agendar</DialogTitle>
+      <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
+        <DialogTitle>
+          Agendar {fechaHoy.split("-").reverse().join("/")}
+        </DialogTitle>
         <DialogContent>
-          <Box> {fechaHoy}</Box>
-          <Box>
-            <SelectTatuador handleChangeDate={handleChangeDate} />
-          </Box>
-          <Box>
-            <TextField
-              id="cliente"
-              label="cliente"
-              type="text"
-              onChange={handleChangeDate("cliente")}
-            />
-          </Box>
-          <Box>
-            {" "}
-            <TextField
-              id="hora"
-              label="Hora"
-              type="text"
-              onChange={handleChangeDate("hora")}
-            />
+          <Box
+            sx={{
+              width: 350,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box> </Box>
+            <Box>
+              <SelectTatuador handleChangeDate={handleChangeDate} />
+            </Box>
+            <Box>
+              <SelectTatuador handleChangeDate={handleChangeDate} />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ m: 1, width: "25ch" }}
+                id="time"
+                label="Hora Cita"
+                type="time"
+                defaultValue="09:00"
+                //onChange={handleChange("timeToClose")}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+              />
+            </Box>
+            <Box>
+              <TextField
+                id="descripcion"
+                label="Descripcion"
+                type="text"
+                //onChange={handleChangeDate("hora")}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                p: 1,
+              }}
+            >
+              <InputLabel>Subir Imagen Muestra</InputLabel>
+              <label htmlFor="icon-button-file">
+                <Input
+                  accept="image/*"
+                  id="icon-button-file"
+                  type="file"
+                  //    onChange={handleChange("logo")}
+                />
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCamera />
+                </IconButton>
+              </label>
+            </Box>
+            <Box>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Tipo Tatuaje</FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="tipeTattoo"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="color"
+                    control={<Radio />}
+                    label="Color"
+                  />
+                  <FormControlLabel
+                    value="bn"
+                    control={<Radio />}
+                    label="Blanco y Negro"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+            <Box>
+              <SelectTatuador handleChangeDate={handleChangeDate} />
+            </Box>
+            <Box>
+              <SelectTatuador handleChangeDate={handleChangeDate} />
+            </Box>
+            <Box>
+              <TextField
+                id="costoAprox"
+                label="Costo Aprox"
+                type="text"
+                //onChange={handleChangeDate("hora")}
+              />
+            </Box>
+            <Box>
+              <TextField
+                sx={{ m: 1, width: "25ch" }}
+                id="adelanto"
+                label="Adelanto"
+                type="text"
+                //onChange={handleChangeDate("hora")}
+              />
+            </Box>
           </Box>
         </DialogContent>
-        <ChildModal />
-
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleGuardar}>Guardar</Button>
@@ -113,5 +163,4 @@ const ModalDate = ({
     </div>
   );
 };
-
 export default ModalDate;

@@ -23,9 +23,12 @@ export default function MediaCard({staffMember, classes, atras}) {
        console.log("auth desde card", auth.infoUser);
 
   let typeRol={}
-  if (auth.infoUser.rol==="Cliente"){
-       typeRol.ruta = "clientModified";
-       typeRol.titulo="Cliente"
+  if (auth.infoUser.rol === "Cliente") {
+    typeRol.ruta = "clientModified";
+    typeRol.titulo = "Cliente";
+  } else if (auth.infoUser.rol === "Administrador") {
+    typeRol.ruta = "staff";
+    typeRol.titulo = "Administrador";
   }
     return (
       <Card sx={{ maxWidth: 500 }} align="center">
@@ -39,7 +42,7 @@ export default function MediaCard({staffMember, classes, atras}) {
           >
             <img
               src={`http://localhost:8000/${staffMember.picture}`}
-              style={{ borderRadius: "50%" }}
+              style={{ borderRadius: "50%", border: "2px solid #F8F8F8" }}
               className={classes.foto}
             ></img>
           </div>
@@ -90,7 +93,7 @@ export default function MediaCard({staffMember, classes, atras}) {
             <EditCustomizedDialogs
               staffMember={staffMember}
               classes={classes}
-             // id={staffMember._id}
+              // id={staffMember._id}
               typeRol={typeRol}
             ></EditCustomizedDialogs>
             <NextLink href={atras} passHref>

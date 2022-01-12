@@ -30,7 +30,7 @@ export const Nav = (props) => {
       </NextLink> */}
       <NextLink href="/login" passHref>
         <Link>
-          <Button className={classes.btn} variant="contained" color="primary">
+          <Button className={classes.btn} variant="contained" color="secondary">
             Login
           </Button>
         </Link>

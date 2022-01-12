@@ -4,12 +4,16 @@ import theme from "../../utils/temaConfig";
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: "7em",
+    marginBottom: "6em",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "4em",
+    },
+
   },
   logo: {
-    height: "7em",
+    height: "6em",
     [theme.breakpoints.down("sm")]: {
-      height: "5em",
+      height: "5.5em",
     },
   },
   //DRAWER
@@ -49,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   loginContainer: {
-    backgroundColor: "#EFC437",
+    //backgroundColor: "#EFC437",
+    backgroundColor: "#CAA345",
     //   alignItems: "left",
   },
   ///NAVEGACION

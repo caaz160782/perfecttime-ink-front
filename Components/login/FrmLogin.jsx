@@ -53,10 +53,15 @@ const FrmLogin = () => {
       .post("/login", values)
       .then((response) => {
         // console.log(response.data);
-        const { auth, token, infoUser, infoStudio } = response.data;
-        setToken({ token, auth, infoUser, infoStudio });
-        guardarAuth({ valToken });
-        if (auth === true && infoUser.rol === "Administrador") {
+        const {token, infoUser, infoStudio, } = response.data;
+
+          guardarAuth({ token, infoUser, autenticado: response.data.auth, infoStudio });
+
+          setToken({ token, autenticado: response.data.auth, infoUser });
+
+     //   setToken({ token, auth, infoUser, infoStudio });
+     //   guardarAuth({ valToken });
+        if (response.data.auth === true && infoUser.rol === "Administrador") {
           if (!infoUser.registerStudio) {
             router.push("/studio");
           } else if (!infoUser.finishConfig) {
@@ -69,12 +74,12 @@ const FrmLogin = () => {
             router.push("/agenda");
           }
         }
-        if (auth === true && info.user === "Tatuador") {
-          router.push("/agenda");
-        }
-        if (auth === true && info.user === "Cliente") {
-          router.push("/agenda");
-        }
+        // if (auth === true && info.user === "Tatuador") {
+        //   router.push("/agenda");
+        // }
+        // if (auth === true && info.user === "Cliente") {
+        //   router.push("/agenda");
+        // }
       })
       .catch((error) => {
         setLoading(false);

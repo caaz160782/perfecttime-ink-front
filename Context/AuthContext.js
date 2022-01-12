@@ -6,7 +6,7 @@ const AuthProvider = props => {
 
     const [auth, guardarAuth] = useState({
       token:"",
-      auth: false,
+      autenticado: false,
       infoUser:{},
       setReloadUser:()=>null
     });

@@ -25,6 +25,7 @@ const FrmLogin = () => {
     email: "",
     showPassword: false,
   });
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -43,6 +44,7 @@ const FrmLogin = () => {
   const router = useRouter();
   const [auth, guardarAuth] = useContext(AuthContext);
   const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -50,17 +52,20 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        ///console.log(response.data);
-        const { auth, token, infoUser } = response.data;
-        setToken({ token, auth, infoUser });
-        //guardarAuth({ token, auth, infoUser });
+        // console.log(response.data);
+        const { auth, token, infoUser, infoStudio } = response.data;
+        setToken({ token, auth, infoUser, infoStudio });
         guardarAuth({ valToken });
         if (auth === true && infoUser.rol === "Administrador") {
           if (!infoUser.registerStudio) {
             router.push("/studio");
           } else if (!infoUser.finishConfig) {
+            const { id } = infoStudio;
+            setStudio(id);
             router.push("/config");
           } else {
+            const { id } = infoStudio;
+            setStudio(id);
             router.push("/agenda");
           }
         }

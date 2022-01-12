@@ -8,24 +8,30 @@ import clienteAxios from "../../utils/axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Agenda = () => {
-  const [valToken] = useLocalStorage("userVal");
+  const [valToken] = useLocalStorage("userVal", "");
+  const [valStudio] = useLocalStorage("studioVal", "");
   const [config, setConfig] = useState({});
   const [token, setToken] = useState({});
+  const [studioId, setStudioId] = useState({});
   const router = useRouter();
 
   useEffect(() => {
     if (valToken !== "") {
       setToken(valToken.token);
     }
-  }, [setToken, valToken]);
+    if (valStudio !== "") {
+      setStudioId(valStudio);
+    }
+  }, [setToken, valToken, valStudio]);
 
   useEffect(() => {
+    //if (studioId) {
     clienteAxios
-      .get("/setting/61db80c35077771dee3267b6", {
+      .get(`/findStudiSetting/${studioId}`, {
         headers: { apitoken: token },
       })
       .then((response) => {
-        //console.log(2, response);
+        console.log(2, response);
         setConfig(response.data.payload);
       })
       .catch((error) => {
@@ -35,49 +41,55 @@ const Agenda = () => {
           console.log(error);
         }
       });
-  }, [setConfig, token]);
+    //}
+  }, [setConfig, studioId, token]);
 
-  //console.log(3, config);
+  //console.log(3, Object.keys(config).length);
 
   if (valToken !== "" && Object.keys(config).length !== 0) {
-    const { id_tatoostudios, timeToOpen, timeToClose, dayAvailables } = config;
+    const { id_tatoostudios, timeToOpen, timeToClose, dayNotAvailables } =
+      config;
 
     let dayNum = [];
-    dayAvailables.forEach((days) => {
-      if (days === "domingo") {
-        dayNum.push(0);
-      }
-      if (days === "lunes") {
-        dayNum.push(1);
-      }
-      if (days === "martes") {
-        dayNum.push(2);
-      }
-      if (days === "miercoles") {
-        dayNum.push(3);
-      }
-      if (days === "jueves") {
-        dayNum.push(4);
-      }
-      if (days === "viernes") {
-        dayNum.push(5);
-      }
-      if (days === "sabado") {
-        dayNum.push(6);
-      }
-      return dayNum;
-    });
-    //console.log(dayNum);
+    if (dayNotAvailables.length !== 0) {
+      console.log(2);
+      dayNotAvailables.forEach((days) => {
+        if (days === "Domingo") {
+          dayNum.push(0);
+        }
+        if (days === "Lunes") {
+          dayNum.push(1);
+        }
+        if (days === "Martes") {
+          dayNum.push(2);
+        }
+        if (days === "Miercoles") {
+          dayNum.push(3);
+        }
+        if (days === "Jueves") {
+          dayNum.push(4);
+        }
+        if (days === "Viernes") {
+          dayNum.push(5);
+        }
+        if (days === "Sabado") {
+          dayNum.push(6);
+        }
+        dayNum;
+      });
+    }
 
     return (
       <Layout>
-        <Box sx={{ display: "flex", justifyContent: "center", m: 14 }}>
-          <Calendar
-            timeToOpen={timeToOpen}
-            timeToClose={timeToClose}
-            dayAvailables={dayNum}
-          />
-        </Box>
+        <div style={{ width: "100%" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", m: 14 }}>
+            <Calendar
+              timeToOpen={timeToOpen}
+              timeToClose={timeToClose}
+              dayNotAvailables={dayNum}
+            />
+          </Box>
+        </div>
       </Layout>
     );
   } else {

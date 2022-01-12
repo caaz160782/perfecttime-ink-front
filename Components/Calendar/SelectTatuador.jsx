@@ -3,15 +3,18 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 
-const SelectTatuador = () => {
+const SelectTatuador = ({ handleChangeDate }) => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [valStudio] = useLocalStorage("studioVal", "");
+
   const [rem, setRem] = useState([]);
 
+  //.get("/findStaffByStudy", { headers: { apitoken: valToken.token } })
   useEffect(() => {
     clienteAxios
-      .get("/", { headers: { apitoken: valToken.token } })
+      .get(`/findStaffByStudy/${valStudio}`)
       .then((response) => {
-        //console.log(response.data.payload)
+        //console.log(response.data.payload);
         setRem(response.data.payload);
       })
       .catch((error) => {
@@ -37,7 +40,8 @@ const SelectTatuador = () => {
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           //onChange={handleChange("notifications")}
-          autoWidth
+          onChange={handleChangeDate("tatuador")}
+          //autoWidth
           label="Recordatorio"
         >
           <MenuItem value="">
@@ -45,7 +49,7 @@ const SelectTatuador = () => {
           </MenuItem>
           {rem.map((r) => (
             <MenuItem key={r._id} value={r._id}>
-              {r.description}
+              {r.name}
             </MenuItem>
           ))}
         </Select>

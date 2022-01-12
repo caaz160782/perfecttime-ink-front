@@ -12,24 +12,25 @@ import { useRouter } from "next/router";
 const FrmConfig = () => {
   const router = useRouter();
   const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
 
   const Input = styled("input")({
     display: "none",
   });
 
   const [valuesConfig, setValuesConfig] = useState({
-    id_tatoostudios: "61ce7372f5a8a9b236dc1801",
+    id_tatoostudios: valStudio,
     logo: "",
     timeToOpen: "07:00",
     timeToClose: "19:00",
-    dayAvailables: [],
+    dayNotAvailables: [],
     notifications: "",
   });
 
   const handleChange = (prop) => (event) => {
     setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
 
-    if (prop[0] === "dayAvailables") {
+    if (prop[0] === "dayNotAvailables") {
       const {
         target: { value },
       } = event;
@@ -37,12 +38,14 @@ const FrmConfig = () => {
     }
   };
 
+  console.log(valuesConfig);
+
   const handlerSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     clienteAxios
       .post("/setting", valuesConfig, {
-        headers: { Authorization: "Bearer valToken.token" },
+        headers: { apitoken: valToken.token },
       })
       .then((response) => {
         console.log(response.data);

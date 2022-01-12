@@ -38,8 +38,8 @@ const DaysSelect = ({ handleChange, valuesConfig }) => {
           labelId="chip-label"
           id="multiple-chip"
           multiple
-          value={valuesConfig.dayAvailables}
-          onChange={handleChange(["dayAvailables"])}
+          value={valuesConfig.dayNotAvailables}
+          onChange={handleChange(["dayNotAvailables"])}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>

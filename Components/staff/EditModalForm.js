@@ -58,7 +58,13 @@ BootstrapDialogTitle.propTypes = {
 
 export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  console.log(staffMember);
+  console.log("staff", staffMember);
+    const foto = staffMember.picture;
+    const [archivo, guardarArchivo] = useState('');
+    const leerArchivo = (e) => {
+      guardarArchivo(e.target.files[0]);
+    };
+
 
   const [open, setOpen] = React.useState(false);
     const [alert, setAlert] = useState({
@@ -77,7 +83,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
       name: staffMember.name,
       lastName: staffMember.lastName,
      // idRole: staffMember.idRole,
-      email: staffMember.email,
+      picture: staffMember.picture,
       password: "",
       phoneHome: staffMember.phoneHome,
       curp: staffMember.curp,
@@ -91,9 +97,22 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
 
     const handlerSubmit = (e) => {
       e.preventDefault();
-      console.log(user);
+     // console.log(user);
+    const formData = new FormData();
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
+    //formData.append("idRole", "staff");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneHome", user.phoneHome);
+    formData.append("phonePersonal", user.phonePersonal);
+  //  formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
+
+
       clienteAxios
-        .patch(`/${typeRol.ruta}/${staffMember._id}`, user, {
+        .patch(`/${typeRol.ruta}/${staffMember._id}`, formData, {
           headers: { apitoken: valToken.token },
         })
         .then((respuesta) => {
@@ -101,7 +120,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
           setAlert({
             open: true,
             message: respuesta.data.message,
-            backgroundColor: "#4BB543",
+            backgroundColor: "#519259",
           });
 
           // router.push("/"); //dirigir a la pagina de inicio
@@ -109,18 +128,12 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.data.errors) {
-            setAlert({
-              open: true,
-              message: err.response.data.errors[0].msg,
-              backgroundColor: "#FF3232",
-            });
-            return;
-          }
+
           setAlert({
             open: true,
-            message: err.response.data.error,
-            backgroundColor: "#FF3232",
+            //message: err.response.data.error,
+            message: 'error',
+            backgroundColor: "#DD4A48",
           });
         });
     };
@@ -147,7 +160,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-         { `Editar ${typeRol.titulo}`}
+          {`Editar ${typeRol.titulo}`}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
@@ -181,19 +194,18 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   value={user.lastName}
                 ></TextField>
               </ListItem>
-              {/* <ListItem>
+              <ListItem>
                 <TextField
-
-                  fullWidth
+                  //  variant="outlined"
                   size="small"
-                  id="idRol"
-                  label="idRol"
-                  name="idRole"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.idRole}
+                  fullWidth
+                  id="picture"
+                  label="picture"
+                  name="picture"
+                  inputProps={{ type: "file" }}
+                  onChange={leerArchivo}
                 ></TextField>
-              </ListItem> */}
+              </ListItem>
               <ListItem>
                 <TextField
                   required
@@ -220,19 +232,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   value={user.phoneHome}
                 ></TextField>
               </ListItem>
-              <ListItem>
-                <TextField
-                  required
-                  size="small"
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  inputProps={{ type: "email" }}
-                  onChange={actualizarState}
-                  value={user.email}
-                ></TextField>
-              </ListItem>
+              <ListItem></ListItem>
               <ListItem>
                 <TextField
                   fullWidth
@@ -280,7 +280,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   variant="contained"
                   type="submit"
                   fullWidth
-                  color="primary"
+                  color="secondary"
                   className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Guardar cambios

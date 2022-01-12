@@ -21,13 +21,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Divider } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "./../../utils/temaConfig";
+import theme from "../../utils/temaConfig";
 import clienteAxios from "../../utils/axios";
 import { Snackbar } from "@mui/material";
 import {useState} from "react"
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
 
 function TablePaginationActions(props) {
+
   const theme = useTheme();
   console.log(theme.palette);
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -52,7 +54,10 @@ function TablePaginationActions(props) {
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton disabled={page === 0} aria-label="first page">
+      <IconButton
+        disabled={page === 0}
+        aria-label="first page"
+      >
         {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
@@ -113,9 +118,9 @@ export default function CustomPaginationActionsTable({staff}) {
     return { name, lastName, _id };
   }
 
-  // const [rows, setRows] = React.useState([])
+ // const [rows, setRows] = React.useState([])
   //const rows = staff.map(x=>createData(x.name,x.lastName,x._id))
-  staff.map((x) => createData(x.name, x.lastName, x._id));
+  staff.map(x=>createData(x.name,x.lastName,x._id))
   console.log("mis rows", staff);
 
   const [page, setPage] = React.useState(0);
@@ -134,10 +139,10 @@ export default function CustomPaginationActionsTable({staff}) {
     setPage(0);
   };
 
-    const eliminar=(id)=>{
+    const reactivar=(id)=>{
        console.log(id);
        clienteAxios
-        .delete(`/staff/${id}`, {
+        .patch(`/staffInac/${id}`, {
           headers: { apitoken: valToken.token },
         })
         .then((respuesta) => {
@@ -191,23 +196,19 @@ export default function CustomPaginationActionsTable({staff}) {
                   {`${row.name} ${row.lastName}`}
                 </TableCell>
 
+
                 <TableCell style={{ width: 100 }} align="left">
                   <Button
-                    variant="outlined"
-                    onClick={(e) => Router.push(`/staff/${row._id}`)}
-                  >
-                    {matches ? <EditIcon></EditIcon> : "editar"}
-                  </Button>
-                </TableCell>
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => {
-                      eliminar(row._id);
+                      reactivar(row._id);
                     }}
                     color="error"
                   >
-                    {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
+                     {`Reactivar `}
+
+
+                    <FaceRetouchingNaturalIcon></FaceRetouchingNaturalIcon>
                   </Button>
                 </TableCell>
               </TableRow>

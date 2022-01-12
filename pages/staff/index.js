@@ -1,37 +1,22 @@
 import Layout from "../../Components/Layout";
-import Image from "next/image";
 import CustomizedDialogs from "../../Components/staff/ModalForm";
 import CustomPaginationActionsTable from "../../Components/staff/Table";
-import SearchIcon from "@mui/icons-material/Search";
-import Router from "next/router";
 
-import {
-  List,
-  ListItem,
-  //Typography,
-  TextField,
-  Button,
-  Alert,
-  AlertTitle,
-  Grid,
-  Snackbar,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
-import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
 import useStyles from "./style";
 import { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
 
 import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
-
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Staff = () => {
+  const classes = useStyles();
+
   const [valToken, setToken] = useLocalStorage("userVal", "");
 
-  const classes = useStyles();
   let source = axios.CancelToken.source();
   const [staff, setStaff] = useState([]);
   const [staffMentira, setStaffMentira] = useState([]);
@@ -53,6 +38,7 @@ const Staff = () => {
     });
     setStaff(resultadosBusqueda);
   };
+
   useEffect(
     () => {
       const consultarAPI = async () => {
@@ -60,7 +46,7 @@ const Staff = () => {
           const respuesta = await clienteAxios.get("/staff", {
             headers: { apitoken: valToken.token },
           });
-          console.log(respuesta);
+         // console.log(respuesta);
           const staffArray = respuesta.data.listUser.users;
           setStaff(staffArray);
           setStaffMentira(staffArray);
@@ -78,40 +64,30 @@ const Staff = () => {
     [staff]
   );
 
-  //const staffMember
-  // const buscarPorId = async (id) => {
-  //   const clienteConsulta = await clienteAxios.get(`/staff/${id}`);
-  //   staffMember = clienteConsulta.data.listUser.userFound;
-  //  // console.log(clienteConsulta.data.listUser.userFound);
-  // };
   return (
     <Layout title={"staff"}>
       {loading ? (
-        <Typography>loading...</Typography>
+        <div align="center">
+          <CircularProgress size={40}></CircularProgress>
+        </div>
       ) : (
         <div>
-          <div align="center">
+          <div align="center" style={{ marginBottom: "20px" }}>
             <CustomizedInputBase
               handleChangeBusqueda={handleChangeBusqueda}
             ></CustomizedInputBase>
           </div>
 
-          <CustomizedDialogs classes={classes}></CustomizedDialogs>
+          <div style={{ marginBottom: "20px", marginTop: "30px" }}>
+            <CustomizedDialogs
+              md={{ m: 2 }}
+              classes={classes}
+            ></CustomizedDialogs>
+          </div>
+
           <CustomPaginationActionsTable
             staff={staff}
           ></CustomPaginationActionsTable>
-
-          {/* {staff.map((x) => {
-            return (
-              <ul>
-                <li>{`nombre completo: ${x.name} ${x.lastName} email: ${x.email}`}</li>
-                <Button onClick={(e) => Router.push(`/staff/${x._id}`)}>
-                  editar
-                </Button>
-                <Button className={classes.eliminar}>eliminar</Button>
-              </ul>
-            );
-          })} */}
         </div>
       )}
     </Layout>

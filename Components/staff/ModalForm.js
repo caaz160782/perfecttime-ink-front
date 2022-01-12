@@ -58,7 +58,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio] = useLocalStorage("studioVal", "");
+ // const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
@@ -84,7 +84,7 @@ export default function CustomizedDialogs({ classes }) {
     idRole: "",
     email: "",
     password: "",
-    phoneNumber: "",
+    phoneHome: "",
     curp: "",
     rfc: " ",
     phonePersonal: "",
@@ -93,21 +93,22 @@ export default function CustomizedDialogs({ classes }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    console.log('archivo', archivo);
 
     const formData = new FormData();
-    formData.append("name", user.name);
-    formData.append("lastName", user.lastName);
-    formData.append("idStudio", valStudio);
-    formData.append("Role", "Tatoo");
-    formData.append("curp", user.curp);
-    formData.append("rfc", user.rfc);
-    formData.append("phoneNumber", user.phoneNumber);
-    formData.append("phonePersonal", user.phonePersonal);
-    formData.append("email", user.email);
-    formData.append("password", user.password);
-    formData.append("picture", archivo);
-
-    console.log("formData", formData);
+     formData.append("name", user.name);
+     formData.append("lastName", user.lastName);
+    // formData.append("idRole", user.idRole);
+     formData.append("idRole", 'staff');
+     formData.append("curp", user.curp);
+     formData.append("rfc", user.rfc);
+     formData.append("phoneHome", user.phoneHome);
+     formData.append("phonePersonal", user.phonePersonal);
+     formData.append("email", user.email);
+     formData.append("password", user.password);
+     formData.append("picture", archivo);
+         // formData.append("idStudio", valStudio);
+    // formData.append("Role", "Tatoo");
 
     clienteAxios
       .post("/staff", formData, {
@@ -117,37 +118,38 @@ export default function CustomizedDialogs({ classes }) {
         },
       })
       .then((respuesta) => {
-        console.log(respuesta);
-        setAlert({
-          open: true,
-          message: respuesta.data.message,
-          backgroundColor: "#4BB543",
-        });
+        console.log(respuesta)
+         setAlert({
+           open: true,
+           message: respuesta.data.message,
+           backgroundColor: "#4BB543",
+         });
+
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
         console.log(err.response.data);
-        if (err.response.data.errors) {
-          setAlert({
-            open: true,
-            message: err.response.data.errors[0].msg,
-            backgroundColor: "#FF3232",
-          });
-          return;
-        }
-        setAlert({
-          open: true,
-          message: err.response.data.error,
-          backgroundColor: "#FF3232",
-        });
+         if (err.response.data.errors) {
+           setAlert({
+             open: true,
+             message: err.response.data.errors[0].msg,
+             backgroundColor: "#FF3232",
+           });
+           return;
+         }
+         setAlert({
+           open: true,
+           message: err.response.data.error,
+           backgroundColor: "#FF3232",
+         });
       });
   };
 
   return (
     <div>
-      <Button color="primary" variant="outlined" onClick={handleClickOpen}>
-        <AddCircleIcon></AddCircleIcon> crear
+      <Button color="success" variant="contained" onClick={handleClickOpen}>
+        <AddCircleIcon></AddCircleIcon>  crear
       </Button>
       <Snackbar
         open={alert.open}
@@ -173,7 +175,7 @@ export default function CustomizedDialogs({ classes }) {
             <List>
               <ListItem>
                 <TextField
-                  //  variant="outlined"
+                  variant="outlined"
                   fullWidth
                   required
                   size="small"
@@ -190,7 +192,7 @@ export default function CustomizedDialogs({ classes }) {
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                  required
+                 // required
                   id="lastName"
                   label="last name"
                   name="lastName"
@@ -215,18 +217,6 @@ export default function CustomizedDialogs({ classes }) {
                   //required
                   fullWidth
                   size="small"
-                  id="idRol"
-                  label="idRol"
-                  name="idRole"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                ></TextField>
-              </ListItem>
-              <ListItem>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
                   id="phonePersonal"
                   label="personal phone"
                   name="phonePersonal"
@@ -239,9 +229,9 @@ export default function CustomizedDialogs({ classes }) {
                   required
                   fullWidth
                   size="small"
-                  id="PhoneNumber"
-                  label="Phone Number"
-                  name="phoneNumber"
+                  id="phoneHome"
+                  label="phone home"
+                  name="phoneHome"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                 ></TextField>
@@ -261,7 +251,7 @@ export default function CustomizedDialogs({ classes }) {
               <ListItem>
                 <TextField
                   fullWidth
-                  required
+                 // required
                   size="small"
                   id="curp"
                   label="curp"
@@ -272,7 +262,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                //  required
                   fullWidth
                   size="small"
                   id="rfc"
@@ -302,7 +292,7 @@ export default function CustomizedDialogs({ classes }) {
                   variant="contained"
                   type="submit"
                   fullWidth
-                  color="primary"
+                  color="secondary"
                   className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Register

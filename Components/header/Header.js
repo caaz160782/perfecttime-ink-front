@@ -137,7 +137,7 @@ const Header = (props) => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="secondary">
+        <AppBar position="fixed" color="primary">
           <Toolbar>
             <div>
               <NextLink href="/" passHref>
@@ -147,7 +147,7 @@ const Header = (props) => {
                     className={classes.logo}
                     src="/images/logo.jfif"
                     alt="logo"
-                    width={120}
+                    width={110}
                     height={120}
                   ></img>
                 </Link>

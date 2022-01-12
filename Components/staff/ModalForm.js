@@ -60,7 +60,7 @@ export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
 
 
-  const [archivo, guardarArchivo] = useState({});
+  const [archivo, guardarArchivo] = useState("");
       const leerArchivo = (e) => {
         guardarArchivo(e.target.files[0]);
       };

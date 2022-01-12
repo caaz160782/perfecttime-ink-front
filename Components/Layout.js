@@ -1,4 +1,4 @@
-import Header from "./header/Header"
+import Header from "./header/Header";
 import HeaderApp from "./headerApp/Header";
 import Head from "next/head";
 import { Typography, ThemeProvider, Container, CssBaseline } from "@mui/material";
@@ -97,4 +97,4 @@ const Layout = ({ title, children }) => {
   );
 };
 
-export default Layout
+export default Layout;

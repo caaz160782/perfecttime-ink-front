@@ -28,7 +28,6 @@ import {useState} from "react"
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 function TablePaginationActions(props) {
-
   const theme = useTheme();
   console.log(theme.palette);
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -53,10 +52,7 @@ function TablePaginationActions(props) {
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        disabled={page === 0}
-        aria-label="first page"
-      >
+      <IconButton disabled={page === 0} aria-label="first page">
         {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
@@ -117,9 +113,9 @@ export default function CustomPaginationActionsTable({staff}) {
     return { name, lastName, _id };
   }
 
- // const [rows, setRows] = React.useState([])
+  // const [rows, setRows] = React.useState([])
   //const rows = staff.map(x=>createData(x.name,x.lastName,x._id))
-  staff.map(x=>createData(x.name,x.lastName,x._id))
+  staff.map((x) => createData(x.name, x.lastName, x._id));
   console.log("mis rows", staff);
 
   const [page, setPage] = React.useState(0);

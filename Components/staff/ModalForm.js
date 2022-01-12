@@ -58,12 +58,16 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
+<<<<<<< HEAD
 
+=======
+  const [valStudio] = useLocalStorage("studioVal", "");
+>>>>>>> develop
 
   const [archivo, guardarArchivo] = useState("");
-      const leerArchivo = (e) => {
-        guardarArchivo(e.target.files[0]);
-      };
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
+  };
 
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = useState({
@@ -107,12 +111,14 @@ export default function CustomizedDialogs({ classes }) {
      formData.append("email", user.email);
      formData.append("password", user.password);
      formData.append("picture", archivo);
+         // formData.append("idStudio", valStudio);
+    // formData.append("Role", "Tatoo");
 
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          apitoken: valToken.token
+          apitoken: valToken.token,
         },
       })
       .then((respuesta) => {
@@ -212,7 +218,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  //required
                   fullWidth
                   size="small"
                   id="phonePersonal"

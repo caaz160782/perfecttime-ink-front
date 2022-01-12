@@ -20,26 +20,26 @@ const MenuProps = {
   },
 };
 const days = [
-  "Domingo",
-  "Lunes",
-  "Martes",
-  "Miercoles",
-  "Jueves",
-  "Viernes",
-  "Sabado",
+  { id: 0, day: "Domingo" },
+  { id: 1, day: "Lunes" },
+  { id: 2, day: "Martes" },
+  { id: 3, day: "Miercoles" },
+  { id: 4, day: "Jueves" },
+  { id: 5, day: "Viernes" },
+  { id: 6, day: "Sabado" },
 ];
 
 const DaysSelect = ({ handleChange, valuesConfig }) => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="chip-label">Días Laborales</InputLabel>
+        <InputLabel id="chip-label">Días No Laborales</InputLabel>
         <Select
           labelId="chip-label"
           id="multiple-chip"
           multiple
-          value={valuesConfig.dayAvailables}
-          onChange={handleChange(["dayAvailables"])}
+          value={valuesConfig.dayNotAvailables}
+          onChange={handleChange(["dayNotAvailables"])}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -51,8 +51,8 @@ const DaysSelect = ({ handleChange, valuesConfig }) => {
           MenuProps={MenuProps}
         >
           {days.map((day) => (
-            <MenuItem key={day} value={day}>
-              {day}
+            <MenuItem key={day.id} value={day.day} name={day.day}>
+              {day.day}
             </MenuItem>
           ))}
         </Select>

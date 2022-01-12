@@ -1,9 +1,9 @@
 import NextLink from "next/link";
 import Image from "next/image";
 
-import React ,{ useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 
-import {useScrollTrigger} from "@mui/material";
+import { useScrollTrigger } from "@mui/material";
 import {
   AppBar,
   Toolbar,
@@ -12,7 +12,7 @@ import {
   ListItem,
   IconButton,
   SwipeableDrawer,
-  Button
+  Button,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -27,7 +27,6 @@ import useStyles from "./style";
 
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-
 function ElevationScroll(props) {
   const { children } = props;
   const trigger = useScrollTrigger({
@@ -40,8 +39,7 @@ function ElevationScroll(props) {
 }
 
 const HeaderApp = (props) => {
-
-  const {logout} = props
+  const { logout } = props;
   const [valToken, setToken] = useLocalStorage("userVal", "");
 
   const [auth, guardarAuth] = useContext(AuthContext);
@@ -61,7 +59,7 @@ const HeaderApp = (props) => {
   };
 
   let rol = auth.infoUser.rol;
-let drawer=[]
+  let drawer = [];
 
   if (rol === "Administrador") {
     drawer = [
@@ -139,140 +137,138 @@ let drawer=[]
       </>,
     ];
   } else if (rol === "tatuador") {
-     drawer = [
-       <>
-         <SwipeableDrawer
-           disableBackdropTransition={!iOS}
-           disableDiscovery={iOS}
-           open={openDrawer}
-           onClose={() => setOpenDrawer(false)}
-           onOpen={() => setOpenDrawer(true)}
-           classes={{ paper: classes.drawer }}
-         >
-           <List>
-             <ListItem
-               divider
-               button
-               selected={value === 0}
-               onClick={() => setValue(0)}
-             >
-               <NextLink href="/" passHref>
-                 <Link className={classes.linkDrawer}>Home</Link>
-               </NextLink>
-             </ListItem>
-             <ListItem
-               divider
-               button
-               selected={value === 0}
-               onClick={() => setValue(0)}
-             >
-               <NextLink href="/agenda" passHref>
-                 <Link className={classes.linkDrawer}>Agenda</Link>
-               </NextLink>
-             </ListItem>
-             <ListItem
-               divider
-               button
-               selected={value === 1}
-               onClick={() => setValue(1)}
-             >
-               <NextLink href="/clientAdmin" passHref>
-                 <Link className={classes.linkDrawer}>Clientes</Link>
-               </NextLink>
-             </ListItem>
+    drawer = [
+      <>
+        <SwipeableDrawer
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
+          open={openDrawer}
+          onClose={() => setOpenDrawer(false)}
+          onOpen={() => setOpenDrawer(true)}
+          classes={{ paper: classes.drawer }}
+        >
+          <List>
+            <ListItem
+              divider
+              button
+              selected={value === 0}
+              onClick={() => setValue(0)}
+            >
+              <NextLink href="/" passHref>
+                <Link className={classes.linkDrawer}>Home</Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 0}
+              onClick={() => setValue(0)}
+            >
+              <NextLink href="/agenda" passHref>
+                <Link className={classes.linkDrawer}>Agenda</Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 1}
+              onClick={() => setValue(1)}
+            >
+              <NextLink href="/clientAdmin" passHref>
+                <Link className={classes.linkDrawer}>Clientes</Link>
+              </NextLink>
+            </ListItem>
 
-             <ListItem
-               divider
-               button
-               className={classes.loginContainer}
-               selected={value === 4}
-               onClick={() => setValue(4)}
-             >
-               <Button onClick={logout} className={classes.linkDrawerLogin}>
-                 Logout
-               </Button>
-             </ListItem>
-           </List>
-         </SwipeableDrawer>
+            <ListItem
+              divider
+              button
+              className={classes.loginContainer}
+              selected={value === 4}
+              onClick={() => setValue(4)}
+            >
+              <Button onClick={logout} className={classes.linkDrawerLogin}>
+                Logout
+              </Button>
+            </ListItem>
+          </List>
+        </SwipeableDrawer>
 
-         <IconButton
-           className={classes.drawerIconContainer}
-           onClick={() => setOpenDrawer(!openDrawer)}
-           disableRipple
-         >
-           <MenuIcon className={classes.drawerIcon} />
-         </IconButton>
-       </>,
-     ];
+        <IconButton
+          className={classes.drawerIconContainer}
+          onClick={() => setOpenDrawer(!openDrawer)}
+          disableRipple
+        >
+          <MenuIcon className={classes.drawerIcon} />
+        </IconButton>
+      </>,
+    ];
   } else {
-     drawer = [
-       <>
-         <SwipeableDrawer
-           disableBackdropTransition={!iOS}
-           disableDiscovery={iOS}
-           open={openDrawer}
-           onClose={() => setOpenDrawer(false)}
-           onOpen={() => setOpenDrawer(true)}
-           classes={{ paper: classes.drawer }}
-         >
-           <List>
-             <ListItem
-               divider
-               button
-               selected={value === 0}
-               onClick={() => setValue(0)}
-             >
-               <NextLink href="/" passHref>
-                 <Link className={classes.linkDrawer}>Home</Link>
-               </NextLink>
-             </ListItem>
-             <ListItem
-               divider
-               button
-               selected={value === 0}
-               onClick={() => setValue(0)}
-             >
-               <NextLink href="/agenda" passHref>
-                 <Link className={classes.linkDrawer}>Agenda</Link>
-               </NextLink>
-             </ListItem>
-             <ListItem
-               divider
-               button
-               selected={value === 1}
-               onClick={() => setValue(1)}
-             >
-               <NextLink href="/info-personal" passHref>
-                 <Link className={classes.linkDrawer}>Mi cuenta</Link>
-               </NextLink>
-             </ListItem>
+    drawer = [
+      <>
+        <SwipeableDrawer
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
+          open={openDrawer}
+          onClose={() => setOpenDrawer(false)}
+          onOpen={() => setOpenDrawer(true)}
+          classes={{ paper: classes.drawer }}
+        >
+          <List>
+            <ListItem
+              divider
+              button
+              selected={value === 0}
+              onClick={() => setValue(0)}
+            >
+              <NextLink href="/" passHref>
+                <Link className={classes.linkDrawer}>Home</Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 0}
+              onClick={() => setValue(0)}
+            >
+              <NextLink href="/agenda" passHref>
+                <Link className={classes.linkDrawer}>Agenda</Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 1}
+              onClick={() => setValue(1)}
+            >
+              <NextLink href="/info-personal" passHref>
+                <Link className={classes.linkDrawer}>Mi cuenta</Link>
+              </NextLink>
+            </ListItem>
 
-             <ListItem
-               divider
-               button
-               className={classes.loginContainer}
-               selected={value === 4}
-               onClick={() => setValue(4)}
-             >
-               <Button onClick={logout} className={classes.linkDrawerLogin}>
-                 Logout
-               </Button>
-             </ListItem>
-           </List>
-         </SwipeableDrawer>
+            <ListItem
+              divider
+              button
+              className={classes.loginContainer}
+              selected={value === 4}
+              onClick={() => setValue(4)}
+            >
+              <Button onClick={logout} className={classes.linkDrawerLogin}>
+                Logout
+              </Button>
+            </ListItem>
+          </List>
+        </SwipeableDrawer>
 
-         <IconButton
-           className={classes.drawerIconContainer}
-           onClick={() => setOpenDrawer(!openDrawer)}
-           disableRipple
-         >
-           <MenuIcon className={classes.drawerIcon} />
-         </IconButton>
-       </>,
-     ];
+        <IconButton
+          className={classes.drawerIconContainer}
+          onClick={() => setOpenDrawer(!openDrawer)}
+          disableRipple
+        >
+          <MenuIcon className={classes.drawerIcon} />
+        </IconButton>
+      </>,
+    ];
   }
-
-
 
   return (
     <>
@@ -305,5 +301,5 @@ let drawer=[]
       <div className={classes.toolbarMargin} />
     </>
   );
-};;
+};
 export default HeaderApp;

@@ -58,14 +58,18 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login",values)
       .then((response) => {
-        //console.log(response.data);
-        const { auth,token,infoUser } = response.data;
-        if (auth) {
-          guardarAuth({token,auth,infoUser});
-          setToken({token,auth,infoUser});
-          router.push("/agenda"); //dirigir a la pagina de inicio
-          //document.querySelector("#form").reset();
-        }
+        console.log(response.data);
+        const { token,infoUser } = response.data;
+        if (response.data.auth) {
+          //const autenticado = response.data.auth
+          //guardarAuth({token,auth,infoUser});
+          //  guardarAuth({ token, auth: response.data.auth, infoUser });
+          guardarAuth({ token, infoUser, autenticado: response.data.auth });
+
+           setToken({ token, autenticado: response.data.auth, infoUser });
+           router.push("/agenda"); //dirigir a la pagina de inicio
+           //   //document.querySelector("#form").reset();
+         }
       })
       .catch((error) => {
         setLoading(false);

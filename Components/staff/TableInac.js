@@ -21,11 +21,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Divider } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "./../../utils/temaConfig";
+import theme from "../../utils/temaConfig";
 import clienteAxios from "../../utils/axios";
 import { Snackbar } from "@mui/material";
 import {useState} from "react"
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
 
 function TablePaginationActions(props) {
 
@@ -138,10 +139,10 @@ export default function CustomPaginationActionsTable({staff}) {
     setPage(0);
   };
 
-    const eliminar=(id)=>{
+    const reactivar=(id)=>{
        console.log(id);
        clienteAxios
-        .delete(`/staff/${id}`, {
+        .patch(`/staffInac/${id}`, {
           headers: { apitoken: valToken.token },
         })
         .then((respuesta) => {
@@ -195,23 +196,19 @@ export default function CustomPaginationActionsTable({staff}) {
                   {`${row.name} ${row.lastName}`}
                 </TableCell>
 
+
                 <TableCell style={{ width: 100 }} align="left">
                   <Button
-                    variant="outlined"
-                    onClick={(e) => Router.push(`/staff/${row._id}`)}
-                  >
-                    {matches ? <EditIcon></EditIcon> : "editar"}
-                  </Button>
-                </TableCell>
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => {
-                      eliminar(row._id);
+                      reactivar(row._id);
                     }}
                     color="error"
                   >
-                    {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
+                     {`Reactivar `}
+
+
+                    <FaceRetouchingNaturalIcon></FaceRetouchingNaturalIcon>
                   </Button>
                 </TableCell>
               </TableRow>

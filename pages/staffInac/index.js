@@ -1,20 +1,33 @@
 import Layout from "../../Components/Layout";
+import Image from "next/image";
 import CustomizedDialogs from "../../Components/staff/ModalForm"
-import CustomPaginationActionsTable from "../../Components/staff/Table";
+import CustomPaginationActionsTable from "../../Components/staff/TableInac";
+import SearchIcon from "@mui/icons-material/Search";
+import Router from 'next/router'
 
 import {
+  List,
   CircularProgress,
+  ListItem,
+  //Typography,
+  TextField,
+  Button,
+  Alert,
+  AlertTitle,
+  Grid,
+  Snackbar,
 } from "@mui/material";
 
+import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import useStyles from "./style";
+import useStyles from "../staff/style";
 import { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
 
 import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
+
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
-
 
 const Staff = () => {
 const [valToken, setToken] = useLocalStorage("userVal", "");
@@ -49,12 +62,10 @@ const [valToken, setToken] = useLocalStorage("userVal", "");
         const consultarAPI = async () => {
           try {
             const respuesta = await clienteAxios.get(
-              "/staff",
-              { headers: { apitoken: valToken.token } }
+              "/staffInac", { headers: { apitoken: valToken.token } },
             );
             console.log(respuesta)
-            //const staffArray = respuesta.data.listUser.allUsers;
-            const staffArray = respuesta.data.listUser.users;
+            const staffArray = respuesta.data.listUser.allUsers;
             setStaff(staffArray);
             setStaffMentira(staffArray)
             setLoading(false);
@@ -86,18 +97,22 @@ const [valToken, setToken] = useLocalStorage("userVal", "");
             ></CustomizedInputBase>
           </div>
 
-          <div style={{ marginBottom: "20px", marginTop: "30px" }}>
-            <CustomizedDialogs
-              md={{ m: 2 }}
-              classes={classes}
-            ></CustomizedDialogs>
-          </div>
 
           <CustomPaginationActionsTable
             staff={staff}
           ></CustomPaginationActionsTable>
 
-
+          {/* {staff.map((x) => {
+            return (
+              <ul>
+                <li>{`nombre completo: ${x.name} ${x.lastName} email: ${x.email}`}</li>
+                <Button onClick={(e) => Router.push(`/staff/${x._id}`)}>
+                  editar
+                </Button>
+                <Button className={classes.eliminar}>eliminar</Button>
+              </ul>
+            );
+          })} */}
         </div>
       )}
     </Layout>

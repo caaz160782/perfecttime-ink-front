@@ -29,7 +29,7 @@ const InfoPersonal = () => {
           try {
             // const respuesta = await clienteAxios.get(`/staff/${id}`);
             const respuesta = await clienteAxios.get(
-              `/clientAdmin/${auth.infoUser._id}`,
+              `/clientModified/${auth.infoUser._id}`,
               {
                 headers: { apitoken: valToken.token },
               }

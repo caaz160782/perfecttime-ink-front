@@ -62,6 +62,7 @@ const HeaderApp = (props) => {
   };
 
   let rol = auth.infoUser.rol;
+  //let rol = "Administrador";
 let drawer=[]
 
   if (rol === "Administrador") {
@@ -278,7 +279,7 @@ let drawer=[]
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary" style>
+        <AppBar position="fixed" color="primary" >
           <Toolbar>
             <div>
               <NextLink href="/" passHref>
@@ -288,7 +289,7 @@ let drawer=[]
                     className={classes.logo}
                     src="/images/logo.jfif"
                     alt="logo"
-                    width={120}
+                    width={110}
                     height={120}
                   ></img>
                 </Link>
@@ -297,10 +298,9 @@ let drawer=[]
             {matches ? (
               drawer
             ) : (
-              //  <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
-              <Nav logout={logout}></Nav>
+             <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
+              //<Nav logout={logout}></Nav>
             )}
-            <Switch></Switch>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

@@ -18,9 +18,9 @@ const Config = () => {
     );
   } else {
     return (
-      <LayoutApp>
+      <Layout>
         <h1>No autorizado</h1>
-      </LayoutApp>
+      </Layout>
     );
 
     //router.push("/agenda")

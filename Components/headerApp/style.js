@@ -4,7 +4,11 @@ import theme from "../../utils/temaConfig";
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: "7em",
+    marginBottom: "6em",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "4em",
+    },
+
   },
   logo: {
     height: "6em",

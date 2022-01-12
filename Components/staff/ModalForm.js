@@ -58,11 +58,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-<<<<<<< HEAD
-
-=======
-  const [valStudio] = useLocalStorage("studioVal", "");
->>>>>>> develop
+ // const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {

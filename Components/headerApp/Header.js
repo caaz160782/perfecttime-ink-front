@@ -12,12 +12,8 @@ import {
   ListItem,
   IconButton,
   SwipeableDrawer,
-<<<<<<< HEAD
   Switch,
   Button
-=======
-  Button,
->>>>>>> develop
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";

@@ -22,7 +22,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Divider } from "@mui/material";
 
 function TablePaginationActions(props) {
-
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -44,10 +43,7 @@ function TablePaginationActions(props) {
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        disabled={page === 0}
-        aria-label="first page"
-      >
+      <IconButton disabled={page === 0} aria-label="first page">
         {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
@@ -90,20 +86,16 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
-
-export default function CustomPaginationActionsTable({staff}) {
-  console.log("staf",staff);
-
-
+export default function CustomPaginationActionsTable({ staff }) {
+  console.log("staf", staff);
 
   function createData(name, lastName, _id) {
     return { name, lastName, _id };
   }
 
- // const [rows, setRows] = React.useState([])
+  // const [rows, setRows] = React.useState([])
   //const rows = staff.map(x=>createData(x.name,x.lastName,x._id))
-  staff.map(x=>createData(x.name,x.lastName,x._id))
+  staff.map((x) => createData(x.name, x.lastName, x._id));
   console.log("mis rows", staff);
 
   const [page, setPage] = React.useState(0);
@@ -122,7 +114,6 @@ export default function CustomPaginationActionsTable({staff}) {
     setPage(0);
   };
 
-
   return (
     <>
       <TableContainer component={Paper}>
@@ -139,7 +130,7 @@ export default function CustomPaginationActionsTable({staff}) {
                 <TableCell component="th" scope="row">
                   {`${row.name} ${row.lastName}`}
                 </TableCell>
-                <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" />
+                {/* <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" /> */}
                 <TableCell style={{ width: 100 }} align="left">
                   <Button>
                     <DeleteIcon></DeleteIcon> eliminar

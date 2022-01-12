@@ -1,18 +1,18 @@
 import React from "react";
 import Layout from "../../Components/Layout";
-import FrmConfig from "../../Components/config/FrmConfig";
+import FrmStudio from "../../Components/studio/Studiofrm";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
 import { useRouter } from "next/router";
 
-const Config = () => {
+const Studio = () => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const router = useRouter();
 
   if (valToken) {
+    const { token, auth, infoUser } = valToken;
     return (
       <Layout>
-        <FrmConfig />
+        <FrmStudio />
       </Layout>
     );
   } else {
@@ -21,8 +21,7 @@ const Config = () => {
         <h1>No autorizado</h1>
       </Layout>
     );
-
-    //router.push("/agenda")
   }
 };
-export default Config;
+
+export default Studio;

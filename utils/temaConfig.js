@@ -1,7 +1,10 @@
 import { createTheme } from "@mui/material";
 
-const gris = "#F8F8F8";
-const dorado = "#EFC437";//centralizando
+//const gris = "#F8F8F8";
+const gris = "#334756";
+//const gris = "#476072";
+//const dorado = "#EFC437";//centralizando
+const dorado = "#CAA345";//centralizando
 
 const theme = createTheme({
   //aqui estan las configuraciones predeterminadas que podemos sobreescribir
@@ -12,10 +15,10 @@ const theme = createTheme({
       gray: `${gris}`,
     },
     primary: {
-      main: `${dorado}`,
+      main: `${gris}`,
     },
     secondary: {
-      main: `${gris}`,
+      main: `${dorado}`,
     },
   },
   typography: {

@@ -16,6 +16,7 @@ import { useState } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,10 +57,13 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes }) {
+  const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [valStudio] = useLocalStorage("studioVal", "");
+
   const [archivo, guardarArchivo] = useState("");
-      const leerArchivo = (e) => {
-        guardarArchivo(e.target.files[0]);
-      };
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
+  };
 
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = useState({
@@ -91,33 +95,34 @@ export default function CustomizedDialogs({ classes }) {
     e.preventDefault();
 
     const formData = new FormData();
-     formData.append("name", user.name);
-     formData.append("lastName", user.lastName);
-     formData.append("idRole", user.idRole);
-     formData.append("curp", user.curp);
-     formData.append("rfc", user.rfc);
-     formData.append("phoneNumber", user.phoneNumber);
-     formData.append("phonePersonal", user.phonePersonal);
-     formData.append("email", user.email);
-     formData.append("password", user.password);
-     formData.append("picture", archivo);
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
+    formData.append("idStudio", valStudio);
+    formData.append("Role", "Tatoo");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneNumber", user.phoneNumber);
+    formData.append("phonePersonal", user.phonePersonal);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
 
-     console.log("formData", formData);
+    console.log("formData", formData);
 
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          apitoken: valToken.token,
         },
       })
       .then((respuesta) => {
-        console.log(respuesta)
+        console.log(respuesta);
         setAlert({
           open: true,
           message: respuesta.data.message,
           backgroundColor: "#4BB543",
         });
-
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
@@ -207,7 +212,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  //required
                   fullWidth
                   size="small"
                   id="idRol"
@@ -300,13 +305,13 @@ export default function CustomizedDialogs({ classes }) {
                   color="primary"
                   className={classes.btnLogin}
                 >
-                 <SendIcon></SendIcon>  Register
+                  <SendIcon></SendIcon> Register
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-               <CloseIcon></CloseIcon>    Close
+                <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>
           </form>

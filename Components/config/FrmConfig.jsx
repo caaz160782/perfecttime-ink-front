@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Typography,
-  TextField,
-  Box,
-  IconButton,
-  styled
-} from "@mui/material";
+import { Typography, TextField, Box, IconButton, styled } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
@@ -16,54 +10,59 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
 const FrmConfig = () => {
-  const router = useRouter();  
+  const router = useRouter();
   const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
+
   const Input = styled("input")({
     display: "none",
   });
 
   const [valuesConfig, setValuesConfig] = useState({
-    id_tatoostudios: "61ce7372f5a8a9b236dc1801",
+    id_tatoostudios: valStudio,
     logo: "",
     timeToOpen: "07:00",
     timeToClose: "19:00",
-    dayAvailables: [],
+    dayNotAvailables: [],
     notifications: "",
   });
 
   const handleChange = (prop) => (event) => {
     setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
-    if(prop[0]==="dayAvailables"){
-          const {
-            target: { value },
-          } = event;
-          setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
-     }
+
+    if (prop[0] === "dayNotAvailables") {
+      const {
+        target: { value },
+      } = event;
+      setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
+    }
   };
+
+  console.log(valuesConfig);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     clienteAxios
-    .post("/setting",valuesConfig ,{ headers: { apitoken: valToken.token } })
-    .then((response) => {
-      console.log(response.data);
-      const { status } = response.data;
-       if (status) {
-         router.push("/agenda"); //dirigir a la pagina de inicio
-        //document.querySelector("#form").reset();
-       }
-    })
-    .catch((error) => {
-      setLoading(false);
-      if (error.response) {
-        console.log(error.response.data); 
-
-      } else {
-        console.log(error);
-      }
-    });
-
+      .post("/setting", valuesConfig, {
+        headers: { apitoken: valToken.token },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const { status } = response.data;
+        if (status) {
+          router.push("/agenda"); //dirigir a la pagina de inicio
+          //document.querySelector("#form").reset();
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        if (error.response) {
+          console.log(error.response.data);
+        } else {
+          console.log(error);
+        }
+      });
   };
 
   const [loading, setLoading] = useState(false);
@@ -117,7 +116,10 @@ const FrmConfig = () => {
             />
           </Box>
           <Box>
-            <DaysSelect handleChange={handleChange} valuesConfig={valuesConfig} />
+            <DaysSelect
+              handleChange={handleChange}
+              valuesConfig={valuesConfig}
+            />
           </Box>
           <Box sx={{ p: 1, m: 2 }}>
             <label htmlFor="icon-button-file">

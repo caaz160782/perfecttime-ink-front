@@ -69,12 +69,12 @@ const FrmLogin = () => {
             router.push("/agenda");
           }
         }
-        if (autenticado === true && infoUser.rol === "Tatuador") {
-          router.push("/agenda");
-        }
-        if (autenticado === true && infoUser.rol === "Cliente") {
-          router.push("/agenda");
-        }
+        // if (auth === true && info.user === "Tatuador") {
+        //   router.push("/agenda");
+        // }
+        // if (auth === true && info.user === "Cliente") {
+        //   router.push("/agenda");
+        // }
       })
       .catch((error) => {
         setLoading(false);

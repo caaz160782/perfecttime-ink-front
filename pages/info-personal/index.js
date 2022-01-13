@@ -13,7 +13,7 @@ import { AuthContext } from "../../Context/AuthContext";
 
 const InfoPersonal = () => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [auth, guardarAuth] = useContext(AuthContext);
+  const { auth, guardarAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();

@@ -18,7 +18,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 
 export default function MediaCard({ staffMember, classes, atras }) {
-  const [auth, guardarAuth] = useContext(AuthContext);
+  const { auth, guardarAuth } = useContext(AuthContext);
   console.log("auth desde card", auth.infoUser);
 
   let typeRol = {};

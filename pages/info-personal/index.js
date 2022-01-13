@@ -11,7 +11,7 @@ import { useState, useEffect, useContext } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 import { makeStyles } from "@mui/styles";
- 
+
 const InfoPersonal = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
@@ -41,7 +41,7 @@ const InfoPersonal = () => {
   }));
   const classes = useStyles();
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [auth, guardarAuth] = useContext(AuthContext);
+  const { auth, guardarAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();

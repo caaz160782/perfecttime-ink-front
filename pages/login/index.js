@@ -5,14 +5,14 @@ import NextLink from "next/link";
 
 const Login = () => {
   return (
-    <Layout>
+    <div>
       <FrmLogin />
       <h2>
         <NextLink href="/admin">
           <a>Registarse</a>
         </NextLink>
       </h2>
-    </Layout>
+    </div>
   );
 };
 export default Login;

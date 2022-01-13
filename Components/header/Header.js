@@ -1,9 +1,9 @@
 import NextLink from "next/link";
 import Image from "next/image";
 
-import React ,{ useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 
-import {useScrollTrigger} from "@mui/material";
+import { useScrollTrigger } from "@mui/material";
 import {
   AppBar,
   Toolbar,
@@ -11,7 +11,7 @@ import {
   List,
   ListItem,
   IconButton,
-  SwipeableDrawer
+  SwipeableDrawer,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -37,13 +37,12 @@ function ElevationScroll(props) {
 }
 
 const Header = (props) => {
-
-    const [valToken, setToken] = useLocalStorage("userVal", {
-      token: "",
-      auth: "",
-      infoUser: "",
-    });
-   // console.log("probando desde el header", valToken.infoUser);
+  const [valToken, setToken] = useLocalStorage("userVal", {
+    token: "",
+    auth: "",
+    infoUser: "",
+  });
+  // console.log("probando desde el header", valToken.infoUser);
 
   const iOS =
     typeof navigator !== "undefined" &&
@@ -149,7 +148,7 @@ const Header = (props) => {
                     alt="logo"
                     width={110}
                     height={120}
-                  ></img>
+                  />
                 </Link>
               </NextLink>
             </div>

@@ -97,7 +97,7 @@ const Staff = () => {
   }, [reload]);
 
   return (
-    <Layout title={"staff"}>
+    <Layout>
       {loading ? (
         <div align="center">
           <CircularProgress size={40}></CircularProgress>

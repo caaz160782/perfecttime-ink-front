@@ -13,11 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 
 export const Nav = ({ logout }) => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-
-  const [auth, guardarAuth] = useContext(AuthContext);
+  const { auth, guardarAuth } = useContext(AuthContext);
   //console.log("auth desde nav del headerApp", auth.infoUser.rol);
-
   let rol = auth.infoUser.rol;
   //  console.log(valToken.infoUser);
 

@@ -13,7 +13,7 @@ import {
   IconButton,
   SwipeableDrawer,
   Switch,
-  Button
+  Button,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -40,11 +40,8 @@ function ElevationScroll(props) {
 }
 
 const HeaderApp = (props) => {
-  const { logout } = props;
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
-  const [auth, guardarAuth] = useContext(AuthContext);
-  //console.log("auth desde el headerApp", auth);
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -58,8 +55,11 @@ const HeaderApp = (props) => {
   const handleChange = (e, value) => {
     setValue(value);
   };
+  //contexto
+  console.log("hader debug context", auth);
+  //validacion de la estructura
+  let rol = auth?.infoUser?.rol;
 
-  let rol = auth.infoUser.rol;
   let drawer = [];
 
   if (rol === "Administrador") {
@@ -121,7 +121,7 @@ const HeaderApp = (props) => {
               selected={value === 4}
               onClick={() => setValue(4)}
             >
-              <Button onClick={logout} className={classes.linkDrawerLogin}>
+              <Button onClick={logOut} className={classes.linkDrawerLogin}>
                 Logout
               </Button>
             </ListItem>
@@ -274,7 +274,7 @@ const HeaderApp = (props) => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary" >
+        <AppBar position="fixed" color="primary">
           <Toolbar>
             <div>
               <NextLink href="/" passHref>
@@ -293,7 +293,7 @@ const HeaderApp = (props) => {
             {matches ? (
               drawer
             ) : (
-             <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
+              <Nav rol={auth?.infoUser?.rol} logout={logOut}></Nav>
               //<Nav logout={logout}></Nav>
             )}
           </Toolbar>

@@ -56,7 +56,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ classes }) {
+export default function CustomizedDialogs({ classes, reload }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [valStudio] = useLocalStorage("studioVal", "");
 
@@ -93,24 +93,23 @@ export default function CustomizedDialogs({ classes }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log('archivo', archivo);
+    console.log("archivo", archivo);
 
     const formData = new FormData();
-     formData.append("name", user.name);
-     formData.append("lastName", user.lastName);
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);
-     formData.append("Role", "staffTatuador");
-     formData.append("curp", user.curp);
-     formData.append("rfc", user.rfc);
-     formData.append("phoneHome", user.phoneHome);
-     formData.append("phonePersonal", user.phonePersonal);
-     formData.append("email", user.email);
-     formData.append("password", user.password);
-     formData.append("picture", archivo);
-     formData.append("idStudio", valStudio);
+    formData.append("Role", "staffTatuador");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneHome", user.phoneHome);
+    formData.append("phonePersonal", user.phonePersonal);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
+    formData.append("idStudio", valStudio);
     // formData.append("Role", "Tatoo");
-
-
+    console.log("user", user);
     clienteAxios
       .post("/staff", formData, {
         headers: {
@@ -119,38 +118,35 @@ export default function CustomizedDialogs({ classes }) {
         },
       })
       .then((respuesta) => {
-        console.log(respuesta)
-         setAlert({
-           open: true,
-           message: respuesta.data.message,
-           backgroundColor: "#4BB543",
-         });
+        console.log(respuesta);
+        setAlert({
+          open: true,
+          message: respuesta.data.message,
+          backgroundColor: "#4BB543",
+        });
+
+        setTimeout(() => {
+          console.log("peticion ok");
+          reload();
+        }, 3000);
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
-        console.log(err.response.data);
-         if (err.response.data.errors) {
-           setAlert({
-             open: true,
-             message: err.response.data.errors[0].msg,
-             backgroundColor: "#FF3232",
-           });
-           return;
-         }
-         setAlert({
-           open: true,
-           message: err.response.data.error,
-           backgroundColor: "#FF3232",
-         });
+        console.log(err);
+        setAlert({
+          open: true,
+          message: err.response.data.error,
+          backgroundColor: "#FF3232",
+        });
       });
   };
 
   return (
     <div>
       <Button color="success" variant="contained" onClick={handleClickOpen}>
-        <AddCircleIcon></AddCircleIcon>  crear
+        <AddCircleIcon></AddCircleIcon> crear
       </Button>
       <Snackbar
         open={alert.open}
@@ -193,7 +189,7 @@ export default function CustomizedDialogs({ classes }) {
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                 // required
+                  // required
                   id="lastName"
                   label="last name"
                   name="lastName"
@@ -252,7 +248,7 @@ export default function CustomizedDialogs({ classes }) {
               <ListItem>
                 <TextField
                   fullWidth
-                 // required
+                  // required
                   size="small"
                   id="curp"
                   label="curp"
@@ -263,7 +259,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                //  required
+                  //  required
                   fullWidth
                   size="small"
                   id="rfc"

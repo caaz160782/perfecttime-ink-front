@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import EditCustomizedDialogs from "./EditModalForm";
+import EditCustomizedDialogs from "./Components/staff/EditModalForm";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import NextLink from "next/link";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -14,7 +14,7 @@ import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import Image from "next/image"
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "./Context/AuthContext";
 import { useContext } from "react";
 
 export default function MediaCard({staffMember, classes, atras}) {

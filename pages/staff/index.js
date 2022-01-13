@@ -5,14 +5,37 @@ import CustomPaginationActionsTable from "../../Components/staff/Table";
 import { CircularProgress } from "@mui/material";
 
 import clienteAxios from "../../utils/axios";
-import useStyles from "./style";
+//import useStyles from "./style";
 import { useState, useEffect } from "react";
 
 import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
+import { makeStyles } from "@mui/styles";
+
 const Staff = () => {
+  const useStyles = makeStyles((theme) => ({
+    btnLogin: {
+      color: "#fff",
+      fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "1.6rem",
+    },
+    imgBack: {
+      border: "3px solid red",
+    },
+    spanes: {
+      textTransform: "none",
+      fontSize: "2.8rem",
+    },
+    foto: {
+      border: "6px solid rgb(173, 173, 173)",
+    },
+    fotoContainer: {
+      backgroundColor: "rgb(123, 136, 146)",
+    },
+  }));
   const classes = useStyles();
 
   const [valToken, setToken] = useLocalStorage("userVal", "");
@@ -21,6 +44,7 @@ const Staff = () => {
   const [staff, setStaff] = useState([]);
   const [staffMentira, setStaffMentira] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
@@ -36,18 +60,24 @@ const Staff = () => {
         return elemento;
       }
     });
+
     setStaff(resultadosBusqueda);
   };
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    if (reload) {
+      setLoading(true);
       const consultarAPI = async () => {
-             const idStudioStored = localStorage.getItem("studioVal");
-             const idStudio = JSON.parse(idStudioStored);
+        const idStudioStored = localStorage.getItem("studioVal");
+        const idStudio = JSON.parse(idStudioStored);
         try {
-          const respuesta = await clienteAxios.get(`/findStaffByStudy/${idStudio}`, {
-            headers: { apitoken: valToken.token },
-          });
+          const respuesta = await clienteAxios.get(
+            `/findStaffByStudy/${idStudio}`,
+            {
+              headers: { apitoken: valToken.token },
+            }
+          );
+
           console.log(respuesta);
           const staffArray = respuesta.data.payload;
           setStaff(staffArray);
@@ -58,13 +88,13 @@ const Staff = () => {
         }
       };
       consultarAPI();
-    },
-    () => {
+      setReload(false);
+    }
+    return () => {
       console.log("desmontar");
       source.cancel();
-    },
-    [staff]
-  );
+    };
+  }, [reload]);
 
   return (
     <Layout title={"staff"}>
@@ -75,9 +105,7 @@ const Staff = () => {
       ) : (
         <div>
           <div align="center" style={{ marginBottom: "20px" }}>
-            <CustomizedInputBase
-              handleChangeBusqueda={handleChangeBusqueda}
-            ></CustomizedInputBase>
+            <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
           <div style={{ marginBottom: "20px", marginTop: "30px" }}>
@@ -85,12 +113,18 @@ const Staff = () => {
               staff={staff}
               md={{ m: 2 }}
               classes={classes}
-            ></CustomizedDialogs>
+              reload={() => {
+                setReload(true);
+              }}
+            />
           </div>
 
           <CustomPaginationActionsTable
             staff={staff}
-          ></CustomPaginationActionsTable>
+            reload={() => {
+              setReload(true);
+            }}
+          />
         </div>
       )}
     </Layout>

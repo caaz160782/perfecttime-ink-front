@@ -2,13 +2,7 @@ import { makeStyles } from "@mui/styles";
 import theme from "../../utils/temaConfig";
 
 console.log(theme.palette);
-const useStyles = makeStyles((theme) => ({
-  btnLogin: {
-    color: "#fff",
-    fontFamily: "Pacifico",
-    textTransform: "none",
-    fontSize: "1.6rem",
-  },
+const usseStyles = makeStyles((theme) => ({
   imgBack: {
     border: "3px solid red",
   },
@@ -16,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     // color: theme.palette.secondary.dark,
     // fontFamily: "Pacifico",
     textTransform: "none",
-    fontSize: "0.8rem",
+    fontSize: "1.8rem",
   },
   foto: {
     //border: "6px solid rgb(173, 173, 173)",
@@ -31,4 +25,4 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-export default useStyles;
+export default usseStyles;

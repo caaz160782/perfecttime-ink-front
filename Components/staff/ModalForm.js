@@ -8,10 +8,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
 import { useState } from "react";
+import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
@@ -54,12 +56,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ classes }) {
+export default function CustomizedDialogs({ classes, reload }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
-
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
   };
@@ -88,17 +89,17 @@ export default function CustomizedDialogs({ classes }) {
     rfc: " ",
     phonePersonal: "",
   };
-
   const [user, actualizarState, reset] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    //console.log("archivo", archivo);
+    console.log("archivo", archivo);
+
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);
-    //formData.append("idRole", "staff");
+    formData.append("Role", "staffTatuador");
     formData.append("curp", user.curp);
     formData.append("rfc", user.rfc);
     formData.append("phoneHome", user.phoneHome);
@@ -107,8 +108,8 @@ export default function CustomizedDialogs({ classes }) {
     formData.append("password", user.password);
     formData.append("picture", archivo);
     formData.append("idStudio", valStudio);
-    formData.append("Role", "staffTatuador");
-
+    // formData.append("Role", "Tatoo");
+    console.log("user", user);
     clienteAxios
       .post("/staff", formData, {
         headers: {
@@ -124,19 +125,15 @@ export default function CustomizedDialogs({ classes }) {
           backgroundColor: "#4BB543",
         });
 
+        setTimeout(() => {
+          reload();
+        }, 3000);
+
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
-        console.log(err.response.data);
-        if (err.response.data.errors) {
-          setAlert({
-            open: true,
-            message: err.response.data.errors[0].msg,
-            backgroundColor: "#FF3232",
-          });
-          return;
-        }
+        console.log(err);
         setAlert({
           open: true,
           message: err.response.data.error,

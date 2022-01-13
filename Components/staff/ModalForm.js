@@ -8,12 +8,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
 import { useState } from "react";
-import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
@@ -58,7 +56,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  // const [valStudio] = useLocalStorage("studioVal", "");
+  const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
 
@@ -90,17 +88,17 @@ export default function CustomizedDialogs({ classes }) {
     rfc: " ",
     phonePersonal: "",
   };
+
   const [user, actualizarState, reset] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("archivo", archivo);
-
+    //console.log("archivo", archivo);
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);
-    formData.append("idRole", "staff");
+    //formData.append("idRole", "staff");
     formData.append("curp", user.curp);
     formData.append("rfc", user.rfc);
     formData.append("phoneHome", user.phoneHome);
@@ -108,8 +106,8 @@ export default function CustomizedDialogs({ classes }) {
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
-    // formData.append("idStudio", valStudio);
-    // formData.append("Role", "Tatoo");
+    formData.append("idStudio", valStudio);
+    formData.append("Role", "staffTatuador");
 
     clienteAxios
       .post("/staff", formData, {

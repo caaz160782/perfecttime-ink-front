@@ -14,24 +14,21 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 
 export const Nav = ({ logout }) => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-
-  const [auth, guardarAuth] = useContext(AuthContext);
+  const { auth, guardarAuth } = useContext(AuthContext);
   //console.log("auth desde nav del headerApp", auth.infoUser.rol);
-
   let rol = auth.infoUser.rol;
   //  console.log(valToken.infoUser);
 
   const classes = useStyles();
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const Linkes = () => {
     if (rol === "Administrador") {
@@ -49,7 +46,7 @@ export const Nav = ({ logout }) => {
           {/* <NextLink href="/staff" passHref>
             <Link className={classes.tab}>Staff</Link>
           </NextLink> */}
-          <div style={{ display: "inline" }} >
+          <div style={{ display: "inline" }}>
             <Button
               className={classes.tab}
               id="fade-button"
@@ -116,7 +113,6 @@ export const Nav = ({ logout }) => {
         <Link className={classes.tab}>Home</Link>
       </NextLink>
       <Linkes></Linkes>
-
       <Button
         onClick={logout}
         className={classes.btn}

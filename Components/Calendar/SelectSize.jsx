@@ -33,7 +33,7 @@ const SelectSize = ({ handleChangeDate }) => {
           defaultValue=""
           labelId="lblInpSize"
           id="size"
-          onChange={handleChangeDate("size")}
+          onChange={handleChangeDate("id_size")}
           autoWidth
           label="Tamaño"
         >

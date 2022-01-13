@@ -37,7 +37,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
           defaultValue=""
           labelId="lblInpTat"
           id="tatuador"
-          onChange={handleChangeDate("tatuador")}
+          onChange={handleChangeDate("id_tatuador")}
           autoWidth
           label="tatuador"
         >

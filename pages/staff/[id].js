@@ -20,29 +20,27 @@ const OneStaff = () => {
   //const classes = useStyles();
   const [staffMember, setStaffMember] = useState({});
 
-  useEffect(
-    () => {
-      const consultarAPI = async () => {
-        try {
-          // const respuesta = await clienteAxios.get(`/staff/${id}`);
-          const respuesta = await clienteAxios.get(`/staff/${id}`, {
-            headers: { apitoken: valToken.token },
-          });
+  useEffect(() => {
+    const consultarAPI = async () => {
+      try {
+        // const respuesta = await clienteAxios.get(`/staff/${id}`);
+        const respuesta = await clienteAxios.get(`/staff/${id}`, {
+          headers: { apitoken: valToken.token },
+        });
 
-          setStaffMember(respuesta.data.listUser.userFound);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      consultarAPI();
-    },
-    () => {
+        setStaffMember(respuesta.data.listUser.userFound);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    consultarAPI();
+
+    return () => {
       console.log("desmontar");
       source.cancel();
-    },
-    [staffMember]
-  );
+    };
+  }, []);
 
   return (
     <Layout>
@@ -52,7 +50,7 @@ const OneStaff = () => {
         ) : (
           <MediaCard
             atras={"/staff"}
-            //        classes={classes}
+            //          classes={classes}
             staffMember={staffMember}
           ></MediaCard>
         )}

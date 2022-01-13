@@ -61,6 +61,7 @@ export default function CustomizedDialogs({ classes }) {
  // const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
+
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
   };
@@ -96,6 +97,21 @@ export default function CustomizedDialogs({ classes }) {
     console.log('archivo', archivo);
 
     const formData = new FormData();
+<<<<<<< HEAD
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
+    formData.append("idStudio", valStudio);
+    formData.append("Role", "Tatoo");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneNumber", user.phoneNumber);
+    formData.append("phonePersonal", user.phonePersonal);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
+
+    console.log("formData", formData);
+=======
      formData.append("name", user.name);
      formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);
@@ -110,6 +126,7 @@ export default function CustomizedDialogs({ classes }) {
          // formData.append("idStudio", valStudio);
     // formData.append("Role", "Tatoo");
 
+>>>>>>> develop
     clienteAxios
       .post("/staff", formData, {
         headers: {
@@ -212,9 +229,16 @@ export default function CustomizedDialogs({ classes }) {
                   onChange={leerArchivo}
                 ></TextField>
               </ListItem>
+<<<<<<< HEAD
+              <ListItem></ListItem>
+              <ListItem>
+                <TextField
+                  required
+=======
               <ListItem>
                 <TextField
                   //required
+>>>>>>> develop
                   fullWidth
                   size="small"
                   id="phonePersonal"

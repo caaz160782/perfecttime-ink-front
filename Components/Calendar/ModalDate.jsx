@@ -53,7 +53,14 @@ const ModalDate = ({
               alignItems: "center",
             }}
           >
-            <Box> </Box>
+            <Box>
+              <TextField
+                id="tilte"
+                label="Cita "
+                type="text"
+                onChange={handleChangeDate("title")}
+              />
+            </Box>
             <Box>
               <SelectTatuador handleChangeDate={handleChangeDate} />
             </Box>
@@ -67,7 +74,7 @@ const ModalDate = ({
                 label="Hora Cita"
                 type="time"
                 defaultValue="09:00"
-                onChange={handleChangeDate("start")}
+                onChange={handleChangeDate("hourTatooStart")}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -79,9 +86,9 @@ const ModalDate = ({
             <Box>
               <TextField
                 id="descripcion"
-                label="Descripcion"
+                label="Descripcion Tatuaje"
                 type="text"
-                onChange={handleChangeDate("descripcion")}
+                onChange={handleChangeDate("description")}
               />
             </Box>
             <Box
@@ -99,7 +106,7 @@ const ModalDate = ({
                   accept="image/*"
                   id="icon-button-file"
                   type="file"
-                  onChange={handleChangeDate("imgMuestra")}
+                  onChange={handleChangeDate("desPhoto")}
                 />
                 <IconButton
                   color="primary"
@@ -122,13 +129,13 @@ const ModalDate = ({
                     value="color"
                     control={<Radio />}
                     label="Color"
-                    onChange={handleChangeDate("tipeTattoo")}
+                    onChange={handleChangeDate("tipoTatoo")}
                   />
                   <FormControlLabel
-                    value="bn"
+                    value="Blanco y Negro"
                     control={<Radio />}
                     label="Blanco y Negro"
-                    onChange={handleChangeDate("tipeTattoo")}
+                    onChange={handleChangeDate("tipoTatoo")}
                   />
                 </RadioGroup>
               </FormControl>
@@ -137,7 +144,20 @@ const ModalDate = ({
               <SelectSize handleChangeDate={handleChangeDate} />
             </Box>
             <Box>
-              <SelectDuracion handleChangeDate={handleChangeDate} />
+              <TextField
+                sx={{ m: 1, width: "25ch" }}
+                id="time"
+                label="Hora Fin"
+                type="time"
+                defaultValue="09:00"
+                onChange={handleChangeDate("hourTatooFinish")}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+              />
             </Box>
             <Box>
               <TextField
@@ -153,7 +173,7 @@ const ModalDate = ({
                 id="adelanto"
                 label="Adelanto"
                 type="text"
-                onChange={handleChangeDate("adelanto")}
+                onChange={handleChangeDate("estimated")}
               />
             </Box>
           </Box>
@@ -167,3 +187,6 @@ const ModalDate = ({
   );
 };
 export default ModalDate;
+/*<Box>
+<SelectDuracion handleChangeDate={handleChangeDate} />
+</Box>*/

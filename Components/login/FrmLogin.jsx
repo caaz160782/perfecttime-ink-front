@@ -17,7 +17,6 @@ import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../Context/AuthContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { info } from "sass";
 
 const FrmLogin = () => {
   const [values, setValues] = useState({
@@ -53,14 +52,19 @@ const FrmLogin = () => {
       .post("/login", values)
       .then((response) => {
         // console.log(response.data);
-        const {token, infoUser, infoStudio, } = response.data;
+        const { token, infoUser, infoStudio } = response.data;
 
-          guardarAuth({ token, infoUser, autenticado: response.data.auth, infoStudio });
+        guardarAuth({
+          token,
+          infoUser,
+          autenticado: response.data.auth,
+          infoStudio,
+        });
 
-          setToken({ token, autenticado: response.data.auth, infoUser });
+        setToken({ token, autenticado: response.data.auth, infoUser });
 
-     //   setToken({ token, auth, infoUser, infoStudio });
-     //   guardarAuth({ valToken });
+        //   setToken({ token, auth, infoUser, infoStudio });
+        //   guardarAuth({ valToken });
         if (response.data.auth === true && infoUser.rol === "Administrador") {
           if (!infoUser.registerStudio) {
             router.push("/studio");

@@ -1,8 +1,6 @@
 import NextLink from "next/link";
 import Image from "next/image";
-
 import React, { useState, useContext } from "react";
-
 import { useScrollTrigger } from "@mui/material";
 import {
   AppBar,
@@ -15,17 +13,14 @@ import {
   Switch,
   Button,
 } from "@mui/material";
-
 import useMediaQuery from "@mui/material/useMediaQuery";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
 import theme from "./../../utils/temaConfig";
 import { AuthContext } from "../../Context/AuthContext";
 import { Nav } from "./Nav";
 import useStyles from "./style";
-
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 function ElevationScroll(props) {
@@ -40,11 +35,8 @@ function ElevationScroll(props) {
 }
 
 const HeaderApp = (props) => {
-  const { logout } = props;
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
-  const [auth, guardarAuth] = useContext(AuthContext);
-  //console.log("auth desde el headerApp", auth);
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -59,7 +51,11 @@ const HeaderApp = (props) => {
     setValue(value);
   };
 
-  let rol = auth.infoUser.rol;
+  //contexto
+  console.log("hader debug context", auth);
+  //validacion de la estructura
+  let rol = auth?.infoUser?.rol;
+
   let drawer = [];
 
   if (rol === "Administrador") {
@@ -121,7 +117,7 @@ const HeaderApp = (props) => {
               selected={value === 4}
               onClick={() => setValue(4)}
             >
-              <Button onClick={logout} className={classes.linkDrawerLogin}>
+              <Button onClick={logOut} className={classes.linkDrawerLogin}>
                 Logout
               </Button>
             </ListItem>
@@ -293,7 +289,7 @@ const HeaderApp = (props) => {
             {matches ? (
               drawer
             ) : (
-              <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
+              <Nav rol={auth?.infoUser?.rol} logout={logOut}></Nav>
               //<Nav logout={logout}></Nav>
             )}
           </Toolbar>

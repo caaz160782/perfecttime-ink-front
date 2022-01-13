@@ -16,9 +16,12 @@ import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../Context/AuthContext";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const FrmLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { auth, guardarAuth } = useContext(AuthContext);
+
   const [values, setValues] = useState({
     password: "",
     email: "",
@@ -39,42 +42,31 @@ const FrmLogin = () => {
     event.preventDefault();
   };
 
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const [auth, guardarAuth] = useContext(AuthContext);
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
-
   const handlerSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        console.log(response.data);
         const { token, infoUser, infoStudio, autenticado } = response.data;
-        setToken({ token, autenticado, infoUser });
         guardarAuth({
           token,
           infoUser,
           autenticado,
           infoStudio,
         });
-
-        console.log(valToken);
-        //   setToken({ token, auth, infoUser, infoStudio });
-        //   guardarAuth({ valToken });
-        if (response.data.auth === true && infoUser.rol === "Administrador") {
+        if (
+          response.data.autenticado === true &&
+          infoUser.rol === "Administrador"
+        ) {
           if (!infoUser.registerStudio) {
             router.push("/studio");
           } else if (!infoUser.finishConfig) {
             const { id } = infoStudio;
-            setStudio(id);
             router.push("/config");
           } else {
             const { id } = infoStudio;
-            setStudio(id);
-            //  router.push("/agenda");
+            router.push("/agenda");
           }
         }
         // if (auth === true && info.user === "Tatuador") {

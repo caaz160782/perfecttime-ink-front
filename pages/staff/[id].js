@@ -3,46 +3,44 @@ import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
 import MediaCard from "../../Components/staff/CardStaff";
-import useStyles from "./style";
+//import useStyles from "./style";
 import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const oneStaff = () => {
+const OneStaff = () => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
   console.log("el id es", id);
-  const classes = useStyles();
+  //const classes = useStyles();
   const [staffMember, setStaffMember] = useState({});
 
-  useEffect(
-    () => {
-      const consultarAPI = async () => {
-        try {
-         // const respuesta = await clienteAxios.get(`/staff/${id}`);
-          const respuesta = await clienteAxios.get(`/staff/${id}`, {
-            headers: { apitoken: valToken.token },
-          });
+  useEffect(() => {
+    const consultarAPI = async () => {
+      try {
+        // const respuesta = await clienteAxios.get(`/staff/${id}`);
+        const respuesta = await clienteAxios.get(`/staff/${id}`, {
+          headers: { apitoken: valToken.token },
+        });
 
-          setStaffMember(respuesta.data.listUser.userFound);
-         setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      consultarAPI();
-    },
-    () => {
+        setStaffMember(respuesta.data.listUser.userFound);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    consultarAPI();
+
+    return () => {
       console.log("desmontar");
       source.cancel();
-    },
-    [staffMember]
-  );
+    };
+  }, []);
 
   return (
     <Layout>
@@ -50,7 +48,11 @@ const oneStaff = () => {
         {loading ? (
           <Typography>loading...</Typography>
         ) : (
-          <MediaCard atras={"/staff"} classes={classes} staffMember={staffMember}></MediaCard>
+          <MediaCard
+            atras={"/staff"}
+            //          classes={classes}
+            staffMember={staffMember}
+          ></MediaCard>
         )}
       </Container>
     </Layout>
@@ -64,5 +66,4 @@ const oneStaff = () => {
 //     return { props: { staffMember } };
 //   };
 
-export default oneStaff;
-
+export default OneStaff;

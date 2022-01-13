@@ -58,7 +58,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
- // const [valStudio] = useLocalStorage("studioVal", "");
+  // const [valStudio] = useLocalStorage("studioVal", "");
 
   const [archivo, guardarArchivo] = useState("");
 
@@ -94,39 +94,23 @@ export default function CustomizedDialogs({ classes }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log('archivo', archivo);
+    console.log("archivo", archivo);
 
     const formData = new FormData();
-<<<<<<< HEAD
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
-    formData.append("idStudio", valStudio);
-    formData.append("Role", "Tatoo");
+    // formData.append("idRole", user.idRole);
+    formData.append("idRole", "staff");
     formData.append("curp", user.curp);
     formData.append("rfc", user.rfc);
-    formData.append("phoneNumber", user.phoneNumber);
+    formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
-
-    console.log("formData", formData);
-=======
-     formData.append("name", user.name);
-     formData.append("lastName", user.lastName);
-    // formData.append("idRole", user.idRole);
-     formData.append("idRole", 'staff');
-     formData.append("curp", user.curp);
-     formData.append("rfc", user.rfc);
-     formData.append("phoneHome", user.phoneHome);
-     formData.append("phonePersonal", user.phonePersonal);
-     formData.append("email", user.email);
-     formData.append("password", user.password);
-     formData.append("picture", archivo);
-         // formData.append("idStudio", valStudio);
+    // formData.append("idStudio", valStudio);
     // formData.append("Role", "Tatoo");
 
->>>>>>> develop
     clienteAxios
       .post("/staff", formData, {
         headers: {
@@ -135,38 +119,38 @@ export default function CustomizedDialogs({ classes }) {
         },
       })
       .then((respuesta) => {
-        console.log(respuesta)
-         setAlert({
-           open: true,
-           message: respuesta.data.message,
-           backgroundColor: "#4BB543",
-         });
+        console.log(respuesta);
+        setAlert({
+          open: true,
+          message: respuesta.data.message,
+          backgroundColor: "#4BB543",
+        });
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
         console.log(err.response.data);
-         if (err.response.data.errors) {
-           setAlert({
-             open: true,
-             message: err.response.data.errors[0].msg,
-             backgroundColor: "#FF3232",
-           });
-           return;
-         }
-         setAlert({
-           open: true,
-           message: err.response.data.error,
-           backgroundColor: "#FF3232",
-         });
+        if (err.response.data.errors) {
+          setAlert({
+            open: true,
+            message: err.response.data.errors[0].msg,
+            backgroundColor: "#FF3232",
+          });
+          return;
+        }
+        setAlert({
+          open: true,
+          message: err.response.data.error,
+          backgroundColor: "#FF3232",
+        });
       });
   };
 
   return (
     <div>
       <Button color="success" variant="contained" onClick={handleClickOpen}>
-        <AddCircleIcon></AddCircleIcon>  crear
+        <AddCircleIcon></AddCircleIcon> crear
       </Button>
       <Snackbar
         open={alert.open}
@@ -209,7 +193,7 @@ export default function CustomizedDialogs({ classes }) {
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                 // required
+                  // required
                   id="lastName"
                   label="last name"
                   name="lastName"
@@ -229,16 +213,9 @@ export default function CustomizedDialogs({ classes }) {
                   onChange={leerArchivo}
                 ></TextField>
               </ListItem>
-<<<<<<< HEAD
-              <ListItem></ListItem>
-              <ListItem>
-                <TextField
-                  required
-=======
               <ListItem>
                 <TextField
                   //required
->>>>>>> develop
                   fullWidth
                   size="small"
                   id="phonePersonal"
@@ -275,7 +252,7 @@ export default function CustomizedDialogs({ classes }) {
               <ListItem>
                 <TextField
                   fullWidth
-                 // required
+                  // required
                   size="small"
                   id="curp"
                   label="curp"
@@ -286,7 +263,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                //  required
+                  //  required
                   fullWidth
                   size="small"
                   id="rfc"

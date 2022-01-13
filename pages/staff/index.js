@@ -5,7 +5,7 @@ import CustomPaginationActionsTable from "../../Components/staff/Table";
 import { CircularProgress } from "@mui/material";
 
 import clienteAxios from "../../utils/axios";
-import useStyles from "./style";
+//import useStyles from "./style";
 import { useState, useEffect } from "react";
 
 import axios from "axios";
@@ -13,7 +13,7 @@ import CustomizedInputBase from "../../Components/staff/Busqueda";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Staff = () => {
-  const classes = useStyles();
+  //const classes = useStyles();
 
   const [valToken, setToken] = useLocalStorage("userVal", "");
 
@@ -46,7 +46,7 @@ const Staff = () => {
           const respuesta = await clienteAxios.get("/staff", {
             headers: { apitoken: valToken.token },
           });
-         // console.log(respuesta);
+          // console.log(respuesta);
           const staffArray = respuesta.data.listUser.users;
           setStaff(staffArray);
           setStaffMentira(staffArray);
@@ -81,7 +81,7 @@ const Staff = () => {
           <div style={{ marginBottom: "20px", marginTop: "30px" }}>
             <CustomizedDialogs
               md={{ m: 2 }}
-              classes={classes}
+              // classes={classes}
             ></CustomizedDialogs>
           </div>
 

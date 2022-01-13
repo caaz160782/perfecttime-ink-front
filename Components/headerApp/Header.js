@@ -13,7 +13,7 @@ import {
   IconButton,
   SwipeableDrawer,
   Switch,
-  Button
+  Button,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -274,7 +274,7 @@ const HeaderApp = (props) => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary" >
+        <AppBar position="fixed" color="primary">
           <Toolbar>
             <div>
               <NextLink href="/" passHref>
@@ -293,7 +293,7 @@ const HeaderApp = (props) => {
             {matches ? (
               drawer
             ) : (
-             <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
+              <Nav rol={valToken.infoUser.rol} logout={logout}></Nav>
               //<Nav logout={logout}></Nav>
             )}
           </Toolbar>

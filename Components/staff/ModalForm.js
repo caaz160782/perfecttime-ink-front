@@ -56,7 +56,11 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ classes }) {
   const [valToken, setToken] = useLocalStorage("userVal", "");
+<<<<<<< HEAD
   const [valStudio] = useLocalStorage("studioVal", "");
+=======
+  // const [valStudio] = useLocalStorage("studioVal", "");
+>>>>>>> develop
 
   const [archivo, guardarArchivo] = useState("");
 
@@ -93,12 +97,21 @@ export default function CustomizedDialogs({ classes }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     //console.log("archivo", archivo);
+=======
+    console.log("archivo", archivo);
+
+>>>>>>> develop
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);
+<<<<<<< HEAD
     //formData.append("idRole", "staff");
+=======
+    formData.append("idRole", "staff");
+>>>>>>> develop
     formData.append("curp", user.curp);
     formData.append("rfc", user.rfc);
     formData.append("phoneHome", user.phoneHome);
@@ -106,8 +119,13 @@ export default function CustomizedDialogs({ classes }) {
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
+<<<<<<< HEAD
     formData.append("idStudio", valStudio);
     formData.append("Role", "staffTatuador");
+=======
+    // formData.append("idStudio", valStudio);
+    // formData.append("Role", "Tatoo");
+>>>>>>> develop
 
     clienteAxios
       .post("/staff", formData, {

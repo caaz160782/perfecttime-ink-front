@@ -51,18 +51,17 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        // console.log(response.data);
-        const { token, infoUser, infoStudio } = response.data;
-
+        console.log(response.data);
+        const { token, infoUser, infoStudio, autenticado } = response.data;
+        setToken({ token, autenticado, infoUser });
         guardarAuth({
           token,
           infoUser,
-          autenticado: response.data.auth,
+          autenticado,
           infoStudio,
         });
 
-        setToken({ token, autenticado: response.data.auth, infoUser });
-
+        console.log(valToken);
         //   setToken({ token, auth, infoUser, infoStudio });
         //   guardarAuth({ valToken });
         if (response.data.auth === true && infoUser.rol === "Administrador") {
@@ -75,7 +74,7 @@ const FrmLogin = () => {
           } else {
             const { id } = infoStudio;
             setStudio(id);
-            router.push("/agenda");
+            //  router.push("/agenda");
           }
         }
         // if (auth === true && info.user === "Tatuador") {

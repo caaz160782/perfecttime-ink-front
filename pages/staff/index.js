@@ -42,12 +42,14 @@ const Staff = () => {
   useEffect(
     () => {
       const consultarAPI = async () => {
+             const idStudioStored = localStorage.getItem("studioVal");
+             const idStudio = JSON.parse(idStudioStored);
         try {
-          const respuesta = await clienteAxios.get("/staff", {
+          const respuesta = await clienteAxios.get(`/findStaffByStudy/${idStudio}`, {
             headers: { apitoken: valToken.token },
           });
-         // console.log(respuesta);
-          const staffArray = respuesta.data.listUser.users;
+          console.log(respuesta);
+          const staffArray = respuesta.data.payload;
           setStaff(staffArray);
           setStaffMentira(staffArray);
           setLoading(false);
@@ -80,6 +82,7 @@ const Staff = () => {
 
           <div style={{ marginBottom: "20px", marginTop: "30px" }}>
             <CustomizedDialogs
+              staff={staff}
               md={{ m: 2 }}
               classes={classes}
             ></CustomizedDialogs>

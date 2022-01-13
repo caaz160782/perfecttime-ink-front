@@ -160,6 +160,92 @@ export default function CustomPaginationActionsTable({staff}) {
         });
     };
 
+    const reactivar = (id) => {
+      alert('lkkkkk')
+      console.log(id);
+      clienteAxios
+        .patch(`/staffInac/${id}`, {
+          headers: { apitoken: valToken.token },
+        })
+        .then((respuesta) => {
+          console.log(respuesta);
+          setAlert({
+            open: true,
+            message: respuesta.data.message,
+            backgroundColor: "#519259",
+          });
+
+          // router.push("/"); //dirigir a la pagina de inicio
+          //  document.querySelector("#form").reset();
+        })
+        .catch((err) => {
+          setAlert({
+            open: true,
+            message: "error al eliminar",
+            backgroundColor: "#DD4A48",
+          });
+        });
+    };
+
+
+  const miTabla = (row)=>{
+   return(
+                     <TableRow key={row._id}>
+                  <TableCell component="th" scope="row">
+                    {`${row.name} ${row.lastName} ${row.statusUser}`}
+                  </TableCell>
+
+                  <TableCell style={{ width: 100 }} align="left">
+                    <Button
+                      variant="outlined"
+                      onClick={(e) => Router.push(`/staff/${row._id}`)}
+                    >
+                      {matches ? <EditIcon></EditIcon> : "editar"}
+                    </Button>
+                  </TableCell>
+                  <TableCell style={{ width: 100 }} align="left">
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        eliminar(row._id);
+                      }}
+                      color="error"
+                    >
+                      {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+   )
+  }
+  const miTablaInac = (row)=>{
+   return(
+                     <TableRow key={row._id}>
+                  <TableCell component="th" scope="row">
+                    {`${row.name} ${row.lastName} ${row.statusUser}`}
+                  </TableCell>
+
+                  {/* <TableCell style={{ width: 100 }} align="left">
+                    <Button
+                      variant="outlined"
+                      onClick={(e) => Router.push(`/staff/${row._id}`)}
+                    >
+                      {matches ? <EditIcon></EditIcon> : "editar"}
+                    </Button>
+                  </TableCell> */}
+                  <TableCell style={{ width: 100 }} align="left">
+                    <Button
+                      // variant="outlined"
+                      onClick={() => {
+                        reactivar(row._id);
+                      }}
+                      color="success"
+                    >
+                      {matches ? <DeleteIcon></DeleteIcon> : "Reactivar"}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+   )
+  }
 
 
   return (
@@ -185,33 +271,16 @@ export default function CustomPaginationActionsTable({staff}) {
                   page * rowsPerPage + rowsPerPage
                 )
               : staff
-            ).map((row) => (
-              <TableRow key={row._id}>
-                <TableCell component="th" scope="row">
-                  {`${row.name} ${row.lastName}`}
-                </TableCell>
+            ).map((row) =>
+              row.statusUser
+              ?
+                miTabla(row)
+              :
+                miTablaInac(row)
 
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button
-                    variant="outlined"
-                    onClick={(e) => Router.push(`/staff/${row._id}`)}
-                  >
-                    {matches ? <EditIcon></EditIcon> : "editar"}
-                  </Button>
-                </TableCell>
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button
-                    variant="outlined"
-                    onClick={() => {
-                      eliminar(row._id);
-                    }}
-                    color="error"
-                  >
-                    {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+
+
+            )}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

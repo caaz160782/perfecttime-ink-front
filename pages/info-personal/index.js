@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
 import MediaCard from "../../Components/staff/CardStaff";
-import useStyles from "./style";
+//import useStyles from "./style";
 import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -12,46 +12,43 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const InfoPersonal = () => {
+  const [valToken, setToken] = useLocalStorage("userVal", "");
+  const [auth, guardarAuth] = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
-    const [valToken, setToken] = useLocalStorage("userVal", "");
-     const [auth, guardarAuth] = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  // const { id } = router.query;
+  //console.log("el id es", auth.infoUser._id);
+  //const classes = useStyles();
+  const [staffMember, setStaffMember] = useState({});
 
-    const router = useRouter();
-   // const { id } = router.query;
-    //console.log("el id es", auth.infoUser._id);
-    const classes = useStyles();
-    const [staffMember, setStaffMember] = useState({});
-
-    useEffect(
-      () => {
-        const consultarAPI = async () => {
-          try {
-            // const respuesta = await clienteAxios.get(`/staff/${id}`);
-            const respuesta = await clienteAxios.get(
-              `/clientModified/${auth.infoUser._id}`,
-              {
-                headers: { apitoken: valToken.token },
-              }
-            );
-            console.log(respuesta.data.listClient.clientId);
-            setStaffMember(respuesta.data.listClient.clientId);
-            setLoading(false);
-          } catch (error) {
-            console.log(error);
+  useEffect(() => {
+    const consultarAPI = async () => {
+      try {
+        // const respuesta = await clienteAxios.get(`/staff/${id}`);
+        const respuesta = await clienteAxios.get(
+          `/clientModified/${auth.infoUser._id}`,
+          {
+            headers: { apitoken: valToken.token },
           }
-        };
-        consultarAPI();
-      },
-      () => {
-        console.log("desmontar");
-        source.cancel();
-      },
-      [staffMember]
-    );
+        );
+        console.log(respuesta.data.listClient.clientId);
+        setStaffMember(respuesta.data.listClient.clientId);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    consultarAPI();
 
-    console.log("loading", loading);
-    console.log(staffMember);
+    return () => {
+      console.log("desmontar");
+      source.cancel();
+    };
+  }, []);
+
+  console.log("loading", loading);
+  console.log(staffMember);
 
   return (
     <Layout>
@@ -60,7 +57,11 @@ const InfoPersonal = () => {
         {loading ? (
           <Typography>loading...</Typography>
         ) : (
-          <MediaCard atras={"/"} classes={classes} staffMember={staffMember}></MediaCard>
+          <MediaCard
+            atras={"/"}
+            //classes={classes}
+            staffMember={staffMember}
+          ></MediaCard>
         )}
       </Container>
     </Layout>

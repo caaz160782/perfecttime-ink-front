@@ -35,7 +35,6 @@ const Layout = ({ title, children }) => {
   // let authh = false
   //console.log("auth desde layout", valtoken);
   //console.log("auth desde layout", auth.autenticado);
-
   return (
     <ThemeProvider theme={theme}>
       <Head>

@@ -46,12 +46,13 @@ const FrmLogin = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    console.log("values", values);
     setLoading(true);
     clienteAxios
       .post("/login", values)
       .then((response) => {
+        console.log(response);
         const { token, infoUser, infoStudio, autenticado } = response.data;
-
         guardarAuth({
           token,
           infoUser,

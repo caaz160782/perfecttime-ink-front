@@ -1,8 +1,6 @@
 import NextLink from "next/link";
 import Image from "next/image";
-
 import React, { useState, useContext } from "react";
-
 import { useScrollTrigger } from "@mui/material";
 import {
   AppBar,
@@ -15,17 +13,14 @@ import {
   Switch,
   Button,
 } from "@mui/material";
-
 import useMediaQuery from "@mui/material/useMediaQuery";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
 import theme from "./../../utils/temaConfig";
 import { AuthContext } from "../../Context/AuthContext";
 import { Nav } from "./Nav";
 import useStyles from "./style";
-
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 function ElevationScroll(props) {
@@ -55,6 +50,7 @@ const HeaderApp = (props) => {
   const handleChange = (e, value) => {
     setValue(value);
   };
+
   //contexto
   console.log("hader debug context", auth);
   //validacion de la estructura

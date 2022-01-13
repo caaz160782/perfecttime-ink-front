@@ -19,14 +19,9 @@ module.exports = withTM({
         fs: false,
       };
     }
-
     return config;
   },
+  images: {
+    domains: ["localhost:8000", "https://backaws-api.perfecttimeink.info"],
+  },
 });
-
-// module.exports = {
-//   images: {
-//     loader: "imgix",
-//     path: "http://localhost:8000/",
-//   },
-// };

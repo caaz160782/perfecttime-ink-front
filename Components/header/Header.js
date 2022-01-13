@@ -1,6 +1,5 @@
 import NextLink from "next/link";
 import Image from "next/image";
-
 import React, { useState, useContext } from "react";
 
 import { useScrollTrigger } from "@mui/material";

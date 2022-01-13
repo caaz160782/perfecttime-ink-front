@@ -38,8 +38,7 @@ const FrmConfig = () => {
     }
   };
 
-  console.log(valuesConfig);
-
+  //console.log(valuesConfig);
   const handlerSubmit = (e) => {
     e.preventDefault();
     setLoading(true);

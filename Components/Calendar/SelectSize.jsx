@@ -3,19 +3,15 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 
-const SelectTatuador = ({ handleChangeDate }) => {
+const SelectSize = ({ handleChangeDate }) => {
   const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio] = useLocalStorage("studioVal", "");
+  const [sizeValue, setSizeTatuador] = useState([]);
 
-  const [tatuadorValue, setValueTatuador] = useState([]);
-
-  //.get("/findStaffByStudy", { headers: { apitoken: valToken.token } })
   useEffect(() => {
     clienteAxios
-      .get(`/findStaffByStudy/${valStudio}`)
+      .get(`/sizes`)
       .then((response) => {
-        //console.log(response.data.payload);
-        setValueTatuador(response.data.payload);
+        setSizeTatuador(response.data.payload);
       })
       .catch((error) => {
         if (error.response) {
@@ -27,26 +23,26 @@ const SelectTatuador = ({ handleChangeDate }) => {
     return () => {
       //   cleanup
     };
-  }, [valStudio, valToken.token]);
+  }, []);
 
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 230 }}>
-        <InputLabel id="lblInpTat">Tatuador</InputLabel>
+        <InputLabel id="lblInpSize">Tamaño</InputLabel>
         <Select
           defaultValue=""
-          labelId="lblInpTat"
-          id="tatuador"
-          onChange={handleChangeDate("id_tatuador")}
+          labelId="lblInpSize"
+          id="size"
+          onChange={handleChangeDate("id_size")}
           autoWidth
-          label="tatuador"
+          label="Tamaño"
         >
           <MenuItem value="">
-            <em>Selecciona un tatuador</em>
+            <em>Selecciona el tamaño</em>
           </MenuItem>
-          {tatuadorValue.map((t) => (
-            <MenuItem key={t._id} value={t._id}>
-              {t.name}
+          {sizeValue.map((sv) => (
+            <MenuItem key={sv._id} value={sv._id}>
+              {sv.descripcion}
             </MenuItem>
           ))}
         </Select>
@@ -55,4 +51,4 @@ const SelectTatuador = ({ handleChangeDate }) => {
   );
 };
 
-export default SelectTatuador;
+export default SelectSize;

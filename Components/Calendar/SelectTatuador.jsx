@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import React, { useEffect, useState, useContext } from "react";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
 
 const SelectTatuador = ({ handleChangeDate }) => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio] = useLocalStorage("studioVal", "");
-
+  const { auth } = useContext(AuthContext);
   const [tatuadorValue, setValueTatuador] = useState([]);
 
   //.get("/findStaffByStudy", { headers: { apitoken: valToken.token } })
   useEffect(() => {
     clienteAxios
-      .get(`/findStaffByStudy/${valStudio}`)
+      .get(`/findStaffByStudy/${auth.infoStudio.id}`)
       .then((response) => {
         //console.log(response.data.payload);
         setValueTatuador(response.data.payload);
@@ -27,16 +25,17 @@ const SelectTatuador = ({ handleChangeDate }) => {
     return () => {
       //   cleanup
     };
-  }, [valStudio, valToken.token]);
+  }, [auth.infoStudio.id]);
 
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 230 }}>
         <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
+          size="small"
           defaultValue=""
           labelId="lblInpTat"
-          id="tatuador"
+          id="id_tatuador"
           onChange={handleChangeDate("id_tatuador")}
           autoWidth
           label="tatuador"

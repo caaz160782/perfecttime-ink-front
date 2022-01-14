@@ -1,34 +1,23 @@
-import React from "react";
-import Calendar from "../Calendar";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import Calendar from "../Calendar/Calendar";
+import clienteAxios from "../../utils/axios";
 
 const FrmAgenda = () => {
+  const { auth } = useContext(AuthContext);
+  const [config, setConfig] = useState({});
+  const [reload, setReload] = useState("true");
 
-    const [valToken] = useLocalStorage("userVal", "");
-    const [valStudio] = useLocalStorage("idStudio", "");
-    const [config, setConfig] = useState({});
-    const [token, setToken] = useState({});
-    const [studioId, setStudioId] = useState({});
-    const router = useRouter();
-  
-    console.log(valToken);
-  
-    useEffect(() => {
-      if (valToken !== "") {
-        setToken(valToken.token);
-      }
-      if (valStudio !== "") {
-        setStudioId(valStudio);
-      }
-    }, [setToken, valToken, valStudio]);
-  
-    useEffect(() => {
-      //if (studioId) {
+  //console.log(auth);
+
+  useEffect(() => {
+    if (reload) {
       clienteAxios
-        .get(`/findStudiSetting/${studioId}`, {
-          headers: { apitoken: token },
+        .get(`/findStudiSetting/${auth.infoStudio.id}`, {
+          headers: { apitoken: auth.token },
         })
         .then((response) => {
-          console.log(2, response);
+          //console.log(2, response);
           setConfig(response.data.payload);
         })
         .catch((error) => {
@@ -38,52 +27,55 @@ const FrmAgenda = () => {
             console.log(error);
           }
         });
-      //}
-    }, [setConfig, studioId, token]);
-  
-    //console.log(3, Object.keys(config).length);
-  
-    if (valToken !== "" && Object.keys(config).length !== 0) {
-      const { id_tatoostudios, timeToOpen, timeToClose, dayNotAvailables } =
-        config;
-  
-      let dayNum = [];
-      if (dayNotAvailables.length !== 0) {
-        dayNotAvailables.forEach((days) => {
-          if (days === "Domingo") {
-            dayNum.push(0);
-          }
-          if (days === "Lunes") {
-            dayNum.push(1);
-          }
-          if (days === "Martes") {
-            dayNum.push(2);
-          }
-          if (days === "Miercoles") {
-            dayNum.push(3);
-          }
-          if (days === "Jueves") {
-            dayNum.push(4);
-          }
-          if (days === "Viernes") {
-            dayNum.push(5);
-          }
-          if (days === "Sabado") {
-            dayNum.push(6);
-          }
-          dayNum;
-        });
-      }
+    }
+    setReload(false);
+  }, []);
 
-  return (
-    <Layout>
-     <Calendar
-            timeToOpen={timeToOpen}
-            timeToClose={timeToClose}
-            dayNotAvailables={dayNum}
-          />
-    </Layout>
-  );
+  if (auth.token !== "" && Object.keys(config).length !== 0) {
+    const { timeToOpen, timeToClose, dayNotAvailables } = config;
+    let dayNum = [];
+    if (dayNotAvailables.length !== 0) {
+      dayNotAvailables.forEach((days) => {
+        if (days === "Domingo") {
+          dayNum.push(0);
+        }
+        if (days === "Lunes") {
+          dayNum.push(1);
+        }
+        if (days === "Martes") {
+          dayNum.push(2);
+        }
+        if (days === "Miercoles") {
+          dayNum.push(3);
+        }
+        if (days === "Jueves") {
+          dayNum.push(4);
+        }
+        if (days === "Viernes") {
+          dayNum.push(5);
+        }
+        if (days === "Sabado") {
+          dayNum.push(6);
+        }
+        dayNum;
+      });
+    }
+
+    return (
+      <div>
+        <Calendar
+          timeToOpen={timeToOpen}
+          timeToClose={timeToClose}
+          dayNotAvailables={dayNum}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1>que paso</h1>
+      </div>
+    );
+  }
 };
-
 export default FrmAgenda;

@@ -1,11 +1,10 @@
-import Layout from "../Components/Layout"
+import Layout from "../Components/Layout";
 
-
-const Servicios = ()=>{
-   return (
-     <Layout title={"servicios"}>
-       <h1>servicios</h1>
-     </Layout>
-   );
-}
-export default Servicios
+const Servicios = () => {
+  return (
+    <div>
+      <h1>servicios</h1>
+    </div>
+  );
+};
+export default Servicios;

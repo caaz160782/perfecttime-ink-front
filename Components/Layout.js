@@ -16,10 +16,9 @@ import { makeStyles } from "@mui/styles";
 
 const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
-  const { auth, guardarAuth, logOut } = contextValue;
-
+  const { auth, logOut } = contextValue;
+  //console.log(1, "layout", auth);
   const router = useRouter();
-
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -37,7 +36,7 @@ const Layout = ({ title, children }) => {
       </Head>
 
       {auth?.autenticado ? (
-        <HeaderApp logout={logOut}></HeaderApp>
+        <HeaderApp logout={logOut}> </HeaderApp>
       ) : (
         <Header></Header>
       )}

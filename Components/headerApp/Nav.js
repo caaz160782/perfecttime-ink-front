@@ -5,7 +5,7 @@ import theme from "./../../utils/temaConfig";
 //import LinkTab from "./LinkTab";
 import { useState, useEffect, useContext } from "react";
 import useStyles from "./style";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 import { AuthContext } from "../../Context/AuthContext";
 import FadeMenu from "../staff/Menu";
 
@@ -15,17 +15,21 @@ import Fade from "@mui/material/Fade";
 
 export const Nav = ({ logout }) => {
   const { auth, guardarAuth } = useContext(AuthContext);
-  //console.log("auth desde nav del headerApp", auth.infoUser.rol);
-  let rol = auth.infoUser.rol;
-  //  console.log(valToken.infoUser);
+
+  //  console.log("nav", auth);
+
+  //  console.log("nav===", auth.infoUser.rol);
+
+  let rol = auth?.infoUser?.rol;
 
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -43,9 +47,6 @@ export const Nav = ({ logout }) => {
           <NextLink href="/clientAdmin" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
-          {/* <NextLink href="/staff" passHref>
-            <Link className={classes.tab}>Staff</Link>
-          </NextLink> */}
           <div style={{ display: "inline" }}>
             <Button
               className={classes.tab}
@@ -121,35 +122,6 @@ export const Nav = ({ logout }) => {
       >
         Logout
       </Button>
-      {/* </Link>
-      </NextLink>{" "} */}
     </div>
   );
 };
-
-// <Tabs
-//   indicatorColor="primary"
-//   value={value}
-//   onChange={handleChange}
-//   className={classes.tabContainer}
-// >
-//   <Tab
-//     className={classes.tab}
-//     label="Home"
-//     component={Link}
-//     to="/servicios"
-//   >
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Galeria">
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Contacto">
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Servicios" component={Link}>
-//     {" "}
-//   </Tab>
-//   {/* <LinkTab  /> */}
-//   {/* <LinkTab label="Page Two" href="/bar" /> */}
-// </Tabs>;

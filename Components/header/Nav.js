@@ -6,9 +6,8 @@ import theme from "./../../utils/temaConfig";
 import { useState } from "react";
 import useStyles from "./style";
 
-
 export const Nav = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.tabContainer}>
@@ -38,30 +37,3 @@ export const Nav = (props) => {
     </div>
   );
 };
-
-    // <Tabs
-    //   indicatorColor="primary"
-    //   value={value}
-    //   onChange={handleChange}
-    //   className={classes.tabContainer}
-    // >
-    //   <Tab
-    //     className={classes.tab}
-    //     label="Home"
-    //     component={Link}
-    //     to="/servicios"
-    //   >
-    //     {" "}
-    //   </Tab>
-    //   <Tab className={classes.tab} label="Galeria">
-    //     {" "}
-    //   </Tab>
-    //   <Tab className={classes.tab} label="Contacto">
-    //     {" "}
-    //   </Tab>
-    //   <Tab className={classes.tab} label="Servicios" component={Link}>
-    //     {" "}
-    //   </Tab>
-    //   {/* <LinkTab  /> */}
-    //   {/* <LinkTab label="Page Two" href="/bar" /> */}
-    // </Tabs>;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-
 const AuthContext = React.createContext([{}, () => {}]);
+import { useRouter } from "next/router";
 
 const AuthProvider = (props) => {
   const defaultUserVal = {
@@ -12,11 +12,12 @@ const AuthProvider = (props) => {
   };
 
   const [userVal, setUserVal] = useLocalStorage("userVal", defaultUserVal);
-  //const [valStudio, setStudio] = useLocalStorage("idStudio", "");
   const [auth, guardarAuth] = useState(userVal);
+  const router = useRouter();
 
   const logOut = () => {
     guardarAuth(defaultUserVal);
+    router.push("/");
   };
 
   //const saveToken = (token) => guardarAuth({ ...auth, token });
@@ -24,8 +25,8 @@ const AuthProvider = (props) => {
 
   useEffect(() => {
     setUserVal(auth);
-    console.log("===>", auth);
   }, [auth]);
+
   return (
     <AuthContext.Provider value={{ auth, guardarAuth, logOut, saveinfoStudio }}>
       {props.children}

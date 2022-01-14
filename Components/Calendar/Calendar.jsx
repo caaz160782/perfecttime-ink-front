@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import FullCalendar, { formatDate } from "@fullcalendar/react";
+import React, { useState, useEffect, useContext } from "react";
+import Box from "@mui/material/Box";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import ModalDate from "./ModalDate";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
+  const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+  const [openViewModal, setOpenViewModal] = useState(false);
   const [fechaHoy, setFecha] = useState("");
   const [even, setEven] = useState([]);
-  const [valStudio] = useLocalStorage("studioVal", "");
   const [valueDate, setValuDate] = useState({
-    id_studio: valStudio,
+    id_studio: auth.infoStudio.id,
     id_cliente: "61a5c587cb1557cfd225dd8e",
-    id_staff: "61de4d484536edaebe55dd00",
+    id_staff: "61a5c587cb1557cfd225dd8e",
   });
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [infoDate, setinfoDate] = useState({});
 
   const handleDateClick = (arg) => {
     setValuDate({ ...valueDate, addDate: arg.dateStr });
@@ -31,32 +30,15 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const HandleEventClick = (info) => {
-    alert("Event: " + info.event.title);
-    alert(info.event);
-
-    console.log(info.event);
-  };
-
-  const handleChangeDate = (prop) => (event) => {
-    setValuDate({ ...valueDate, [prop]: event.target.value });
-    if (prop === "hourTatooStart") {
-      setValuDate({
-        ...valueDate,
-        start: valueDate.addDate + "T" + event.target.value,
-      });
-    }
-    if (prop === "hourTatooFinish") {
-      setValuDate({
-        ...valueDate,
-        end: valueDate.addDate + "T" + event.target.value,
-      });
-    }
+    //console.log(info.event._def);
+    setinfoDate(info.event._def);
+    setOpenViewModal(true);
   };
 
   const cargaDates = async () => {
     try {
       clienteAxios
-        .get(`/dateTatoo/${valStudio}`, {
+        .get(`/dateTatoo/${auth.infoStudio.id}`, {
           //headers: { apitoken: token },
         })
         .then((response) => {
@@ -80,42 +62,27 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     cargaDates();
   }, []);
 
-  const handleGuardar = (e) => {
-    e.preventDefault();
-    // setLoading(true);
-    clienteAxios
-      .post("/dateTatoo", valueDate, {
-        //   headers: { apitoken: valToken.token },
-      })
-      .then((response) => {
-        //console.log(response.data);
-        const { code } = response.data;
-        //console.log();
-        if (code === "Succesful") {
-          //setEven([response.data.payload]);
-          cargaDates();
-          setOpen(false);
-        }
-      })
-      .catch((error) => {
-        // setLoading(false);
-        if (error.response) {
-          console.log(error.response.data);
-        } else {
-          console.log(error);
-        }
-      });
-  };
-
   return (
     <div>
       <div>
         <ModalDate
           open={open}
-          handleClose={handleClose}
+          setOpen={setOpen}
           fechaHoy={fechaHoy}
-          handleChangeDate={handleChangeDate}
-          handleGuardar={handleGuardar}
+          setValuDate={setValuDate}
+          valueDate={valueDate}
+          cargaDates={cargaDates}
+        />
+      </div>
+      <div>
+        <ModalViewDate
+          openViewModal={openViewModal}
+          setOpenViewModal={setOpenViewModal}
+          fechaHoy={fechaHoy}
+          infoDate={infoDate}
+          setinfoDate={setinfoDate}
+          // valueDate={valueDate}
+          cargaDates={cargaDates}
         />
       </div>
       <FullCalendar

@@ -4,8 +4,11 @@ import { useRouter } from "next/router";
 const oneDate = () => {
   //const router = useRouter();
   const { id } = router.query;
-
-  return <div></div>;
+  return (
+    <div>
+      <h1>agend id</h1>
+    </div>
+  );
 };
 
 export default oneDate;

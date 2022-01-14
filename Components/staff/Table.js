@@ -24,9 +24,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "./../../utils/temaConfig";
 import clienteAxios from "../../utils/axios";
 import { Snackbar } from "@mui/material";
-import { useState } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-
+import { useState, useContext } from "react";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
+import { set } from "date-fns";
+import Switches from "../../Components/staff/SwitchStatus";
 function TablePaginationActions(props) {
   // const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -100,7 +102,8 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
     message: "",
     backgroundColor: "",
   });
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -133,15 +136,18 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
     // console.log(id);
     clienteAxios
       .delete(`/staff/${id}`, {
-        headers: { apitoken: valToken.token },
+        //headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        reload();
         setAlert({
           open: true,
           message: respuesta.data.message,
           backgroundColor: "#519259",
         });
+        setTimeout(() => {
+          reload();
+        }, 4000);
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
@@ -159,16 +165,18 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
     console.log(cliente);
     clienteAxios
       .patch(`/staffInac/${id}`, cliente, {
-        headers: { apitoken: valToken.token },
+        //  headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        reload();
         setAlert({
           open: true,
           message: respuesta.data.message,
           backgroundColor: "#519259",
         });
-
+        setTimeout(() => {
+          reload();
+        }, 3000);
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
@@ -185,7 +193,7 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
     return (
       <TableRow key={row._id}>
         <TableCell component="th" scope="row">
-          {`${row.name} ${row.lastName} ${row.statusUser}`}
+          {`${row.name} ${row.lastName}`}
         </TableCell>
 
         <TableCell style={{ width: 100 }} align="left">
@@ -261,6 +269,7 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
+      <Switches />
       <TableContainer component={Paper}>
         <Table
           md={{ maxWidth: 600 }}

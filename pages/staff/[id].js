@@ -7,9 +7,12 @@ import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
+
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 
 const oneStaff = () => {
   const useStyles = makeStyles((theme) => ({
@@ -35,12 +38,13 @@ const oneStaff = () => {
   }));
   const classes = useStyles();
 
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
-  console.log("el id es", id);
+
   const [staffMember, setStaffMember] = useState({});
   const [reload, setReload] = useState(true);
 
@@ -49,7 +53,8 @@ const oneStaff = () => {
       const consultarAPI = async () => {
         try {
           const respuesta = await clienteAxios.get(`/staff/${id}`, {
-            headers: { apitoken: valToken.token },
+            // headers: { apitoken: valToken.token },
+            headers: { apitoken: auth.token },
           });
           setStaffMember(respuesta.data.listUser.userFound);
           setLoading(false);
@@ -67,7 +72,7 @@ const oneStaff = () => {
   }, [reload]);
 
   return (
-    <Layout>
+    <div>
       <Container align="center" maxWidth={600}>
         {loading ? (
           <div align="center">
@@ -84,7 +89,7 @@ const oneStaff = () => {
           ></MediaCard>
         )}
       </Container>
-    </Layout>
+    </div>
   );
 };
 

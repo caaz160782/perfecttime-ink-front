@@ -270,7 +270,11 @@ const HeaderApp = (props) => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary">
+        <AppBar
+          position="fixed"
+          color="primary"
+          style={{ marginBottom: "5px" }}
+        >
           <Toolbar>
             <div>
               <NextLink href="/" passHref>

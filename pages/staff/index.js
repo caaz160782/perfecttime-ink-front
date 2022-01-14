@@ -13,6 +13,8 @@ import CustomizedInputBase from "../../Components/staff/Busqueda";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 import { makeStyles } from "@mui/styles";
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 
 const Staff = () => {
   const useStyles = makeStyles((theme) => ({
@@ -38,7 +40,8 @@ const Staff = () => {
   }));
   const classes = useStyles();
 
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   let source = axios.CancelToken.source();
   const [staff, setStaff] = useState([]);
@@ -68,17 +71,17 @@ const Staff = () => {
     if (reload) {
       setLoading(true);
       const consultarAPI = async () => {
-        const idStudioStored = localStorage.getItem("studioVal");
-        const idStudio = JSON.parse(idStudioStored);
+        //const idStudioStored = localStorage.getItem("userVal");
+        // const idStudio = JSON.parse(idStudioStored);
         try {
           const respuesta = await clienteAxios.get(
-            `/findStaffByStudy/${idStudio}`,
+            `/findStaffByStudy/${auth.infoStudio.id}`,
+            // `/findStaffByStudy/${idStudio.infoStudio.id}`,
             {
-              headers: { apitoken: valToken.token },
+              headers: { apitoken: auth.token },
             }
           );
 
-          console.log(respuesta);
           const staffArray = respuesta.data.payload;
           setStaff(staffArray);
           setStaffMentira(staffArray);
@@ -97,18 +100,18 @@ const Staff = () => {
   }, [reload]);
 
   return (
-    <Layout>
+    <div>
       {loading ? (
         <div align="center">
           <CircularProgress size={40}></CircularProgress>
         </div>
       ) : (
         <div>
-          <div align="center" style={{ marginBottom: "20px" }}>
+          <div align="center" style={{ margin: "20px" }}>
             <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
-          <div style={{ marginBottom: "20px", marginTop: "30px" }}>
+          <div style={{ marginBottom: "25px" }}>
             <CustomizedDialogs
               staff={staff}
               md={{ m: 2 }}
@@ -127,7 +130,7 @@ const Staff = () => {
           />
         </div>
       )}
-    </Layout>
+    </div>
   );
 };
 

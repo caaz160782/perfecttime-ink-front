@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       marginBottom: "4em",
     },
-
   },
   logo: {
     height: "6em",
@@ -45,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     textTransform: "none",
-    fontFamily: "Pacifico",
-    fontSize: "1.1rem",
+    fontFamily: "Raleway",
+    fontWeight: 550,
+    fontSize: "1rem",
     color: "#fff",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,
@@ -80,9 +80,9 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     color: "#fff",
-    fontFamily: "Pacifico",
+    fontFamily: "Raleway",
     textTransform: "none",
-    fontSize: "1.6rem",
+    fontSize: "1.4rem",
     borderRadius: "40px",
     marginLeft: "50px",
     marginRight: "25px",

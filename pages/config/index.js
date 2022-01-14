@@ -8,15 +8,15 @@ const Config = () => {
 
   if (valToken) {
     return (
-      <Layout>
+      <div>
         <FrmConfig />
-      </Layout>
+      </div>
     );
   } else {
     return (
-      <Layout>
+      <div>
         <h1>No autorizado</h1>
-      </Layout>
+      </div>
     );
 
     //router.push("/agenda")

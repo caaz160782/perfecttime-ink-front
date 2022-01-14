@@ -12,11 +12,12 @@ import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -57,8 +58,9 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes, reload }) {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio] = useLocalStorage("studioVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  // const [valStudio] = useLocalStorage("studioVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
@@ -93,8 +95,8 @@ export default function CustomizedDialogs({ classes, reload }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("archivo", archivo);
-
+    //  console.log("archivo", archivo);
+    const idStudio = auth.infoStudio.id;
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
@@ -107,14 +109,15 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
-    formData.append("idStudio", valStudio);
+    formData.append("idStudio", idStudio);
     // formData.append("Role", "Tatoo");
     console.log("user", user);
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          apitoken: valToken.token,
+          //  apitoken: valToken.token,
+          headers: { apitoken: auth.token },
         },
       })
       .then((respuesta) => {

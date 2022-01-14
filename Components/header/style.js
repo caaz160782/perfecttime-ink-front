@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     textTransform: "none",
-    fontFamily: "Pacifico",
+    // fontFamily: "Pacifico",
     fontSize: "1.1rem",
     color: "#fff",
     "&:hover": {

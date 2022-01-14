@@ -82,6 +82,7 @@ const FrmLogin = () => {
         // }
       })
       .catch((error) => {
+        console.log(error);
         setLoading(false);
         if (error.response) {
           console.log(error.response.data);

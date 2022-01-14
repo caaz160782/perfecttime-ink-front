@@ -11,31 +11,14 @@ import theme from "../utils/temaConfig";
 import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
 import { useContext, useEffect, useMemo } from "react";
-
 import { createTheme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-//import theme from "../../utils/temaConfig";
 
 const Layout = ({ title, children }) => {
-  // const useStyles = makeStyles((theme) => {
-  //   footer:{
-  //     backgroundColor:"#000"
-  //   }
-  // })
-
-  //const classes = useStyles();
-  //
   const contextValue = useContext(AuthContext);
-  console.log("0", contextValue);
-  const { auth, guardarAuth, logOut } = contextValue;
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
-  //console.log("probando desde el layout", valToken);
-  console.log("1", auth);
-
+  const { auth, logOut } = contextValue;
+  //console.log(1, "layout", auth);
   const router = useRouter();
-  // let authh = false
-  //console.log("auth desde layout", valtoken);
-  //console.log("auth desde layout", auth.autenticado);
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -53,7 +36,7 @@ const Layout = ({ title, children }) => {
       </Head>
 
       {auth?.autenticado ? (
-        <HeaderApp logout={logOut}></HeaderApp>
+        <HeaderApp logout={logOut}> </HeaderApp>
       ) : (
         <Header></Header>
       )}

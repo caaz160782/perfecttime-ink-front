@@ -1,26 +1,13 @@
-import React, { useEffect } from "react";
-import Layout from "../../Components/Layout";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import React, { useState, useEffect, useContext } from "react";
+import FrmAgenda from "../../Components/agenda/FrmAgenda";
+import Box from "@mui/material/Box";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Agenda = () => {
-  const [valToken] = useLocalStorage("userVal", "");
-
-  useEffect(() => {}, []);
-
-  //if (valToken !== ) {
   return (
-    <Layout>
-      <div style={{ width: "100%" }}>
-        <h1> prueba</h1>
-      </div>
-    </Layout>
+    <Box sx={{ p: 0 }}>
+      <FrmAgenda />
+    </Box>
   );
-  // } else {
-  // return (
-  //   <Layout>
-  //     <h1>No autorizado</h1>
-  //   </Layout>
-  // );
-  // }
 };
 export default Agenda;

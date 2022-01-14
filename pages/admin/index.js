@@ -3,11 +3,10 @@ import Layout from "../../Components/Layout";
 import FrmAdmin from "../../Components/admin/FrmAdmin";
 
 const Admin = () => {
-  
   return (
-    <Layout>
-     <FrmAdmin/>
-    </Layout>
+    <div>
+      <FrmAdmin />
+    </div>
   );
 };
 

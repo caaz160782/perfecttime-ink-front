@@ -31,7 +31,8 @@ const FrmAgenda = () => {
     setReload(false);
   }, []);
 
-  if (auth.token !== "" && Object.keys(config).length !== 0) {
+  // if (auth.token !== "" && Object.keys(config).length !== 0) {
+  if (Object.keys(config).length !== 0) {
     const { timeToOpen, timeToClose, dayNotAvailables } = config;
     let dayNum = [];
     if (dayNotAvailables.length !== 0) {

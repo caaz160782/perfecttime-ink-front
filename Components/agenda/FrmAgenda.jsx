@@ -14,7 +14,7 @@ const FrmAgenda = () => {
     if (reload) {
       clienteAxios
         .get(`/findStudiSetting/${auth.infoStudio.id}`, {
-          headers: { apitoken: auth.token },
+          //   headers: { apitoken: auth.token },
         })
         .then((response) => {
           //console.log(2, response);

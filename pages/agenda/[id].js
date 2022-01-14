@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const oneDate = () => {
   //const router = useRouter();
-  const { id } = router.query;
+  //const { id } = router.query;
   return (
     <div>
       <h1>agend id</h1>

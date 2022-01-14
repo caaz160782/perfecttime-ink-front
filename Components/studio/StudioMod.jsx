@@ -280,4 +280,4 @@ export default function EditCustomizedDialogs({classes, studioName, typeRol}) {
   ); 
 };
 
-export default FrmStudio
+export default StudioMod

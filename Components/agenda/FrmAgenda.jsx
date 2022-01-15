@@ -17,7 +17,7 @@ const FrmAgenda = () => {
           //   headers: { apitoken: auth.token },
         })
         .then((response) => {
-          //console.log(2, response);
+          console.log(2, response);
           setConfig(response.data.payload);
         })
         .catch((error) => {

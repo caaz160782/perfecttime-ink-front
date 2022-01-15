@@ -48,6 +48,7 @@ const Staff = () => {
   const [staffMentira, setStaffMentira] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
+  //let staffFirst = [];
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
@@ -81,10 +82,13 @@ const Staff = () => {
               headers: { apitoken: auth.token },
             }
           );
-
           const staffArray = respuesta.data.payload;
-          setStaff(staffArray);
+
           setStaffMentira(staffArray);
+
+          let staffFirst = staffArray.filter((x) => x.statusUser === true);
+
+          setStaff(staffFirst);
           setLoading(false);
         } catch (error) {
           console.log(error);
@@ -99,7 +103,7 @@ const Staff = () => {
     };
   }, [reload]);
 
-  const [switchStatus, setSwitchStatus] = useState(true);
+  const [switchStatus, setSwitchStatus] = useState(false);
   const verInactivos = () => {
     setSwitchStatus(!switchStatus);
     if (switchStatus) {

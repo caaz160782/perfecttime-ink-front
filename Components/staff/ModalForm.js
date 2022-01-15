@@ -111,13 +111,13 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("picture", archivo);
     formData.append("idStudio", idStudio);
     // formData.append("Role", "Tatoo");
-    console.log("user", user);
+    console.log("auth", auth.token);
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           //  apitoken: valToken.token,
-          headers: { apitoken: auth.token },
+          apitoken: auth.token,
         },
       })
       .then((respuesta) => {

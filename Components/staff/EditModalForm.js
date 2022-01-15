@@ -12,11 +12,12 @@ import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -61,7 +62,8 @@ export default function EditCustomizedDialogs({
   staffMember,
   reload,
 }) {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
   //  console.log("staff", typeRol);
   //  const foto = staffMember.picture;
   const [archivo, guardarArchivo] = useState("");
@@ -113,7 +115,8 @@ export default function EditCustomizedDialogs({
 
     clienteAxios
       .patch(`/staff/${staffMember._id}`, formData, {
-        headers: { apitoken: valToken.token },
+        // headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
         console.log(respuesta);

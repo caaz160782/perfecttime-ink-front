@@ -17,6 +17,8 @@ import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../Context/AuthContext";
 
+import { info } from "sass";
+
 const FrmLogin = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -44,10 +46,12 @@ const FrmLogin = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    console.log("values", values);
     setLoading(true);
     clienteAxios
       .post("/login", values)
       .then((response) => {
+        console.log(response);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,
@@ -55,6 +59,7 @@ const FrmLogin = () => {
           autenticado,
           infoStudio,
         });
+
         if (
           response.data.autenticado === true &&
           infoUser.rol === "Administrador"
@@ -77,6 +82,7 @@ const FrmLogin = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
         setLoading(false);
         if (error.response) {
           console.log(error.response.data);

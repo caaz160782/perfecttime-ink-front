@@ -3,59 +3,93 @@ import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
 import MediaCard from "../../Components/staff/CardStaff";
-//import useStyles from "./style";
 import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { makeStyles } from "@mui/styles";
+import { CircularProgress } from "@mui/material";
+
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 
 const OneStaff = () => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  const useStyles = makeStyles((theme) => ({
+    btnLogin: {
+      color: "#fff",
+      fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "1.6rem",
+    },
+    imgBack: {
+      border: "3px solid red",
+    },
+    spanes: {
+      textTransform: "none",
+      fontSize: "0.8rem",
+    },
+    foto: {
+      border: "2px solid rgb(173, 173, 173)",
+    },
+    fotoContainer: {
+      backgroundColor: "rgb(123, 136, 146)",
+    },
+  }));
+  const classes = useStyles();
+
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
-  console.log("el id es", id);
-  //const classes = useStyles();
+
   const [staffMember, setStaffMember] = useState({});
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
-    const consultarAPI = async () => {
-      try {
-        // const respuesta = await clienteAxios.get(`/staff/${id}`);
-        const respuesta = await clienteAxios.get(`/staff/${id}`, {
-          headers: { apitoken: valToken.token },
-        });
-
-        setStaffMember(respuesta.data.listUser.userFound);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    consultarAPI();
-
+    if (reload) {
+      const consultarAPI = async () => {
+        try {
+          const respuesta = await clienteAxios.get(`/staff/${id}`, {
+            // headers: { apitoken: valToken.token },
+            headers: { apitoken: auth.token },
+          });
+          setStaffMember(respuesta.data.listUser.userFound);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      consultarAPI();
+      setReload(false);
+    }
     return () => {
       console.log("desmontar");
-      source.cancel();
+      // source.cancel();
     };
-  }, []);
+  }, [reload]);
 
   return (
-    <Layout>
+    <div>
       <Container align="center" maxWidth={600}>
         {loading ? (
-          <Typography>loading...</Typography>
+          <div align="center">
+            <CircularProgress size={40}></CircularProgress>
+          </div>
         ) : (
           <MediaCard
             atras={"/staff"}
-            //          classes={classes}
+            classes={classes}
             staffMember={staffMember}
+            reload={() => {
+              setReload(true);
+            }}
           ></MediaCard>
         )}
       </Container>
-    </Layout>
+    </div>
   );
 };
 

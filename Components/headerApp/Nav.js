@@ -46,45 +46,9 @@ export const Nav = ({ logout }) => {
           <NextLink href="/clientAdmin" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
-<<<<<<< HEAD
           <NextLink href="/staff" passHref>
             <Link className={classes.tab}>Staff</Link>
           </NextLink>
-=======
-          <div style={{ display: "inline" }}>
-            <Button
-              className={classes.tab}
-              id="fade-button"
-              aria-controls={open ? "fade-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              Staff
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleClose}>
-                <NextLink href="/staff" passHref>
-                  <Link>Staff</Link>
-                </NextLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <NextLink href="/staffInac" passHref>
-                  <Link>Staff Inactivo </Link>
-                </NextLink>
-              </MenuItem>
-            </Menu>
-          </div>
->>>>>>> develop
         </>
       );
     } else if (rol === "tatuador") {

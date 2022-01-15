@@ -8,8 +8,6 @@ const FrmAgenda = () => {
   const [config, setConfig] = useState({});
   const [reload, setReload] = useState("true");
 
-  //console.log(auth);
-
   useEffect(() => {
     if (reload) {
       clienteAxios

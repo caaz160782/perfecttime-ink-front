@@ -99,6 +99,10 @@ const Staff = () => {
     };
   }, [reload]);
 
+  const verInactivos = () => {
+    staff.filter((x) => x.statusUser === true);
+  };
+
   return (
     <div>
       {loading ? (

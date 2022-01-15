@@ -14,7 +14,6 @@ import clienteAxios from "../../utils/axios";
 const FrmAdmin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
   const [values, setValues] = React.useState({
     register: true,
     name: "",
@@ -40,7 +39,6 @@ const FrmAdmin = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("values", values);
     setLoading(true);
     clienteAxios
       .post("/admin", values)

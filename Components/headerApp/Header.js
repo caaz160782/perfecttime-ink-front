@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import Image from "next/image";
 import React, { useState, useContext } from "react";
 import { useScrollTrigger } from "@mui/material";
 import {
@@ -14,14 +13,11 @@ import {
   Button,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-//import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import theme from "./../../utils/temaConfig";
-import { AuthContext } from "../../Context/AuthContext";
 import { Nav } from "./Nav";
 import useStyles from "./style";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -29,6 +25,7 @@ function ElevationScroll(props) {
     disableHysteresis: true,
     threshold: 0,
   });
+
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
@@ -36,28 +33,24 @@ function ElevationScroll(props) {
 
 const HeaderApp = (props) => {
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [openDrawer, setOpenDrawer] = React.useState(false);
-
   const classes = useStyles();
-
   const [value, setValue] = useState(0);
   const handleChange = (e, value) => {
     setValue(value);
   };
 
-  //contexto
-  console.log("hader debug context", auth);
+  //console.log(1, auth, "headerAPP");
   //validacion de la estructura
   let rol = auth?.infoUser?.rol;
+  //console.log(rol);
 
   let drawer = [];
-
   if (rol === "Administrador") {
     drawer = [
       <>
@@ -183,7 +176,7 @@ const HeaderApp = (props) => {
               selected={value === 4}
               onClick={() => setValue(4)}
             >
-              <Button onClick={logout} className={classes.linkDrawerLogin}>
+              <Button onClick={logOut} className={classes.linkDrawerLogin}>
                 Logout
               </Button>
             </ListItem>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useContext } from "react";
 import Layout from "../../Components/Layout";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
@@ -17,13 +18,18 @@ const Agenda = () => {
         <h1> prueba</h1>
       </div>
     </>
+=======
+import React, { useState, useEffect, useContext } from "react";
+import FrmAgenda from "../../Components/agenda/FrmAgenda";
+import Box from "@mui/material/Box";
+import { AuthContext } from "../../Context/AuthContext";
+
+const Agenda = () => {
+  return (
+    <Box sx={{ p: 0 }}>
+      <FrmAgenda />
+    </Box>
+>>>>>>> develop
   );
-  // } else {
-  // return (
-  //   <Layout>
-  //     <h1>No autorizado</h1>
-  //   </Layout>
-  // );
-  // }
 };
 export default Agenda;

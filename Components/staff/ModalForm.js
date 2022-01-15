@@ -293,7 +293,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnLogin}
+                  //className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Register
                 </Button>

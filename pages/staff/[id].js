@@ -14,7 +14,7 @@ import { CircularProgress } from "@mui/material";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 
-const oneStaff = () => {
+const OneStaff = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
       color: "#fff",
@@ -100,4 +100,4 @@ const oneStaff = () => {
 //     return { props: { staffMember } };
 //   };
 
-export default oneStaff;
+export default OneStaff;

@@ -31,6 +31,7 @@ const SelectSize = ({ handleChangeDate }) => {
         <InputLabel id="lblInpSize">Tamaño</InputLabel>
         <Select
           defaultValue=""
+          size="small"
           labelId="lblInpSize"
           id="size"
           onChange={handleChangeDate("id_size")}

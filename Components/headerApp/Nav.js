@@ -7,7 +7,6 @@ import { useState, useEffect, useContext } from "react";
 import useStyles from "./style";
 
 import { AuthContext } from "../../Context/AuthContext";
-import FadeMenu from "../staff/Menu";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -47,39 +46,9 @@ export const Nav = ({ logout }) => {
           <NextLink href="/clientAdmin" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
-          <div style={{ display: "inline" }}>
-            <Button
-              className={classes.tab}
-              id="fade-button"
-              aria-controls={open ? "fade-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              Staff
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleClose}>
-                <NextLink href="/staff" passHref>
-                  <Link>Staff</Link>
-                </NextLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <NextLink href="/staffInac" passHref>
-                  <Link>Staff Inactivo </Link>
-                </NextLink>
-              </MenuItem>
-            </Menu>
-          </div>
+          <NextLink href="/staff" passHref>
+            <Link className={classes.tab}>Staff</Link>
+          </NextLink>
         </>
       );
     } else if (rol === "tatuador") {

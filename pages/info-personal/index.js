@@ -10,8 +10,36 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect, useContext } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
+import { makeStyles } from "@mui/styles";
 
 const InfoPersonal = () => {
+  const useStyles = makeStyles((theme) => ({
+    btnLogin: {
+      color: "#fff",
+      fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "1.6rem",
+    },
+    imgBack: {
+      border: "3px solid red",
+    },
+    spanes: {
+      // color: theme.palette.secondary.dark,
+      // fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "0.8rem",
+    },
+    foto: {
+      //border: "6px solid rgb(173, 173, 173)",
+    },
+    fotoContainer: {
+      backgroundColor: "#F8F8F8",
+    },
+    // ingresar:{
+    //   fontFamily:theme.typography.fuente
+    // }
+  }));
+  const classes = useStyles();
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -59,7 +87,7 @@ const InfoPersonal = () => {
         ) : (
           <MediaCard
             atras={"/"}
-            //classes={classes}
+            classes={classes}
             staffMember={staffMember}
           ></MediaCard>
         )}

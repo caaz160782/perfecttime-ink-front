@@ -12,15 +12,42 @@ import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const Staff = () => {
-  //const classes = useStyles();
+import { makeStyles } from "@mui/styles";
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+const Staff = () => {
+  const useStyles = makeStyles((theme) => ({
+    btnLogin: {
+      color: "#fff",
+      fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "1.6rem",
+    },
+    imgBack: {
+      border: "3px solid red",
+    },
+    spanes: {
+      textTransform: "none",
+      fontSize: "2.8rem",
+    },
+    foto: {
+      border: "6px solid rgb(173, 173, 173)",
+    },
+    fotoContainer: {
+      backgroundColor: "rgb(123, 136, 146)",
+    },
+  }));
+  const classes = useStyles();
+
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   let source = axios.CancelToken.source();
   const [staff, setStaff] = useState([]);
   const [staffMentira, setStaffMentira] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
@@ -36,18 +63,26 @@ const Staff = () => {
         return elemento;
       }
     });
+
     setStaff(resultadosBusqueda);
   };
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    if (reload) {
+      setLoading(true);
       const consultarAPI = async () => {
+        //const idStudioStored = localStorage.getItem("userVal");
+        // const idStudio = JSON.parse(idStudioStored);
         try {
-          const respuesta = await clienteAxios.get("/staff", {
-            headers: { apitoken: valToken.token },
-          });
-          // console.log(respuesta);
-          const staffArray = respuesta.data.listUser.users;
+          const respuesta = await clienteAxios.get(
+            `/findStaffByStudy/${auth.infoStudio.id}`,
+            // `/findStaffByStudy/${idStudio.infoStudio.id}`,
+            {
+              headers: { apitoken: auth.token },
+            }
+          );
+
+          const staffArray = respuesta.data.payload;
           setStaff(staffArray);
           setStaffMentira(staffArray);
           setLoading(false);
@@ -56,41 +91,50 @@ const Staff = () => {
         }
       };
       consultarAPI();
-    },
-    () => {
+      setReload(false);
+    }
+    return () => {
       console.log("desmontar");
       source.cancel();
-    },
-    [staff]
-  );
+    };
+  }, [reload]);
+
+  const verInactivos = () => {
+    staff.filter((x) => x.statusUser === true);
+  };
 
   return (
-    <Layout title={"staff"}>
+    <div>
       {loading ? (
         <div align="center">
           <CircularProgress size={40}></CircularProgress>
         </div>
       ) : (
         <div>
-          <div align="center" style={{ marginBottom: "20px" }}>
-            <CustomizedInputBase
-              handleChangeBusqueda={handleChangeBusqueda}
-            ></CustomizedInputBase>
+          <div align="center" style={{ margin: "20px" }}>
+            <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
-          <div style={{ marginBottom: "20px", marginTop: "30px" }}>
+          <div style={{ marginBottom: "25px" }}>
             <CustomizedDialogs
+              staff={staff}
               md={{ m: 2 }}
-              // classes={classes}
-            ></CustomizedDialogs>
+              classes={classes}
+              reload={() => {
+                setReload(true);
+              }}
+            />
           </div>
 
           <CustomPaginationActionsTable
             staff={staff}
-          ></CustomPaginationActionsTable>
+            reload={() => {
+              setReload(true);
+            }}
+          />
         </div>
       )}
-    </Layout>
+    </div>
   );
 };
 

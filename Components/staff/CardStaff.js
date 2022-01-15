@@ -17,47 +17,27 @@ import Image from "next/image";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 
-export default function MediaCard({ staffMember, classes, atras }) {
+export default function MediaCard({ staffMember, classes, atras, reload }) {
   const { auth, guardarAuth } = useContext(AuthContext);
   console.log("auth desde card", auth.infoUser);
 
-  let typeRol = {};
-  if (auth.infoUser.rol === "Cliente") {
-    typeRol.ruta = "clientModified";
-    typeRol.titulo = "Cliente";
-  } else if (auth.infoUser.rol === "Administrador") {
-    typeRol.ruta = "staff";
-    typeRol.titulo = "Administrador";
-  }
+  // let typeRol = {};
+  // if (auth.infoUser.rol === "Cliente") {
+  //   typeRol.ruta = "clientModified";
+  //   typeRol.titulo = "Cliente";
+  // }
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
       <CardMedia>
-        <div
-          className={classes.fotoContainer}
-          // component="img"
-          // image={`http://localhost:8000/${staffMember.picture}`}
-          // height="auto"
-          // alt={staffMember.name}
-        >
+        <div className={classes.fotoContainer}>
           <img
-            alt="staff"
-            //src={`http://localhost:8000/${staffMember.picture}`}
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/${staffMember.picture}`}
-            style={{ borderRadius: "50%", border: "2px solid #F8F8F8" }}
+            src={`http://localhost:8000/${staffMember.picture}`}
+            style={{ borderRadius: "50%" }}
             className={classes.foto}
-          />
+          ></img>
         </div>
       </CardMedia>
 
-      {/* <CardMedia>
-        <Image
-          className={classes.logo}
-          src={`${staffMember.picture}`}
-          alt="logo"
-          width={500}
-          height={400}
-        ></Image>
-      </CardMedia> */}
       <CardContent align="center">
         <Typography gutterBottom variant="h5" component="div">
           {`${staffMember.name} ${staffMember.lastName} `}
@@ -94,8 +74,7 @@ export default function MediaCard({ staffMember, classes, atras }) {
           <EditCustomizedDialogs
             staffMember={staffMember}
             classes={classes}
-            // id={staffMember._id}
-            typeRol={typeRol}
+            reload={reload}
           ></EditCustomizedDialogs>
           <NextLink href={atras} passHref>
             <Link className={classes.tab}>

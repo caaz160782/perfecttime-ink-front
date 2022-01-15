@@ -99,8 +99,18 @@ const Staff = () => {
     };
   }, [reload]);
 
+  const [switchStatus, setSwitchStatus] = useState(true);
   const verInactivos = () => {
-    staff.filter((x) => x.statusUser === true);
+    setSwitchStatus(!switchStatus);
+    if (switchStatus) {
+      const staffAct = staffMentira.filter((x) => x.statusUser === true);
+      setStaff(staffAct);
+      console.log("------activos!!!!!!!!!!!!!!!", staffAct);
+    } else {
+      const staffInact = staffMentira.filter((x) => x.statusUser !== true);
+      setStaff(staffInact);
+      console.log("------inactivos!!!!!!!!!!!!!!!", staffInact);
+    }
   };
 
   return (
@@ -127,6 +137,7 @@ const Staff = () => {
           </div>
 
           <CustomPaginationActionsTable
+            verInactivos={verInactivos}
             staff={staff}
             reload={() => {
               setReload(true);

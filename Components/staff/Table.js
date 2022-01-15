@@ -94,7 +94,11 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function CustomPaginationActionsTable({ staff, reload }) {
+export default function CustomPaginationActionsTable({
+  staff,
+  reload,
+  verInactivos,
+}) {
   //console.log("staf", staff);
 
   const [alert, setAlert] = useState({
@@ -269,7 +273,7 @@ export default function CustomPaginationActionsTable({ staff, reload }) {
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
-      <Switches />
+      <Switches verInactivos={verInactivos} />
       <TableContainer component={Paper}>
         <Table
           md={{ maxWidth: 600 }}

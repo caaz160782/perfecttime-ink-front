@@ -19,7 +19,7 @@ const FrmStudio = () => {
   //console.log(auth);
 
   const initialForm = {
-    id_user: auth.infoUser._id,
+    id_user: auth?.infoUser._id,
     name: "",
     description: "",
     licenseImage: "url",
@@ -40,7 +40,7 @@ const FrmStudio = () => {
     setLoading(true);
     clienteAxios
       .post("/studio", tatstudio, {
-        headers: { apitoken: auth.token },
+        headers: { apitoken: auth?.token },
       })
       .then((response) => {
         //console.log(response.data);

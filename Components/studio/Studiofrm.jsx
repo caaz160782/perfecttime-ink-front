@@ -7,9 +7,12 @@ import { LoadingButton } from "@mui/lab";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import { useForm } from "../../hooks/useForm";
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 
 const FrmStudio = () => {
   const router = useRouter();
+  const { auth, guardarAuth, logOut, saveinfoStudio } = useContext(AuthContext);
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [valStudio, setStudio] = useLocalStorage("studioVal", "");
   const Input = styled("input")({
@@ -43,6 +46,7 @@ const FrmStudio = () => {
       .then((response) => {
         console.log(response.data);
         setStudio(response.data.payload._id);
+        // saveinfoStudio(response.data.payload._id);
         router.push("/config");
       })
       .catch((error) => {

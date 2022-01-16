@@ -1,6 +1,6 @@
 import Layout from "../../Components/Layout";
-import CustomizedDialogs from "../../Components/staff/ModalForm";
-import CustomPaginationActionsTable from "../../Components/staff/Table";
+import CustomizedDialogs from "../../Components/client/ModalForm";
+import CustomPaginationActionsTable from "../../Components/client/Table";
 
 import { CircularProgress } from "@mui/material";
 
@@ -71,20 +71,22 @@ const Staff = () => {
   useEffect(() => {
     if (reload) {
       setLoading(true);
-      console.log("auth", auth);
       const consultarAPI = async () => {
         //const idStudioStored = localStorage.getItem("userVal");
         // const idStudio = JSON.parse(idStudioStored);
+        //  console.log("respuesta de cleinte", auth.infoStudio.id);
         try {
           const respuesta = await clienteAxios.get(
-            `/findStaffByStudy/${auth.infoStudio.id}`,
+            `/findClientByStudy/${auth.infoStudio.id}`,
             // `/findStaffByStudy/${idStudio.infoStudio.id}`,
             {
               headers: { apitoken: auth.token },
             }
           );
           const staffArray = respuesta.data.payload;
+          //console.log(respuesta);
 
+          setStaff(staffArray);
           setStaffMentira(staffArray);
 
           let staffFirst = staffArray.filter((x) => x.statusUser === true);
@@ -110,11 +112,9 @@ const Staff = () => {
     if (switchStatus) {
       const staffAct = staffMentira.filter((x) => x.statusUser === true);
       setStaff(staffAct);
-      console.log("------activos!!!!!!!!!!!!!!!", staffAct);
     } else {
       const staffInact = staffMentira.filter((x) => x.statusUser !== true);
       setStaff(staffInact);
-      console.log("------inactivos!!!!!!!!!!!!!!!", staffInact);
     }
   };
 

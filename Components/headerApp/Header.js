@@ -242,7 +242,7 @@ const HeaderApp = (props) => {
               selected={value === 4}
               onClick={() => setValue(4)}
             >
-              <Button onClick={logout} className={classes.linkDrawerLogin}>
+              <Button onClick={logOut} className={classes.linkDrawerLogin}>
                 Logout
               </Button>
             </ListItem>

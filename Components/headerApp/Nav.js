@@ -43,7 +43,7 @@ export const Nav = ({ logout }) => {
           <NextLink href="/config" passHref>
             <Link className={classes.tab}>Configuracion</Link>
           </NextLink>
-          <NextLink href="/clientAdmin" passHref>
+          <NextLink href="/client" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
           <NextLink href="/staff" passHref>

@@ -2,21 +2,19 @@ import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
-
-//import MediaCard from "../../Components/client/CardStaff";
-import MediaCard from "../../Components/infoPersonal/CardStaff";
-//import useStyles from "./style";
+import MediaCard from "../../Components/client/CardStaff";
 import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useState, useEffect, useContext } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { AuthContext } from "../../Context/AuthContext";
+import { useState, useEffect } from "react";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { makeStyles } from "@mui/styles";
-import { set } from "date-fns/esm";
 import { CircularProgress } from "@mui/material";
 
-const InfoPersonal = () => {
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
+
+const OneStaff = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
       color: "#fff",
@@ -28,55 +26,46 @@ const InfoPersonal = () => {
       border: "3px solid red",
     },
     spanes: {
-      // color: theme.palette.secondary.dark,
-      // fontFamily: "Pacifico",
       textTransform: "none",
       fontSize: "0.8rem",
     },
     foto: {
-      //border: "6px solid rgb(173, 173, 173)",
+      border: "2px solid rgb(173, 173, 173)",
     },
     fotoContainer: {
-      backgroundColor: "red",
+      backgroundColor: "rgb(123, 136, 146)",
     },
-    // ingresar:{
-    //   fontFamily:theme.typography.fuente
-    // }
   }));
   const classes = useStyles();
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const { auth, guardarAuth } = useContext(AuthContext);
+
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(true);
 
   const router = useRouter();
-  // const { id } = router.query;
-  console.log("el id es", auth.infoUser._id);
-  //const classes = useStyles();
+  const { id } = router.query;
+
   const [staffMember, setStaffMember] = useState({});
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
     if (reload) {
+      console.log(id);
       const consultarAPI = async () => {
-        // console.log("ryta", `/clientModified/${auth.infoUser._id}`);
         try {
-          // const respuesta = await clienteAxios.get(`/staff/${id}`);
-          const respuesta = await clienteAxios.get(
-            `/clientModified/${auth.infoUser._id}`,
-            {
-              headers: { apitoken: valToken.token },
-            }
-          );
-          // console.log(respuesta.data);
+          const respuesta = await clienteAxios.get(`/clientAdmin/${id}`, {
+            // headers: { apitoken: valToken.token },
+            headers: { apitoken: auth.token },
+          });
+          console.log("respuesta*************", respuesta.data.listClient);
           setStaffMember(respuesta.data.listClient.clientId);
-          setReload(false);
           setLoading(false);
         } catch (error) {
           console.log(error);
         }
       };
-
       consultarAPI();
+      setReload(false);
     }
     return () => {
       console.log("desmontar");
@@ -86,7 +75,6 @@ const InfoPersonal = () => {
 
   return (
     <div>
-      <div>esta es mi cuenta</div>
       <Container align="center" maxWidth={600}>
         {loading ? (
           <div align="center">
@@ -94,11 +82,12 @@ const InfoPersonal = () => {
           </div>
         ) : (
           <MediaCard
-            atras={"/"}
+            atras={"/client"}
             classes={classes}
             staffMember={staffMember}
-            role={"user"}
-            reload={() => setReload(true)}
+            reload={() => {
+              setReload(true);
+            }}
           ></MediaCard>
         )}
       </Container>
@@ -106,4 +95,11 @@ const InfoPersonal = () => {
   );
 };
 
-export default InfoPersonal;
+//  export async function getServerSideProps (ctx) {
+//      const clienteConsulta = await clienteAxios.get(`/staff/${ctx.query.id}`);
+//      const staffMember = clienteConsulta.data.listUser.userFound;
+//      console.log(clienteConsulta.data.listUser.userFound);
+//     return { props: { staffMember } };
+//   };
+
+export default OneStaff;

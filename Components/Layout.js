@@ -17,7 +17,7 @@ import { makeStyles } from "@mui/styles";
 const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
   const { auth, logOut } = contextValue;
-  //console.log(1, "layout", auth);
+  console.log("layout", auth);
   const router = useRouter();
   return (
     <ThemeProvider theme={theme}>

@@ -14,6 +14,7 @@ const AuthProvider = (props) => {
 
   // const [auth, guardarAuth] = useState(defaultUserVal);
   const [userVal, setUserVal] = useLocalStorage("userVal", defaultUserVal);
+  console.log("****************", userVal);
   const [auth, guardarAuth] = useState(userVal);
   //const [valStudio, setStudio] = useLocalStorage("idStudio", "");
   const router = useRouter();

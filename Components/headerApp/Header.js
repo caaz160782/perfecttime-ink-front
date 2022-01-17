@@ -40,19 +40,18 @@ const HeaderApp = (props) => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const classes = useStyles();
+
   const [value, setValue] = useState(0);
   const handleChange = (e, value) => {
     setValue(value);
   };
 
-  //console.log(1, auth, "headerAPP");
-  //validacion de la estructura
   let rol = auth?.infoUser?.rol;
   //console.log(rol);
 
-  let drawer = [];
+  let drawer = undefined;
   if (rol === "Administrador") {
-    drawer = [
+    drawer = (
       <>
         <SwipeableDrawer
           disableBackdropTransition={!iOS}
@@ -89,7 +88,7 @@ const HeaderApp = (props) => {
               selected={value === 2}
               onClick={() => setValue(2)}
             >
-              <NextLink href="/clientAdmin" passHref>
+              <NextLink href="/client" passHref>
                 <Link className={classes.linkDrawer}>Clientes</Link>
               </NextLink>
             </ListItem>
@@ -124,10 +123,10 @@ const HeaderApp = (props) => {
         >
           <MenuIcon className={classes.drawerIcon} />
         </IconButton>
-      </>,
-    ];
+      </>
+    );
   } else if (rol === "tatuador") {
-    drawer = [
+    drawer = (
       <>
         <SwipeableDrawer
           disableBackdropTransition={!iOS}
@@ -190,10 +189,10 @@ const HeaderApp = (props) => {
         >
           <MenuIcon className={classes.drawerIcon} />
         </IconButton>
-      </>,
-    ];
+      </>
+    );
   } else {
-    drawer = [
+    drawer = (
       <>
         <SwipeableDrawer
           disableBackdropTransition={!iOS}
@@ -242,7 +241,7 @@ const HeaderApp = (props) => {
               selected={value === 4}
               onClick={() => setValue(4)}
             >
-              <Button onClick={logout} className={classes.linkDrawerLogin}>
+              <Button onClick={logOut} className={classes.linkDrawerLogin}>
                 Logout
               </Button>
             </ListItem>
@@ -256,44 +255,34 @@ const HeaderApp = (props) => {
         >
           <MenuIcon className={classes.drawerIcon} />
         </IconButton>
-      </>,
-    ];
+      </>
+    );
   }
 
   return (
-    <>
-      <ElevationScroll>
-        <AppBar
-          position="fixed"
-          color="primary"
-          style={{ marginBottom: "5px" }}
-        >
-          <Toolbar>
-            <div>
-              <NextLink href="/" passHref>
-                <Link>
-                  <img
-                    style={{ borderRadius: "50%" }}
-                    className={classes.logo}
-                    src="/images/logo.jfif"
-                    alt="logo"
-                    width={110}
-                    height={120}
-                  ></img>
-                </Link>
-              </NextLink>
-            </div>
-            {matches ? (
-              drawer
-            ) : (
-              <Nav rol={auth?.infoUser?.rol} logout={logOut}></Nav>
-              //<Nav logout={logout}></Nav>
-            )}
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-      <div className={classes.toolbarMargin} />
-    </>
+    <ElevationScroll>
+      <AppBar position="static" color="primary" style={{ marginBottom: "5px" }}>
+        <Toolbar>
+          <div>
+            <NextLink href="/" passHref>
+              <Link>
+                <img
+                  className={classes.logo}
+                  src="/images/logo.jfif"
+                  alt="logo"
+                />
+              </Link>
+            </NextLink>
+          </div>
+          {matches ? (
+            drawer
+          ) : (
+            <Nav rol={auth?.infoUser?.rol} logOut={logOut}></Nav>
+            //<Nav logout={logout}></Nav>
+          )}
+        </Toolbar>
+      </AppBar>
+    </ElevationScroll>
   );
 };
 export default HeaderApp;

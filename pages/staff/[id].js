@@ -1,30 +1,21 @@
-import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
-import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
 import MediaCard from "../../Components/staff/CardStaff";
-import { Typography, Container, Button, Link } from "@mui/material";
-import NextLink from "next/link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useState, useEffect } from "react";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { Container, Button, Link } from "@mui/material";
+import { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 
 import { AuthContext } from "../../Context/AuthContext";
-import { useContext } from "react";
 
 const OneStaff = () => {
-  const useStyles = makeStyles((theme) => ({
-    btnLogin: {
+  const useStyles = makeStyles(() => ({
+    btnRegister: {
       color: "#fff",
-      fontFamily: "Pacifico",
       textTransform: "none",
-      fontSize: "1.6rem",
+      fontSize: "1.4rem",
     },
-    imgBack: {
-      border: "3px solid red",
-    },
+
     spanes: {
       textTransform: "none",
       fontSize: "0.8rem",
@@ -38,7 +29,6 @@ const OneStaff = () => {
   }));
   const classes = useStyles();
 
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 

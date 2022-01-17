@@ -43,8 +43,9 @@ const FrmStudio = () => {
         headers: { apitoken: auth?.token },
       })
       .then((response) => {
-        //console.log(response.data);
-        saveinfoStudio({ id: response.data.payload._id, name: name }); //saveinfoStudio(response.data.payload._id);
+        console.log(response.data);
+        setStudio(response.data.payload._id);
+        // saveinfoStudio(response.data.payload._id);
         router.push("/config");
       })
       .catch((error) => {

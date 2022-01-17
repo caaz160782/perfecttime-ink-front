@@ -111,13 +111,13 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("picture", archivo);
     formData.append("idStudio", idStudio);
     // formData.append("Role", "Tatoo");
-    console.log("user", user);
+    console.log("auth", auth.token);
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           //  apitoken: valToken.token,
-          headers: { apitoken: auth.token },
+          apitoken: auth.token,
         },
       })
       .then((respuesta) => {
@@ -155,7 +155,7 @@ export default function CustomizedDialogs({ classes, reload }) {
         open={alert.open}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
@@ -293,14 +293,14 @@ export default function CustomizedDialogs({ classes, reload }) {
                   type="submit"
                   fullWidth
                   color="secondary"
-                  //className={classes.btnLogin}
+                  className={classes.btnRegister}
                 >
-                  <SendIcon></SendIcon> Register
+                  <SendIcon></SendIcon> CREAR
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button type="submit" autoFocus onClick={handleClose}>
+              <Button color="primary" autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

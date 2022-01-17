@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
-      // textDecoration: "underline #F8F8F8",
       textDecoration: "underline #334756",
       color: theme.palette.secondary.light,
     },
@@ -76,15 +75,15 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     color: "#fff",
-    fontFamily: "Pacifico",
     textTransform: "none",
-    fontSize: "1.6rem",
-    borderRadius: "40px",
+    textDecoration: `underline ${theme.palette.primary}`,
+    fontSize: "1.5rem",
+    borderRadius: "30px",
     marginLeft: "50px",
     marginRight: "25px",
     padding: "2px 20px",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.3rem",

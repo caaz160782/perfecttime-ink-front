@@ -44,7 +44,7 @@ const InfoPersonal = () => {
     // }
   }));
   const classes = useStyles();
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
@@ -64,7 +64,7 @@ const InfoPersonal = () => {
           const respuesta = await clienteAxios.get(
             `/clientModified/${auth.infoUser._id}`,
             {
-              headers: { apitoken: valToken.token },
+              headers: { apitoken: auth.token },
             }
           );
           // console.log(respuesta.data);

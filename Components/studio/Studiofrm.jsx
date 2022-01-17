@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Typography, TextField, Box, IconButton, styled } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 import { useRouter } from "next/router";
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../Context/AuthContext";
@@ -12,15 +12,22 @@ import { useContext } from "react";
 
 const FrmStudio = () => {
   const router = useRouter();
+<<<<<<< HEAD
   const { auth, guardarAuth, logOut, saveinfoStudio } = useContext(AuthContext);
   const [valToken, setToken] = useLocalStorage("userVal", "");
   const [valStudio, setStudio] = useLocalStorage("studioVal", "");
+=======
+  const { auth, saveinfoStudio } = useContext(AuthContext);
+
+>>>>>>> develop
   const Input = styled("input")({
     display: "none",
   });
 
+  //console.log(auth);
+
   const initialForm = {
-    id_user: valToken.infoUser._id,
+    id_user: auth?.infoUser._id,
     name: "",
     description: "",
     licenseImage: "url",
@@ -41,7 +48,7 @@ const FrmStudio = () => {
     setLoading(true);
     clienteAxios
       .post("/studio", tatstudio, {
-        headers: { apitoken: valToken.token },
+        headers: { apitoken: auth?.token },
       })
       .then((response) => {
         console.log(response.data);
@@ -69,8 +76,6 @@ const FrmStudio = () => {
           flexDirection: "column",
           textAlign: "center",
           flexWrap: "wrap",
-          p: 1,
-          m: 15,
         }}
       >
         <Typography component="h5" variant="h5">

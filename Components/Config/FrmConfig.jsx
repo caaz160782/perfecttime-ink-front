@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Typography, TextField, Box, IconButton, styled } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { LoadingButton } from "@mui/lab";
@@ -6,26 +6,28 @@ import SendIcon from "@mui/icons-material/Send";
 import DaysSelect from "./DaysSelect";
 import RemSelect from "./RemSelect";
 import clienteAxios from "../../utils/axios";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 import { useRouter } from "next/router";
 
 const FrmConfig = () => {
   const router = useRouter();
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
-
+  const { auth } = useContext(AuthContext);
   const Input = styled("input")({
     display: "none",
   });
 
+  //console.log(auth);
+
   const [valuesConfig, setValuesConfig] = useState({
-    id_tatoostudios: valStudio,
+    id_tatoostudios: auth.infoStudio.id,
     logo: "",
     timeToOpen: "07:00",
     timeToClose: "19:00",
     dayNotAvailables: [],
     notifications: "",
   });
+
+  //console.log(valuesConfig);
 
   const handleChange = (prop) => (event) => {
     setValuesConfig({ ...valuesConfig, [prop]: event.target.value });
@@ -44,7 +46,7 @@ const FrmConfig = () => {
     setLoading(true);
     clienteAxios
       .post("/setting", valuesConfig, {
-        headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
       })
       .then((response) => {
         console.log(response.data);

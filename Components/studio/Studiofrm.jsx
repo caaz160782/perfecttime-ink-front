@@ -12,14 +12,8 @@ import { useContext } from "react";
 
 const FrmStudio = () => {
   const router = useRouter();
-<<<<<<< HEAD
-  const { auth, guardarAuth, logOut, saveinfoStudio } = useContext(AuthContext);
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [valStudio, setStudio] = useLocalStorage("studioVal", "");
-=======
   const { auth, saveinfoStudio } = useContext(AuthContext);
 
->>>>>>> develop
   const Input = styled("input")({
     display: "none",
   });

@@ -7,7 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { AuthContext } from "../../Context/AuthContext";
 import { useRouter } from "next/router";
 import { useForm } from "../../hooks/useForm";
-import { AuthContext } from "../../Context/AuthContext";
+
 import { useContext } from "react";
 
 const FrmStudio = () => {

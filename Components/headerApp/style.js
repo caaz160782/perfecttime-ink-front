@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    height: "15vh",
+    height: "6em",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
-      height: "13vh",
+      height: "5.5em",
     },
   },
   //DRAWER
@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "#fff",
     fontSize: "1.5rem",
+    fontWeight: "600",
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",

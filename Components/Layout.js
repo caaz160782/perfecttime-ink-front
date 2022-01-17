@@ -50,7 +50,7 @@ const Layout = ({ title, children }) => {
       </Head>
       {/* {auth?.autenticado ? <HeaderApp logout={logOut} /> : <Header />} */}
       {NavComponent}
-      <Container style={{ height: "calc(90vh - 15vh)", paddingTop: "3.5em" }}>
+      <Container style={{ minHeight: "calc(90vh - 6em)", paddingTop: "3.5em" }}>
         {children}
       </Container>
       <footer
@@ -60,10 +60,10 @@ const Layout = ({ title, children }) => {
           justifyContent: "center",
           backgroundColor: "rgb(91, 107, 119)",
           height: "10vh",
-          marginTop: "30px",
+          marginTop: "20px",
         }}
       >
-        <Typography style={{ color: "#fff" }}>
+        <Typography style={{ color: "#fff", fontWeight: "500" }}>
           All rights reserved. Perfect Time Ink | 2022
         </Typography>
       </footer>

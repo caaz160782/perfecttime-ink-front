@@ -1,19 +1,13 @@
-import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
-import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
-
 //import MediaCard from "../../Components/client/CardStaff";
 import MediaCard from "../../Components/infoPersonal/CardStaff";
 //import useStyles from "./style";
 import { Typography, Container, Button, Link } from "@mui/material";
-import NextLink from "next/link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect, useContext } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 import { makeStyles } from "@mui/styles";
-import { set } from "date-fns/esm";
+//import { set } from "date-fns/esm";
 import { CircularProgress } from "@mui/material";
 
 const InfoPersonal = () => {
@@ -51,7 +45,7 @@ const InfoPersonal = () => {
 
   const router = useRouter();
   // const { id } = router.query;
-  console.log("el id es", auth.infoUser._id);
+  // console.log("el id es", auth.infoUser._id);
   //const classes = useStyles();
   const [staffMember, setStaffMember] = useState({});
 

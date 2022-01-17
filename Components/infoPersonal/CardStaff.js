@@ -13,7 +13,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import Image from "next/image";
+//import Image from "next/image";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 

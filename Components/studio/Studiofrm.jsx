@@ -8,8 +8,6 @@ import { AuthContext } from "../../Context/AuthContext";
 import { useRouter } from "next/router";
 import { useForm } from "../../hooks/useForm";
 
-import { useContext } from "react";
-
 const FrmStudio = () => {
   const router = useRouter();
   const { auth, saveinfoStudio } = useContext(AuthContext);

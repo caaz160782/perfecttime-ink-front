@@ -149,7 +149,7 @@ export default function CustomPaginationActionsTable({
         });
         setTimeout(() => {
           reload();
-        }, 4000);
+        }, 3000);
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
@@ -164,7 +164,7 @@ export default function CustomPaginationActionsTable({
   };
 
   const reactivar = (id, cliente = {}) => {
-    console.log(cliente);
+    // console.log(cliente);
     clienteAxios
       .patch(`/staffInac/${id}`, cliente, {
         //  headers: { apitoken: valToken.token },
@@ -191,7 +191,7 @@ export default function CustomPaginationActionsTable({
       });
   };
 
-  const miTabla = (row) => {
+  const miRow = (row) => {
     return (
       <TableRow key={row._id}>
         <TableCell component="th" scope="row">
@@ -220,7 +220,7 @@ export default function CustomPaginationActionsTable({
       </TableRow>
     );
   };
-  const miTablaInac = (row) => {
+  const miRowInac = (row) => {
     return (
       <TableRow key={row._id}>
         <TableCell
@@ -285,7 +285,7 @@ export default function CustomPaginationActionsTable({
                   page * rowsPerPage + rowsPerPage
                 )
               : staff
-            ).map((row) => (row.statusUser ? miTabla(row) : miTablaInac(row)))}
+            ).map((row) => (row.statusUser ? miRow(row) : miRowInac(row)))}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

@@ -25,26 +25,9 @@ export default function MediaCard({
   role,
 }) {
   const { auth, guardarAuth } = useContext(AuthContext);
-  //console.log("auth desde card", auth.infoUser);
-  console.log("clientt", staffMember);
-  console.log(role);
 
-  // let typeRol = {};
-  // if (auth.infoUser.rol === "Cliente") {
-  //   typeRol.ruta = "clientModified";
-  //   typeRol.titulo = "Cliente";
-  // }
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
-      {/* <CardMedia>
-        <div className={classes.fotoContainer}>
-          <img
-            src={`http://localhost:8000/${staffMember.picture}`}
-            style={{ borderRadius: "50%" }}
-            className={classes.foto}
-          ></img>
-        </div>
-      </CardMedia> */}
       <CardMedia
         component="img"
         alt="green iguana"

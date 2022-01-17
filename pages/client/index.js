@@ -86,7 +86,7 @@ const Staff = () => {
           const staffArray = respuesta.data.payload;
           //console.log(respuesta);
 
-          setStaff(staffArray);
+          //  setStaff(staffArray);
           setStaffMentira(staffArray);
 
           let staffFirst = staffArray.filter((x) => x.statusUser === true);

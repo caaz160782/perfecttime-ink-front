@@ -114,11 +114,7 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("password", user.password);
     formData.append("picture", archivo);
     formData.append("idStudio", idStudio);
-    // formData.append("Role", "Tatoo");
-    // setValues({
-    //   ...user,
-    //   idStudio: auth.infoStudio,
-    // });
+
     console.log("user", auth);
     clienteAxios
       .post("/clientAdmin", formData, {

@@ -1,5 +1,3 @@
-import Header from "./header/Header";
-import HeaderApp from "./headerApp/Header";
 import Head from "next/head";
 import {
   Typography,
@@ -13,12 +11,28 @@ import { AuthContext } from "../Context/AuthContext";
 import { useContext, useEffect, useMemo } from "react";
 import { createTheme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useState } from "react";
+
+//importacion dinamica
+import dynamic from "next/dynamic";
+const Header = dynamic(() => import("./header/Header"));
+const HeaderApp = dynamic(() => import("./headerApp/Header"));
 
 const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
   const { auth, logOut } = contextValue;
-  console.log("layout", auth);
+  console.log("layout", auth, logOut);
   const router = useRouter();
+
+  const [NavComponent, setNavComponent] = useState(() => <></>);
+
+  useEffect(() => {
+    console.log("autenticado", auth.autenticado);
+    setNavComponent(
+      auth?.autenticado ? <HeaderApp logOut={logOut} /> : <Header />
+    );
+  }, [auth]);
+
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -34,13 +48,11 @@ const Layout = ({ title, children }) => {
           href="https://fonts.googleapis.com/css?family=Pacifico|Raleway:100,400,400i,700|Roboto:300,400,500,700&display=swap"
         />
       </Head>
-      {auth?.autenticado ? (
-        <HeaderApp logout={logOut}> </HeaderApp>
-      ) : (
-        <Header></Header>
-      )}
-
-      <Container style={{ minHeight: "70vh" }}>{children}</Container>
+      {/* {auth?.autenticado ? <HeaderApp logout={logOut} /> : <Header />} */}
+      {NavComponent}
+      <Container style={{ height: "calc(90vh - 15vh)", paddingTop: "3.5em" }}>
+        {children}
+      </Container>
       <footer
         style={{
           display: "flex",

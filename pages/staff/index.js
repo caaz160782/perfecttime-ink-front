@@ -2,7 +2,7 @@ import Layout from "../../Components/Layout";
 import CustomizedDialogs from "../../Components/staff/ModalForm";
 import CustomPaginationActionsTable from "../../Components/staff/Table";
 
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Switch, Typography } from "@mui/material";
 
 import clienteAxios from "../../utils/axios";
 //import useStyles from "./style";
@@ -15,12 +15,13 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { makeStyles } from "@mui/styles";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
+import Switches from "../../Components/client/SwitchStatus";
 
 const Staff = () => {
   const useStyles = makeStyles((theme) => ({
-    btnLogin: {
+    btnRegister: {
       color: "#fff",
-      fontFamily: "Pacifico",
+      // fontFamily: "Pacifico",
       textTransform: "none",
       fontSize: "1.6rem",
     },
@@ -49,21 +50,42 @@ const Staff = () => {
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
   //let staffFirst = [];
+  let staffInact = [];
+  let staffAct = [];
+
+  const [switchStatus, setSwitchStatus] = useState(false);
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
   };
   const filtrar = (terminoBusqueda) => {
-    var resultadosBusqueda = staffMentira.filter((elemento) => {
-      if (
-        elemento.name
-          .toString()
-          .toLowerCase()
-          .includes(terminoBusqueda.toLowerCase())
-      ) {
-        return elemento;
-      }
-    });
+    if (!switchStatus) {
+      var resultadosBusqueda = staffMentira.filter((elemento) => {
+        if (
+          elemento.name
+            .toString()
+            .toLowerCase()
+            .includes(terminoBusqueda.toLowerCase()) &&
+          elemento.statusUser
+        ) {
+          console.log("elemento", elemento, switchStatus);
+          return elemento;
+        }
+      });
+    } else {
+      var resultadosBusqueda = staffMentira.filter((elemento) => {
+        if (
+          elemento.name
+            .toString()
+            .toLowerCase()
+            .includes(terminoBusqueda.toLowerCase()) &&
+          !elemento.statusUser
+        ) {
+          console.log("elemento", elemento, switchStatus);
+          return elemento;
+        }
+      });
+    }
 
     setStaff(resultadosBusqueda);
   };
@@ -71,7 +93,7 @@ const Staff = () => {
   useEffect(() => {
     if (reload) {
       setLoading(true);
-      console.log("auth", auth);
+      // console.log("auth", auth);
       const consultarAPI = async () => {
         //const idStudioStored = localStorage.getItem("userVal");
         // const idStudio = JSON.parse(idStudioStored);
@@ -83,11 +105,18 @@ const Staff = () => {
               headers: { apitoken: auth.token },
             }
           );
-          const staffArray = respuesta.data.payload;
-
-          setStaffMentira(staffArray);
-
-          let staffFirst = staffArray.filter((x) => x.statusUser === true);
+          //const staffArray = respuesta.data.payload;
+          let staffFirst;
+          setStaffMentira(respuesta.data.payload);
+          if (!switchStatus) {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === true
+            );
+          } else {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === false
+            );
+          }
 
           setStaff(staffFirst);
           setLoading(false);
@@ -104,17 +133,14 @@ const Staff = () => {
     };
   }, [reload]);
 
-  const [switchStatus, setSwitchStatus] = useState(false);
   const verInactivos = () => {
     setSwitchStatus(!switchStatus);
     if (switchStatus) {
-      const staffAct = staffMentira.filter((x) => x.statusUser === true);
+      staffAct = staffMentira.filter((x) => x.statusUser === true);
       setStaff(staffAct);
-      console.log("------activos!!!!!!!!!!!!!!!", staffAct);
     } else {
-      const staffInact = staffMentira.filter((x) => x.statusUser !== true);
+      staffInact = staffMentira.filter((x) => x.statusUser !== true);
       setStaff(staffInact);
-      console.log("------inactivos!!!!!!!!!!!!!!!", staffInact);
     }
   };
 
@@ -126,11 +152,23 @@ const Staff = () => {
         </div>
       ) : (
         <div>
-          <div align="center" style={{ margin: "20px" }}>
+          <div
+            align="center"
+            style={{
+              margin: "20px",
+            }}
+          >
             <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
-          <div style={{ marginBottom: "25px" }}>
+          <div
+            style={{
+              marginBottom: "25px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <CustomizedDialogs
               staff={staff}
               md={{ m: 2 }}
@@ -139,6 +177,17 @@ const Staff = () => {
                 setReload(true);
               }}
             />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography color="primary">
+                {!switchStatus ? "VER INACTIVOS" : "VER ACTIVOS"}
+              </Typography>
+              <Switches verInactivos={verInactivos} />
+            </div>
           </div>
 
           <CustomPaginationActionsTable

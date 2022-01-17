@@ -28,7 +28,9 @@ import { useState, useContext } from "react";
 //import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 import { set } from "date-fns";
-import Switches from "../../Components/staff/SwitchStatus";
+import AlertDialog from "./Alert";
+import AlertDeleteTable from "./AlertDeletedTable";
+
 function TablePaginationActions(props) {
   // const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -105,6 +107,7 @@ export default function CustomPaginationActionsTable({
     open: false,
     message: "",
     backgroundColor: "",
+    textAlign: "center",
   });
   //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
@@ -146,8 +149,9 @@ export default function CustomPaginationActionsTable({
       .then((respuesta) => {
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
+          textAlign: "center",
         });
         setTimeout(() => {
           reload();
@@ -166,7 +170,7 @@ export default function CustomPaginationActionsTable({
   };
 
   const reactivar = (id, cliente = {}) => {
-    console.log(cliente);
+    // console.log(cliente);
     clienteAxios
       .patch(`/staffInac/${id}`, cliente, {
         //  headers: { apitoken: valToken.token },
@@ -175,14 +179,14 @@ export default function CustomPaginationActionsTable({
       .then((respuesta) => {
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
+          border: "1px solid red",
+          textAlign: "center",
         });
         setTimeout(() => {
           reload();
         }, 3000);
-        // router.push("/"); //dirigir a la pagina de inicio
-        //  document.querySelector("#form").reset();
       })
       .catch((err) => {
         setAlert({
@@ -209,6 +213,13 @@ export default function CustomPaginationActionsTable({
           </Button>
         </TableCell>
         <TableCell style={{ width: 100 }} align="left">
+          <AlertDeleteTable
+            eliminar={() => {
+              eliminar(row._id);
+            }}
+          ></AlertDeleteTable>
+        </TableCell>
+        {/* <TableCell style={{ width: 100 }} align="left">
           <Button
             variant="outlined"
             onClick={() => {
@@ -218,7 +229,7 @@ export default function CustomPaginationActionsTable({
           >
             {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
           </Button>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     );
   };
@@ -237,7 +248,9 @@ export default function CustomPaginationActionsTable({
           component="th"
           scope="row"
         >
-          <Typography>INACTIVO</Typography>
+          <Typography style={{ color: "rgb(91, 107, 119)" }}>
+            INACTIVO
+          </Typography>
         </TableCell>
 
         {/* <TableCell style={{ width: 100 }} align="left">
@@ -249,15 +262,7 @@ export default function CustomPaginationActionsTable({
                     </Button>
                   </TableCell> */}
         <TableCell style={{ width: 100 }} align="left">
-          <Button
-            // variant="outlined"
-            onClick={() => {
-              reactivar(row._id, row);
-            }}
-            color="success"
-          >
-            Reactivar
-          </Button>
+          <AlertDialog reactivar={() => reactivar(row._id, row)}></AlertDialog>
         </TableCell>
       </TableRow>
     );
@@ -268,12 +273,15 @@ export default function CustomPaginationActionsTable({
       <Snackbar
         open={alert.open}
         message={alert.message}
-        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.backgroundColor,
+          },
+        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
-      <Switches verInactivos={verInactivos} />
       <TableContainer component={Paper}>
         <Table
           md={{ maxWidth: 600 }}

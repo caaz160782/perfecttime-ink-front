@@ -101,7 +101,7 @@ export default function EditCustomizedDialogs({
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    // console.log(user);
+    console.log("user---", user);
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
@@ -135,8 +135,7 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          //message: err.response.data.error,
-          message: "error",
+          message: err.response.data.error,
           backgroundColor: "#DD4A48",
         });
       });
@@ -285,14 +284,14 @@ export default function EditCustomizedDialogs({
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnLogin}
+                  className={classes.btnRegister}
                 >
                   <SendIcon></SendIcon> Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button type="submit" autoFocus onClick={handleClose}>
+              <Button autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

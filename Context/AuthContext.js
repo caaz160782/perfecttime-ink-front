@@ -28,6 +28,7 @@ const AuthProvider = (props) => {
 
   const logOut = () => {
     guardarAuth(defaultUserVal);
+    console.log("deslogear");
     router.push("/");
   };
 

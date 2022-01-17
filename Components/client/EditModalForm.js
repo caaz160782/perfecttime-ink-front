@@ -280,7 +280,7 @@ export default function EditCustomizedDialogs({
               </ListItem>
             </List>
             <DialogActions>
-              <Button type="submit" autoFocus onClick={handleClose}>
+              <Button autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

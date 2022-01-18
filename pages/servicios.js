@@ -49,6 +49,7 @@ const Servicios = ()=>{
                   src="/images/hand.png"
                   height="300px"
                   width="400px"
+                  alt="hand"
                 />
               </Grid>
               <Grid item sm={12} md={6}>

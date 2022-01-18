@@ -99,7 +99,7 @@ const Staff = () => {
         // const idStudio = JSON.parse(idStudioStored);
         try {
           const respuesta = await clienteAxios.get(
-            `/findStaffByStudy/${auth.infoStudio.id}`,
+            `/findStaffByStudy/${auth?.infoStudio.id}`,
             // `/findStaffByStudy/${idStudio.infoStudio.id}`,
             {
               headers: { apitoken: auth.token },

@@ -44,7 +44,7 @@ const OneStaff = () => {
         try {
           const respuesta = await clienteAxios.get(`/staff/${id}`, {
             // headers: { apitoken: valToken.token },
-            headers: { apitoken: auth.token },
+            headers: { apitoken: auth?.token },
           });
           setStaffMember(respuesta.data.listUser.userFound);
           setLoading(false);

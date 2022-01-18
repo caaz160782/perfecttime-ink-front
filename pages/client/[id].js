@@ -55,7 +55,7 @@ const OneStaff = () => {
         try {
           const respuesta = await clienteAxios.get(`/clientAdmin/${id}`, {
             // headers: { apitoken: valToken.token },
-            headers: { apitoken: auth.token },
+            headers: { apitoken: auth?.token },
           });
           console.log("respuesta*************", respuesta.data.listClient);
           setStaffMember(respuesta.data.listClient.clientId);

@@ -56,9 +56,9 @@ const InfoPersonal = () => {
         try {
           // const respuesta = await clienteAxios.get(`/staff/${id}`);
           const respuesta = await clienteAxios.get(
-            `/clientModified/${auth.infoUser._id}`,
+            `/clientModified/${auth?.infoUser._id}`,
             {
-              headers: { apitoken: auth.token },
+              headers: { apitoken: auth?.token },
             }
           );
           // console.log(respuesta.data);

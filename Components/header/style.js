@@ -7,45 +7,52 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "7em",
   },
   logo: {
-    height: "7em",
+    height: "6em",
     [theme.breakpoints.down("sm")]: {
-      height: "5em",
+      height: "5.5em",
     },
   },
   //DRAWER
   drawer: {
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   drawerIconContainer: {
     marginLeft: "auto",
-    "&:hover": {
-      //backgroundColor: "transparent",
-    },
   },
   drawerIcon: {
     width: 40,
     height: 40,
-    // color: "#fff"
+
+    color: "#fff",
   },
   linkDrawer: {
-    fontFamily: "Raleway",
+    //fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
-    fontSize: "1.3rem",
+    fontSize: "1rem",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
   },
   linkDrawerLogin: {
-    fontFamily: "Pacifico",
-    fontSize: "1.5rem",
+    padding: 0,
+    margin: 0,
+    textTransform: "none",
+    textDecoration: "none",
+    fontWeight: 550,
+    fontSize: "1.1rem",
     color: "#fff",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      color: theme.palette.secondary.light,
+      textDecoration: `underline ${theme.palette.primary.main}`,
     },
+    transition: "color .8s",
   },
   loginContainer: {
-    backgroundColor: "#EFC437",
+    //backgroundColor: "#EFC437",
+    backgroundColor: theme.palette.secondary.main,
+    //   alignItems: "left",
+    transition: "all .8s",
   },
   ///NAVEGACION
   tabContainer: {
@@ -53,28 +60,38 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     ...theme.typography.tab,
-    color: "#000",
+    textDecoration: "none",
+    color: "#fff",
+    fontSize: "1.5rem",
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
-      textDecoration: "underline #F8F8F8",
-      color: theme.palette.primary.dark,
+      textDecoration: "underline #334756",
+      color: theme.palette.secondary.light,
     },
-    [theme.breakpoints.down("md")]: {},
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.3rem",
+      marginLeft: "30px",
+    },
   },
   btn: {
     color: "#fff",
-    fontFamily: "Pacifico",
     textTransform: "none",
-    fontSize: "1.6rem",
-    borderRadius: "40px",
+    textDecoration: `underline ${theme.palette.primary}`,
+    fontSize: "1.5rem",
+    borderRadius: "30px",
     marginLeft: "50px",
     marginRight: "25px",
     padding: "2px 20px",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
-    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.3rem",
+      marginLeft: "40px",
+      marginRight: "20px",
+      padding: "2px 10px",
+    },
   },
 }));
 

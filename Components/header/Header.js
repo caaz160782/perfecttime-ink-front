@@ -1,9 +1,8 @@
 import NextLink from "next/link";
 import Image from "next/image";
+import React, { useState, useContext } from "react";
 
-import React ,{ useState, useContext } from "react";
-
-import {useScrollTrigger} from "@mui/material";
+import { useScrollTrigger } from "@mui/material";
 import {
   AppBar,
   Toolbar,
@@ -11,7 +10,7 @@ import {
   List,
   ListItem,
   IconButton,
-  SwipeableDrawer
+  SwipeableDrawer,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -22,8 +21,6 @@ import MenuItem from "@mui/material/MenuItem";
 import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
 import useStyles from "./style";
-
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -37,19 +34,11 @@ function ElevationScroll(props) {
 }
 
 const Header = (props) => {
-
-    const [valToken, setToken] = useLocalStorage("userVal", {
-      token: "",
-      auth: "",
-      infoUser: "",
-    });
-   // console.log("probando desde el header", valToken.infoUser);
-
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const classes = useStyles();
@@ -59,7 +48,7 @@ const Header = (props) => {
     setValue(value);
   };
 
-  const drawer = [
+  const drawer = (
     <>
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
@@ -131,34 +120,31 @@ const Header = (props) => {
       >
         <MenuIcon className={classes.drawerIcon} />
       </IconButton>
-    </>,
-  ];
+    </>
+  );
 
   return (
-    <>
-      <ElevationScroll>
-        <AppBar position="fixed" color="secondary">
-          <Toolbar>
-            <div>
-              <NextLink href="/" passHref>
-                <Link>
-                  <img
-                    style={{ borderRadius: "50%" }}
-                    className={classes.logo}
-                    src="/images/logo.jfif"
-                    alt="logo"
-                    width={120}
-                    height={120}
-                  ></img>
-                </Link>
-              </NextLink>
-            </div>
-            {matches ? drawer : <Nav></Nav>}
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-      <div className={classes.toolbarMargin} />
-    </>
+    <ElevationScroll>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <div>
+            <NextLink href="/" passHref>
+              <Link>
+                <img
+                  style={{ borderRadius: "50%" }}
+                  // className={classes.logo}
+                  src="/images/logo.jfif"
+                  alt="logo"
+                  width={110}
+                  height={120}
+                />
+              </Link>
+            </NextLink>
+          </div>
+          {matches ? drawer : <Nav></Nav>}
+        </Toolbar>
+      </AppBar>
+    </ElevationScroll>
   );
 };
 export default Header;

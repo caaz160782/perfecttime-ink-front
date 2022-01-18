@@ -4,53 +4,63 @@ import theme from "../../utils/temaConfig";
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: "7em",
+    marginBottom: "2em",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "1em",
+    },
   },
   logo: {
-    height: "7em",
+    height: "6em",
+    borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
-      height: "5em",
+      height: "5.5em",
     },
   },
   //DRAWER
   drawer: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   drawerIconContainer: {
     marginLeft: "auto",
-    "&:hover": {
-      //backgroundColor: "transparent",
-    },
   },
   drawerIcon: {
     width: 40,
     height: 40,
-
     color: "#fff",
+    "&:hover": {
+      //color: theme.palette.secondary.light,
+    },
   },
   linkDrawer: {
-    fontFamily: "Raleway",
+    // fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
     fontSize: "1rem",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      textDecoration: `underline ${theme.palette.primary.main}`,
     },
   },
   linkDrawerLogin: {
     padding: 0,
     margin: 0,
     textTransform: "none",
-    fontFamily: "Pacifico",
-    fontSize: "1.1rem",
+    fontWeight: 550,
+    fontSize: "1rem",
     color: "#fff",
     "&:hover": {
       textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
+    transition: "color .8s",
   },
   loginContainer: {
-    backgroundColor: "#EFC437",
-    //   alignItems: "left",
+    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: "#fff",
+    // backgroundColor: "#CAA345",
+    transition: "background-color .8s",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.dark,
+      // color: theme.palette.primary.dark,
+    },
   },
   ///NAVEGACION
   tabContainer: {
@@ -61,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "#fff",
     fontSize: "1.5rem",
+    fontWeight: "600",
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
@@ -75,15 +86,14 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     color: "#fff",
-    fontFamily: "Pacifico",
     textTransform: "none",
-    fontSize: "1.6rem",
-    borderRadius: "40px",
+    fontSize: "1.4rem",
+    borderRadius: "30px",
     marginLeft: "50px",
     marginRight: "25px",
     padding: "2px 20px",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.3rem",

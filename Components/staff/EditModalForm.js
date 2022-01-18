@@ -9,14 +9,15 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import {List, ListItem, TextField,Snackbar} from "@mui/material";
+import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import {useState, useEffect} from "react"
-import theme from "../../utils/temaConfig"
+import { useState, useEffect, useContext } from "react";
+import theme from "../../utils/temaConfig";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,16 +57,26 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  console.log(staffMember);
+export default function EditCustomizedDialogs({
+  classes,
+  staffMember,
+  reload,
+}) {
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
+  //  console.log("staff", typeRol);
+  //  const foto = staffMember.picture;
+  const [archivo, guardarArchivo] = useState("");
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
+  };
 
   const [open, setOpen] = React.useState(false);
-    const [alert, setAlert] = useState({
-      open: false,
-      message: "",
-      backgroundColor: "",
-    });
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,57 +84,61 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
   const handleClose = () => {
     setOpen(false);
   };
-    const initialForm = {
-      name: staffMember.name,
-      lastName: staffMember.lastName,
-     // idRole: staffMember.idRole,
-      email: staffMember.email,
-      password: "",
-      phoneHome: staffMember.phoneHome,
-      curp: staffMember.curp,
-      rfc: staffMember.rfc,
-      phonePersonal: staffMember.phonePersonal,
-    };
-    const [user, actualizarState, reset] = useForm(initialForm);
-    //console.log("initialForm", initialForm);
-    //console.log('user', user);
+  const initialForm = {
+    name: staffMember.name,
+    lastName: staffMember.lastName,
+    // idRole: staffMember.idRole,
+    picture: staffMember.picture,
+    password: "",
+    phoneHome: staffMember.phoneHome,
+    curp: staffMember.curp,
+    rfc: staffMember.rfc,
+    phonePersonal: staffMember.phonePersonal,
+  };
+  const [user, actualizarState, reset] = useForm(initialForm);
+  //console.log("initialForm", initialForm);
+  //console.log('user', user);
 
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    console.log("user---", user);
+    const formData = new FormData();
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
+    //formData.append("idRole", "staff");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneHome", user.phoneHome);
+    formData.append("phonePersonal", user.phonePersonal);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
 
-    const handlerSubmit = (e) => {
-      e.preventDefault();
-      console.log(user);
-      clienteAxios
-        .patch(`/${typeRol.ruta}/${staffMember._id}`, user, {
-          headers: { apitoken: valToken.token },
-        })
-        .then((respuesta) => {
-          console.log(respuesta);
-          setAlert({
-            open: true,
-            message: respuesta.data.message,
-            backgroundColor: "#4BB543",
-          });
-
-          // router.push("/"); //dirigir a la pagina de inicio
-          //  document.querySelector("#form").reset();
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.data.errors) {
-            setAlert({
-              open: true,
-              message: err.response.data.errors[0].msg,
-              backgroundColor: "#FF3232",
-            });
-            return;
-          }
-          setAlert({
-            open: true,
-            message: err.response.data.error,
-            backgroundColor: "#FF3232",
-          });
+    clienteAxios
+      .patch(`/staff/${staffMember._id}`, formData, {
+        // headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
+      })
+      .then((respuesta) => {
+        reload();
+        setAlert({
+          open: true,
+          message: respuesta.data.message.toUpperCase(),
+          backgroundColor: "#519259",
         });
-    };
+
+        //  router.push("/staff"); //dirigir a la pagina de inicio
+        //  document.querySelector("#form").reset();
+      })
+      .catch((err) => {
+        console.log(err);
+
+        setAlert({
+          open: true,
+          message: err.response.data.error.toUpperCase(),
+          backgroundColor: "#DD4A48",
+        });
+      });
+  };
 
   return (
     <div>
@@ -132,9 +147,10 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
       </Button>
       <Snackbar
         open={alert.open}
+        style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
@@ -147,7 +163,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-         { `Editar ${typeRol.titulo}`}
+          Editar
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
@@ -181,19 +197,18 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   value={user.lastName}
                 ></TextField>
               </ListItem>
-              {/* <ListItem>
+              <ListItem>
                 <TextField
-
-                  fullWidth
+                  //  variant="outlined"
                   size="small"
-                  id="idRol"
-                  label="idRol"
-                  name="idRole"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.idRole}
+                  fullWidth
+                  id="picture"
+                  label="picture"
+                  name="picture"
+                  inputProps={{ type: "file" }}
+                  onChange={leerArchivo}
                 ></TextField>
-              </ListItem> */}
+              </ListItem>
               <ListItem>
                 <TextField
                   required
@@ -220,19 +235,7 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   value={user.phoneHome}
                 ></TextField>
               </ListItem>
-              <ListItem>
-                <TextField
-                  required
-                  size="small"
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  inputProps={{ type: "email" }}
-                  onChange={actualizarState}
-                  value={user.email}
-                ></TextField>
-              </ListItem>
+              <ListItem></ListItem>
               <ListItem>
                 <TextField
                   fullWidth
@@ -280,15 +283,15 @@ export default function EditCustomizedDialogs({classes, staffMember, typeRol}) {
                   variant="contained"
                   type="submit"
                   fullWidth
-                  color="primary"
-                  className={classes.btnLogin}
+                  color="secondary"
+                  className={classes.btnRegister}
                 >
                   <SendIcon></SendIcon> Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button type="submit" autoFocus onClick={handleClose}>
+              <Button autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

@@ -1,125 +1,205 @@
 import Layout from "../../Components/Layout";
-import Image from "next/image";
-import CustomizedDialogs from "../../Components/staff/ModalForm"
+import CustomizedDialogs from "../../Components/staff/ModalForm";
 import CustomPaginationActionsTable from "../../Components/staff/Table";
-import SearchIcon from "@mui/icons-material/Search";
-import Router from 'next/router'
 
-import {
-  List,
-  ListItem,
-  //Typography,
-  TextField,
-  Button,
-  Alert,
-  AlertTitle,
-  Grid,
-  Snackbar,
-} from "@mui/material";
+import { CircularProgress, Switch, Typography } from "@mui/material";
 
-import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import useStyles from "./style";
+//import useStyles from "./style";
 import { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
 
 import axios from "axios";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
-
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
+import { makeStyles } from "@mui/styles";
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
+import Switches from "../../Components/client/SwitchStatus";
+
 const Staff = () => {
-const [valToken, setToken] = useLocalStorage("userVal", "");
-
-
+  const useStyles = makeStyles((theme) => ({
+    btnRegister: {
+      color: "#fff",
+      // fontFamily: "Pacifico",
+      textTransform: "none",
+      fontSize: "1.6rem",
+    },
+    imgBack: {
+      border: "3px solid red",
+    },
+    spanes: {
+      textTransform: "none",
+      fontSize: "2.8rem",
+    },
+    foto: {
+      border: "6px solid rgb(173, 173, 173)",
+    },
+    fotoContainer: {
+      backgroundColor: "rgb(123, 136, 146)",
+    },
+  }));
   const classes = useStyles();
- let source = axios.CancelToken.source();
- const [staff, setStaff] = useState([])
- const [staffMentira, setStaffMentira] = useState([])
- const [loading, setLoading] = useState(true);
 
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
-   const handleChangeBusqueda = ({ target }) => {
-     filtrar(target.value);
-   };
-   const filtrar = (terminoBusqueda) => {
-     var resultadosBusqueda = staffMentira.filter((elemento) => {
+  let source = axios.CancelToken.source();
+  const [staff, setStaff] = useState([]);
+  const [staffMentira, setStaffMentira] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
+  //let staffFirst = [];
+  let staffInact = [];
+  let staffAct = [];
 
-       if (
-         elemento.name
-           .toString()
-           .toLowerCase()
-           .includes(terminoBusqueda.toLowerCase())
-       ) {
-         return elemento;
-       }
-     });
-     setStaff(resultadosBusqueda);
-   };
- useEffect(
-    () => {
-        const consultarAPI = async () => {
-          try {
-            const respuesta = await clienteAxios.get(
-              "/staff", { headers: { apitoken: valToken.token } },
+  const [switchStatus, setSwitchStatus] = useState(false);
 
-              );
-       //     console.log(respuesta)
-            const staffArray = respuesta.data.listUser.users;
-            setStaff(staffArray);
-            setStaffMentira(staffArray)
-            setLoading(false);
-          } catch (error) {
-            console.log(error);
+  const handleChangeBusqueda = ({ target }) => {
+    filtrar(target.value);
+  };
+  const filtrar = (terminoBusqueda) => {
+    if (!switchStatus) {
+      var resultadosBusqueda = staffMentira.filter((elemento) => {
+        if (
+          elemento.name
+            .toString()
+            .toLowerCase()
+            .includes(terminoBusqueda.toLowerCase()) &&
+          elemento.statusUser
+        ) {
+          console.log("elemento", elemento, switchStatus);
+          return elemento;
+        }
+      });
+    } else {
+      var resultadosBusqueda = staffMentira.filter((elemento) => {
+        if (
+          elemento.name
+            .toString()
+            .toLowerCase()
+            .includes(terminoBusqueda.toLowerCase()) &&
+          !elemento.statusUser
+        ) {
+          console.log("elemento", elemento, switchStatus);
+          return elemento;
+        }
+      });
+    }
+
+    setStaff(resultadosBusqueda);
+  };
+
+  useEffect(() => {
+    if (reload) {
+      setLoading(true);
+      // console.log("auth", auth);
+      const consultarAPI = async () => {
+        //const idStudioStored = localStorage.getItem("userVal");
+        // const idStudio = JSON.parse(idStudioStored);
+        try {
+          const respuesta = await clienteAxios.get(
+            `/findStaffByStudy/${auth.infoStudio.id}`,
+            // `/findStaffByStudy/${idStudio.infoStudio.id}`,
+            {
+              headers: { apitoken: auth.token },
+            }
+          );
+          //const staffArray = respuesta.data.payload;
+          let staffFirst;
+          setStaffMentira(respuesta.data.payload);
+          if (!switchStatus) {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === true
+            );
+          } else {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === false
+            );
           }
-        };
-        consultarAPI();
-      }
-    ,
-    () => {
+
+          setStaff(staffFirst);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      consultarAPI();
+      setReload(false);
+    }
+    return () => {
       console.log("desmontar");
       source.cancel();
-    },
-    [staff]
-  );
+    };
+  }, [reload]);
 
-  //const staffMember
-    // const buscarPorId = async (id) => {
-    //   const clienteConsulta = await clienteAxios.get(`/staff/${id}`);
-    //   staffMember = clienteConsulta.data.listUser.userFound;
-    //  // console.log(clienteConsulta.data.listUser.userFound);
-    // };
+  const verInactivos = () => {
+    setSwitchStatus(!switchStatus);
+    if (switchStatus) {
+      staffAct = staffMentira.filter((x) => x.statusUser === true);
+      setStaff(staffAct);
+    } else {
+      staffInact = staffMentira.filter((x) => x.statusUser !== true);
+      setStaff(staffInact);
+    }
+  };
+
   return (
-    <Layout title={"staff"}>
+    <div>
       {loading ? (
-        <Typography>loading...</Typography>
+        <div align="center">
+          <CircularProgress size={40}></CircularProgress>
+        </div>
       ) : (
         <div>
-          <div align="center">
-            <CustomizedInputBase
-              handleChangeBusqueda={handleChangeBusqueda}
-            ></CustomizedInputBase>
+          <div
+            align="center"
+            style={{
+              margin: "20px",
+            }}
+          >
+            <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
-          <CustomizedDialogs classes={classes}></CustomizedDialogs>
-          <CustomPaginationActionsTable
-            staff={staff}
-          ></CustomPaginationActionsTable>
+          <div
+            style={{
+              marginBottom: "25px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <CustomizedDialogs
+              staff={staff}
+              md={{ m: 2 }}
+              classes={classes}
+              reload={() => {
+                setReload(true);
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography color="primary">
+                {!switchStatus ? "VER INACTIVOS" : "VER ACTIVOS"}
+              </Typography>
+              <Switches verInactivos={verInactivos} />
+            </div>
+          </div>
 
-          {/* {staff.map((x) => {
-            return (
-              <ul>
-                <li>{`nombre completo: ${x.name} ${x.lastName} email: ${x.email}`}</li>
-                <Button onClick={(e) => Router.push(`/staff/${x._id}`)}>
-                  editar
-                </Button>
-                <Button className={classes.eliminar}>eliminar</Button>
-              </ul>
-            );
-          })} */}
+          <CustomPaginationActionsTable
+            verInactivos={verInactivos}
+            staff={staff}
+            reload={() => {
+              setReload(true);
+            }}
+          />
         </div>
       )}
-    </Layout>
+    </div>
   );
 };
 

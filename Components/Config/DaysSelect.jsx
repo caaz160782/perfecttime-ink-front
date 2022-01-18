@@ -20,6 +20,7 @@ const MenuProps = {
   },
 };
 const days = [
+  "Ninguno",
   "Domingo",
   "Lunes",
   "Martes",
@@ -30,16 +31,17 @@ const days = [
 ];
 
 const DaysSelect = ({ handleChange, valuesConfig }) => {
+  //console.log(valuesConfig.dayNotAvailables);
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="chip-label">Días Laborales</InputLabel>
+      <FormControl sx={{ m: 1, width: "30ch" }}>
+        <InputLabel id="chip-label">Días No Laborales</InputLabel>
         <Select
           labelId="chip-label"
-          id="multiple-chip"
+          id="dayNotAvailables"
           multiple
-          value={valuesConfig.dayAvailables}
-          onChange={handleChange(["dayAvailables"])}
+          value={valuesConfig?.dayNotAvailables}
+          onChange={handleChange(["dayNotAvailables"])}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>

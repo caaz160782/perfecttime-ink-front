@@ -5,19 +5,33 @@ import theme from "./../../utils/temaConfig";
 //import LinkTab from "./LinkTab";
 import { useState, useEffect, useContext } from "react";
 import useStyles from "./style";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 import { AuthContext } from "../../Context/AuthContext";
 
-export const Nav = ({ logout }) => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
 
-  const [auth, guardarAuth] = useContext(AuthContext);
-  console.log("auth desde nav del headerApp", auth.infoUser.rol);
+export const Nav = ({ logOut }) => {
+  const { auth, guardarAuth } = useContext(AuthContext);
 
-  let rol = auth.infoUser.rol;
-  //  console.log(valToken.infoUser);
+  //  console.log("nav", auth);
+
+  //  console.log("nav===", auth.infoUser.rol);
+
+  let rol = auth?.infoUser?.rol;
 
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const Linkes = () => {
     if (rol === "Administrador") {
@@ -29,11 +43,11 @@ export const Nav = ({ logout }) => {
           <NextLink href="/config" passHref>
             <Link className={classes.tab}>Configuracion</Link>
           </NextLink>
-          <NextLink href="/clientAdmin" passHref>
+          <NextLink href="/client" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
           <NextLink href="/staff" passHref>
-            <Link className={classes.tab}>staff</Link>
+            <Link className={classes.tab}>Staff</Link>
           </NextLink>
         </>
       );
@@ -55,7 +69,7 @@ export const Nav = ({ logout }) => {
             <Link className={classes.tab}>Agenda</Link>
           </NextLink>
           <NextLink href="/info-personal" passHref>
-            <Link className={classes.tab}>mi cuenta</Link>
+            <Link className={classes.tab}>Mi Cuenta</Link>
           </NextLink>
         </>
       );
@@ -70,42 +84,13 @@ export const Nav = ({ logout }) => {
       </NextLink>
       <Linkes></Linkes>
       <Button
-        onClick={logout}
+        onClick={logOut}
         className={classes.btn}
         variant="contained"
         color="secondary"
       >
         Logout
       </Button>
-      {/* </Link>
-      </NextLink>{" "} */}
     </div>
   );
 };
-
-// <Tabs
-//   indicatorColor="primary"
-//   value={value}
-//   onChange={handleChange}
-//   className={classes.tabContainer}
-// >
-//   <Tab
-//     className={classes.tab}
-//     label="Home"
-//     component={Link}
-//     to="/servicios"
-//   >
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Galeria">
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Contacto">
-//     {" "}
-//   </Tab>
-//   <Tab className={classes.tab} label="Servicios" component={Link}>
-//     {" "}
-//   </Tab>
-//   {/* <LinkTab  /> */}
-//   {/* <LinkTab label="Page Two" href="/bar" /> */}
-// </Tabs>;

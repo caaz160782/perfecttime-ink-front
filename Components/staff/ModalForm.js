@@ -12,11 +12,11 @@ import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -56,15 +56,16 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ classes }) {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-
-
+export default function CustomizedDialogs({ classes, reload }) {
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  // const [valStudio] = useLocalStorage("studioVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   const [archivo, guardarArchivo] = useState("");
-      const leerArchivo = (e) => {
-        guardarArchivo(e.target.files[0]);
-      };
+
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
+  };
 
   const [open, setOpen] = React.useState(false);
   const [alert, setAlert] = useState({
@@ -82,10 +83,9 @@ export default function CustomizedDialogs({ classes }) {
   const initialForm = {
     name: "",
     lastName: "",
-    idRole: "",
     email: "",
     password: "",
-    phoneNumber: "",
+    phoneHome: "",
     curp: "",
     rfc: " ",
     phonePersonal: "",
@@ -94,52 +94,52 @@ export default function CustomizedDialogs({ classes }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-
+    const idStudio = auth.infoStudio.id;
     const formData = new FormData();
-     formData.append("name", user.name);
-     formData.append("lastName", user.lastName);
-     formData.append("idRole", user.idRole);
-     formData.append("curp", user.curp);
-     formData.append("rfc", user.rfc);
-     formData.append("phoneNumber", user.phoneNumber);
-     formData.append("phonePersonal", user.phonePersonal);
-     formData.append("email", user.email);
-     formData.append("password", user.password);
-     formData.append("picture", archivo);
 
-     console.log("formData", formData);
-
+    formData.append("name", user.name);
+    formData.append("lastName", user.lastName);
+    // formData.append("idRole", user.idRole);
+    formData.append("Role", "staffTatuador");
+    formData.append("curp", user.curp);
+    formData.append("rfc", user.rfc);
+    formData.append("phoneHome", user.phoneHome);
+    formData.append("phonePersonal", user.phonePersonal);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("picture", archivo);
+    formData.append("idStudio", idStudio);
+    // formData.append("Role", "Tatoo");
+    console.log("auth", auth.token);
     clienteAxios
       .post("/staff", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          apitoken: valToken.token
+          //  apitoken: valToken.token,
+          apitoken: auth.token,
         },
       })
       .then((respuesta) => {
-        console.log(respuesta)
+        console.log(respuesta);
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#4BB543",
         });
+
+        setTimeout(() => {
+          console.log("peticion ok");
+          reload();
+        }, 3000);
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
-        console.log(err.response.data);
-        if (err.response.data.errors) {
-          setAlert({
-            open: true,
-            message: err.response.data.errors[0].msg,
-            backgroundColor: "#FF3232",
-          });
-          return;
-        }
+        console.log(err);
         setAlert({
           open: true,
-          message: err.response.data.error,
+          message: err.response.data.error.toUpperCase(),
           backgroundColor: "#FF3232",
         });
       });
@@ -147,14 +147,15 @@ export default function CustomizedDialogs({ classes }) {
 
   return (
     <div>
-      <Button color="primary" variant="outlined" onClick={handleClickOpen}>
+      <Button color="success" variant="contained" onClick={handleClickOpen}>
         <AddCircleIcon></AddCircleIcon> crear
       </Button>
       <Snackbar
         open={alert.open}
         message={alert.message}
+        style={{ height: "100%" }}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
@@ -174,7 +175,7 @@ export default function CustomizedDialogs({ classes }) {
             <List>
               <ListItem>
                 <TextField
-                  //  variant="outlined"
+                  variant="outlined"
                   fullWidth
                   required
                   size="small"
@@ -191,7 +192,7 @@ export default function CustomizedDialogs({ classes }) {
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                  required
+                  // required
                   id="lastName"
                   label="last name"
                   name="lastName"
@@ -213,19 +214,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  id="idRol"
-                  label="idRol"
-                  name="idRole"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                ></TextField>
-              </ListItem>
-              <ListItem>
-                <TextField
-                  required
+                  //required
                   fullWidth
                   size="small"
                   id="phonePersonal"
@@ -240,9 +229,9 @@ export default function CustomizedDialogs({ classes }) {
                   required
                   fullWidth
                   size="small"
-                  id="PhoneNumber"
-                  label="Phone Number"
-                  name="phoneNumber"
+                  id="phoneHome"
+                  label="phone home"
+                  name="phoneHome"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                 ></TextField>
@@ -262,7 +251,7 @@ export default function CustomizedDialogs({ classes }) {
               <ListItem>
                 <TextField
                   fullWidth
-                  required
+                  // required
                   size="small"
                   id="curp"
                   label="curp"
@@ -273,7 +262,7 @@ export default function CustomizedDialogs({ classes }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  //  required
                   fullWidth
                   size="small"
                   id="rfc"
@@ -303,16 +292,16 @@ export default function CustomizedDialogs({ classes }) {
                   variant="contained"
                   type="submit"
                   fullWidth
-                  color="primary"
-                  className={classes.btnLogin}
+                  color="secondary"
+                  className={classes.btnRegister}
                 >
-                 <SendIcon></SendIcon>  Register
+                  <SendIcon></SendIcon> CREAR
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button type="submit" autoFocus onClick={handleClose}>
-               <CloseIcon></CloseIcon>    Close
+              <Button color="primary" autoFocus onClick={handleClose}>
+                <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>
           </form>

@@ -15,15 +15,24 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Router from "next/router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Divider } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import theme from "./../../utils/temaConfig";
+import clienteAxios from "../../utils/axios";
+import { Snackbar } from "@mui/material";
+import { useState, useContext } from "react";
+//import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { AuthContext } from "../../Context/AuthContext";
+import { set } from "date-fns";
+import AlertDialog from "./Alert";
+import AlertDeleteTable from "./AlertDeletedTable";
 
 function TablePaginationActions(props) {
-
-  const theme = useTheme();
+  // const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
   const handleFirstPageButtonClick = (event) => {
@@ -44,10 +53,7 @@ function TablePaginationActions(props) {
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        disabled={page === 0}
-        aria-label="first page"
-      >
+      <IconButton disabled={page === 0} aria-label="first page">
         {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
@@ -90,21 +96,31 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
+export default function CustomPaginationActionsTable({
+  staff,
+  reload,
+  verInactivos,
+}) {
+  //console.log("staf", staff);
 
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
+  //const [valToken, setToken] = useLocalStorage("userVal", "");
+  const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
-export default function CustomPaginationActionsTable({staff}) {
-  console.log("staf",staff);
-
-
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   function createData(name, lastName, _id) {
     return { name, lastName, _id };
   }
 
- // const [rows, setRows] = React.useState([])
+  // const [rows, setRows] = React.useState([])
   //const rows = staff.map(x=>createData(x.name,x.lastName,x._id))
-  staff.map(x=>createData(x.name,x.lastName,x._id))
-  console.log("mis rows", staff);
+  staff.map((x) => createData(x.name, x.lastName, x._id));
+  //console.log("mis rows", staff);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -122,11 +138,133 @@ export default function CustomPaginationActionsTable({staff}) {
     setPage(0);
   };
 
+  const eliminar = (id) => {
+    // console.log(id);
+    clienteAxios
+      .delete(`/staff/${id}`, {
+        //headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
+      })
+      .then((respuesta) => {
+        setAlert({
+          open: true,
+          message: respuesta.data.message.toUpperCase(),
+          backgroundColor: "#519259",
+          fontWeight: "500",
+        });
+        setTimeout(() => {
+          reload();
+        }, 4000);
+
+        // router.push("/"); //dirigir a la pagina de inicio
+        //  document.querySelector("#form").reset();
+      })
+      .catch((err) => {
+        setAlert({
+          open: true,
+          message: "error al eliminar",
+          backgroundColor: "#DD4A48",
+        });
+      });
+  };
+
+  const reactivar = (id, cliente = {}) => {
+    // console.log(cliente);
+    clienteAxios
+      .patch(`/staffInac/${id}`, cliente, {
+        //  headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
+      })
+      .then((respuesta) => {
+        setAlert({
+          open: true,
+          message: respuesta.data.message.toUpperCase(),
+          backgroundColor: "#519259",
+          fontWeight: "500",
+        });
+        setTimeout(() => {
+          reload();
+        }, 3000);
+      })
+      .catch((err) => {
+        setAlert({
+          open: true,
+          message: "error al reactivar",
+          backgroundColor: "#DD4A48",
+        });
+      });
+  };
+
+  const miTabla = (row) => {
+    return (
+      <TableRow key={row._id}>
+        <TableCell component="th" scope="row">
+          {`${row.name.toUpperCase()} ${row.lastName.toUpperCase()}`}
+        </TableCell>
+
+        <TableCell style={{ width: 100 }} align="left">
+          <Button
+            variant="outlined"
+            onClick={(e) => Router.push(`/staff/${row._id}`)}
+          >
+            {matches ? <EditIcon></EditIcon> : "editar"}
+          </Button>
+        </TableCell>
+        <TableCell style={{ width: 100 }} align="left">
+          <AlertDeleteTable
+            eliminar={() => {
+              eliminar(row._id);
+            }}
+          ></AlertDeleteTable>
+        </TableCell>
+      </TableRow>
+    );
+  };
+  const miTablaInac = (row) => {
+    return (
+      <TableRow key={row._id}>
+        <TableCell
+          style={{ backgroundColor: "#fff" }}
+          component="th"
+          scope="row"
+        >
+          {`${row.name.toUpperCase()} ${row.lastName.toUpperCase()} `}
+        </TableCell>
+        <TableCell
+          style={{ color: "rgb(91, 107, 119)" }}
+          component="th"
+          scope="row"
+        ></TableCell>
+
+        <TableCell style={{ width: 100 }} align="left">
+          <AlertDialog reactivar={() => reactivar(row._id, row)}></AlertDialog>
+        </TableCell>
+      </TableRow>
+    );
+  };
 
   return (
     <>
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        style={{ height: "100%" }}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.backgroundColor,
+            fontWeight: alert.fontWeight,
+          },
+        }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <Table
+          md={{ maxWidth: 600 }}
+          sx={{ minWidth: 400 }}
+          aria-label="custom pagination table"
+        >
           <TableBody>
             {(rowsPerPage > 0
               ? staff.slice(
@@ -134,25 +272,7 @@ export default function CustomPaginationActionsTable({staff}) {
                   page * rowsPerPage + rowsPerPage
                 )
               : staff
-            ).map((row) => (
-              <TableRow key={row._id}>
-                <TableCell component="th" scope="row">
-                  {`${row.name} ${row.lastName}`}
-                </TableCell>
-                {/* <Divider sx={{ height: 45, m: 0.5 }} orientation="vertical" /> */}
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button>
-                    <DeleteIcon></DeleteIcon> eliminar
-                  </Button>
-                </TableCell>
-
-                <TableCell style={{ width: 100 }} align="left">
-                  <Button onClick={(e) => Router.push(`/staff/${row._id}`)}>
-                    <EditIcon></EditIcon>editar
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            ).map((row) => (row.statusUser ? miTabla(row) : miTablaInac(row)))}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

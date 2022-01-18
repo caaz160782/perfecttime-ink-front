@@ -61,6 +61,7 @@ export default function EditCustomizedDialogs({
   classes,
   staffMember,
   reload,
+  role,
 }) {
   //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
@@ -91,41 +92,41 @@ export default function EditCustomizedDialogs({
     picture: staffMember.picture,
     password: "",
     phoneHome: staffMember.phoneHome,
-    curp: staffMember.curp,
-    rfc: staffMember.rfc,
+    age: staffMember.age,
     phonePersonal: staffMember.phonePersonal,
   };
   const [user, actualizarState, reset] = useForm(initialForm);
   //console.log("initialForm", initialForm);
   //console.log('user', user);
+  let ruta = role === "user" ? "clientModified" : "clientAdmin";
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("user---", user);
+    // console.log(user);
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     //formData.append("idRole", "staff");
-    formData.append("curp", user.curp);
-    formData.append("rfc", user.rfc);
+    formData.append("age", user.age);
+    // formData.append("rfc", user.rfc);
     formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("password", user.password);
     formData.append("picture", archivo);
 
     clienteAxios
-      .patch(`/staff/${staffMember._id}`, formData, {
+      .patch(`/${ruta}/${staffMember._id}`, formData, {
         // headers: { apitoken: valToken.token },
         headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        console.log(respuesta);
-        reload();
+        console.log(respuesta.data.message);
         setAlert({
           open: true,
           message: respuesta.data.message,
           backgroundColor: "#519259",
         });
+        reload();
 
         //  router.push("/staff"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
@@ -135,7 +136,8 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          message: err.response.data.error,
+          //message: err.response.data.error,
+          message: "error",
           backgroundColor: "#DD4A48",
         });
       });
@@ -235,33 +237,20 @@ export default function EditCustomizedDialogs({
                   value={user.phoneHome}
                 ></TextField>
               </ListItem>
-              <ListItem></ListItem>
-              <ListItem>
-                <TextField
-                  fullWidth
-                  required
-                  size="small"
-                  id="curp"
-                  label="curp"
-                  name="curp"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.curp}
-                ></TextField>
-              </ListItem>
               <ListItem>
                 <TextField
                   required
                   fullWidth
                   size="small"
-                  id="rfc"
-                  label="rfc"
-                  name="rfc"
-                  inputProps={{ type: "text" }}
+                  id="age"
+                  label="age"
+                  name="age"
+                  inputProps={{ type: "phone" }}
                   onChange={actualizarState}
-                  value={user.rfc}
+                  value={user.age}
                 ></TextField>
               </ListItem>
+
               <ListItem>
                 <TextField
                   // required
@@ -284,7 +273,7 @@ export default function EditCustomizedDialogs({
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnRegister}
+                  className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Guardar cambios
                 </Button>

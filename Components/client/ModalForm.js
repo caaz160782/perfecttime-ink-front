@@ -12,9 +12,9 @@ import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
-import EditIcon from "@mui/icons-material/Edit";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
 //import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
@@ -57,15 +57,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditCustomizedDialogs({
-  classes,
-  staffMember,
-  reload,
-}) {
+export default function CustomizedDialogs({ classes, reload }) {
   //const [valToken, setToken] = useLocalStorage("userVal", "");
+  // const [valStudio] = useLocalStorage("studioVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-  //  console.log("staff", typeRol);
-  //  const foto = staffMember.picture;
+
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -85,66 +81,79 @@ export default function EditCustomizedDialogs({
     setOpen(false);
   };
   const initialForm = {
-    name: staffMember.name,
-    lastName: staffMember.lastName,
-    // idRole: staffMember.idRole,
-    picture: staffMember.picture,
+    name: "",
+    lastName: "",
+    //  Role: "Cliente",
+    email: "",
     password: "",
-    phoneHome: staffMember.phoneHome,
-    curp: staffMember.curp,
-    rfc: staffMember.rfc,
-    phonePersonal: staffMember.phonePersonal,
+    phoneHome: "",
+    age: "",
+    // idStudio: auth.infoStudio.id,
+    // idStudio: "61df650efc14abb6d4c68ecf",
+    // curp: "",
+    // rfc: " ",
+    phonePersonal: "",
   };
-  const [user, actualizarState, reset] = useForm(initialForm);
-  //console.log("initialForm", initialForm);
-  //console.log('user', user);
+  const [user, actualizarState, reset, setValues] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("user---", user);
+    //console.log("auth***", auth.infoStudio);
+    //const userEnviar = user;
+    // userEnviar.idStudio = auth.infoStudio.id;
+    //console.log("user", userEnviar);
+    const idStudio = auth.infoStudio.id;
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
-    //formData.append("idRole", "staff");
-    formData.append("curp", user.curp);
-    formData.append("rfc", user.rfc);
+    formData.append("age", user.age);
+    formData.append("Role", "Cliente");
     formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
+    formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
+    formData.append("idStudio", idStudio);
 
+    console.log("user", auth);
     clienteAxios
-      .patch(`/staff/${staffMember._id}`, formData, {
-        // headers: { apitoken: valToken.token },
-        headers: { apitoken: auth.token },
+      .post("/clientAdmin", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          //  apitoken: valToken.token,
+          apitoken: auth.token,
+        },
       })
       .then((respuesta) => {
         console.log(respuesta);
-        reload();
         setAlert({
           open: true,
           message: respuesta.data.message,
-          backgroundColor: "#519259",
+          backgroundColor: "#4BB543",
         });
 
-        //  router.push("/staff"); //dirigir a la pagina de inicio
+        setTimeout(() => {
+          console.log("peticion ok");
+          reload();
+        }, 3000);
+
+        // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
         console.log(err);
-
         setAlert({
           open: true,
           message: err.response.data.error,
-          backgroundColor: "#DD4A48",
+          backgroundColor: "#FF3232",
         });
       });
   };
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        <EditIcon></EditIcon> Editar
+      <Button color="success" variant="contained" onClick={handleClickOpen}>
+        <AddCircleIcon></AddCircleIcon> crear
       </Button>
       <Snackbar
         open={alert.open}
@@ -163,14 +172,14 @@ export default function EditCustomizedDialogs({
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Editar
+          Ingresar Cliente
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
             <List>
               <ListItem>
                 <TextField
-                  //  variant="outlined"
+                  variant="outlined"
                   fullWidth
                   required
                   size="small"
@@ -179,7 +188,6 @@ export default function EditCustomizedDialogs({
                   name="name"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={user.name}
                   //  helperText={error ? "Name needs to be 'a'" : "Perfect!"}
                 ></TextField>
               </ListItem>
@@ -188,13 +196,12 @@ export default function EditCustomizedDialogs({
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                  required
+                  // required
                   id="lastName"
                   label="last name"
                   name="lastName"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
-                  value={user.lastName}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -211,7 +218,7 @@ export default function EditCustomizedDialogs({
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  //required
                   fullWidth
                   size="small"
                   id="phonePersonal"
@@ -219,7 +226,6 @@ export default function EditCustomizedDialogs({
                   name="phonePersonal"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
-                  value={user.phonePersonal}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -232,46 +238,41 @@ export default function EditCustomizedDialogs({
                   name="phoneHome"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
-                  value={user.phoneHome}
-                ></TextField>
-              </ListItem>
-              <ListItem></ListItem>
-              <ListItem>
-                <TextField
-                  fullWidth
-                  required
-                  size="small"
-                  id="curp"
-                  label="curp"
-                  name="curp"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.curp}
                 ></TextField>
               </ListItem>
               <ListItem>
                 <TextField
                   required
-                  fullWidth
                   size="small"
-                  id="rfc"
-                  label="rfc"
-                  name="rfc"
-                  inputProps={{ type: "text" }}
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  inputProps={{ type: "email" }}
                   onChange={actualizarState}
-                  value={user.rfc}
                 ></TextField>
               </ListItem>
               <ListItem>
                 <TextField
-                  // required
+                  //  required
+                  fullWidth
+                  size="small"
+                  id="age"
+                  label="age"
+                  name="age"
+                  inputProps={{ type: "text" }}
+                  onChange={actualizarState}
+                ></TextField>
+              </ListItem>
+              <ListItem>
+                <TextField
+                  required
                   size="small"
                   id="password"
                   fullWidth
                   label="Password"
                   name="password"
                   inputProps={{ type: "password" }}
-                  autoComplete="current-password"
                   helperText={
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
@@ -284,14 +285,14 @@ export default function EditCustomizedDialogs({
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnRegister}
+                  //className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon> Guardar cambios
+                  <SendIcon></SendIcon> Register
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button autoFocus onClick={handleClose}>
+              <Button type="submit" autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

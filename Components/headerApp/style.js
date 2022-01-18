@@ -4,15 +4,16 @@ import theme from "../../utils/temaConfig";
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: "6em",
+    marginBottom: "2em",
     [theme.breakpoints.down("sm")]: {
-      marginBottom: "4em",
+      marginBottom: "1em",
     },
   },
   logo: {
-    height: "6em",
+    height: "15vh",
+    borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
-      height: "5.5em",
+      height: "13vh",
     },
   },
   //DRAWER
@@ -21,41 +22,44 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerIconContainer: {
     marginLeft: "auto",
-    "&:hover": {
-      //backgroundColor: "transparent",
-    },
   },
   drawerIcon: {
     width: 40,
     height: 40,
-
     color: "#fff",
+    "&:hover": {
+      //color: theme.palette.secondary.light,
+    },
   },
   linkDrawer: {
-    fontFamily: "Raleway",
+    // fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
     fontSize: "1rem",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      textDecoration: `underline ${theme.palette.primary.dark}`,
     },
   },
   linkDrawerLogin: {
     padding: 0,
     margin: 0,
     textTransform: "none",
-    fontFamily: "Raleway",
     fontWeight: 550,
     fontSize: "1rem",
     color: "#fff",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      textDecoration: `underline ${theme.palette.primary.dark}`,
+      color: theme.palette.secondary.light,
     },
+    transition: "all .8s",
   },
   loginContainer: {
-    //backgroundColor: "#EFC437",
-    backgroundColor: "#CAA345",
-    //   alignItems: "left",
+    backgroundColor: theme.palette.secondary.dark,
+    transition: "all .8s",
+    "&:hover": {
+      // backgroundColor: theme.palette.secondary.light,
+      // color: theme.palette.primary.dark,
+    },
   },
   ///NAVEGACION
   tabContainer: {
@@ -80,15 +84,14 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     color: "#fff",
-    fontFamily: "Raleway",
     textTransform: "none",
     fontSize: "1.4rem",
-    borderRadius: "40px",
+    borderRadius: "30px",
     marginLeft: "50px",
     marginRight: "25px",
     padding: "2px 20px",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.3rem",

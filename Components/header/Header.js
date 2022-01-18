@@ -38,7 +38,7 @@ const Header = (props) => {
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const classes = useStyles();
@@ -48,7 +48,7 @@ const Header = (props) => {
     setValue(value);
   };
 
-  const drawer = [
+  const drawer = (
     <>
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
@@ -120,34 +120,31 @@ const Header = (props) => {
       >
         <MenuIcon className={classes.drawerIcon} />
       </IconButton>
-    </>,
-  ];
+    </>
+  );
 
   return (
-    <>
-      <ElevationScroll>
-        <AppBar position="fixed" color="primary">
-          <Toolbar>
-            <div>
-              <NextLink href="/" passHref>
-                <Link>
-                  <img
-                    style={{ borderRadius: "50%" }}
-                    className={classes.logo}
-                    src="/images/logo.jfif"
-                    alt="logo"
-                    width={110}
-                    height={120}
-                  />
-                </Link>
-              </NextLink>
-            </div>
-            {matches ? drawer : <Nav></Nav>}
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-      <div className={classes.toolbarMargin} />
-    </>
+    <ElevationScroll>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <div>
+            <NextLink href="/" passHref>
+              <Link>
+                <img
+                  style={{ borderRadius: "50%" }}
+                  // className={classes.logo}
+                  src="/images/logo.jfif"
+                  alt="logo"
+                  width={110}
+                  height={120}
+                />
+              </Link>
+            </NextLink>
+          </div>
+          {matches ? drawer : <Nav></Nav>}
+        </Toolbar>
+      </AppBar>
+    </ElevationScroll>
   );
 };
 export default Header;

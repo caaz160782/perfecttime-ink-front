@@ -12,7 +12,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 
-export const Nav = ({ logout }) => {
+export const Nav = ({ logOut }) => {
   const { auth, guardarAuth } = useContext(AuthContext);
 
   //  console.log("nav", auth);
@@ -40,17 +40,27 @@ export const Nav = ({ logout }) => {
           <NextLink href="/agenda" passHref>
             <Link className={classes.tab}>Agenda</Link>
           </NextLink>
+<<<<<<< HEAD
           <NextLink href="/clientAdmin" passHref>
             <Link className={classes.tab}>Clientes</Link>
+=======
+          <NextLink href="/config" passHref>
+            <Link className={classes.tab}>Configuracion</Link>
+>>>>>>> develop
           </NextLink>
           <NextLink href="/staff" passHref>
             <Link className={classes.tab}>Staff</Link>
           </NextLink>
+<<<<<<< HEAD
           <NextLink href="/studio/modif" passHref>
             <Link className={classes.tab}>Studio</Link>
           </NextLink>
           <NextLink href="/config/modif" passHref>
             <Link className={classes.tab}>Configuracion</Link>
+=======
+          <NextLink href="/client" passHref>
+            <Link className={classes.tab}>Clientes</Link>
+>>>>>>> develop
           </NextLink>
         </>
       );
@@ -87,7 +97,7 @@ export const Nav = ({ logout }) => {
       </NextLink>
       <Linkes></Linkes>
       <Button
-        onClick={logout}
+        onClick={logOut}
         className={classes.btn}
         variant="contained"
         color="secondary"

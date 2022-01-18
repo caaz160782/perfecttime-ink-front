@@ -16,7 +16,6 @@ import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -63,6 +62,7 @@ export default function CustomizedDialogs({ classes, reload }) {
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
 
   const [archivo, guardarArchivo] = useState("");
+
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
   };
@@ -83,7 +83,6 @@ export default function CustomizedDialogs({ classes, reload }) {
   const initialForm = {
     name: "",
     lastName: "",
-    idRole: "",
     email: "",
     password: "",
     phoneHome: "",
@@ -95,9 +94,9 @@ export default function CustomizedDialogs({ classes, reload }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    //  console.log("archivo", archivo);
     const idStudio = auth.infoStudio.id;
     const formData = new FormData();
+
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     // formData.append("idRole", user.idRole);

@@ -14,7 +14,7 @@ const AuthProvider = (props) => {
 
   // const [auth, guardarAuth] = useState(defaultUserVal);
   const [userVal, setUserVal] = useLocalStorage("userVal", defaultUserVal);
-  console.log("****************", userVal);
+  //console.log("****************", userVal);
   const [auth, guardarAuth] = useState(userVal);
   //const [valStudio, setStudio] = useLocalStorage("idStudio", "");
   const router = useRouter();
@@ -28,7 +28,7 @@ const AuthProvider = (props) => {
 
   const logOut = () => {
     guardarAuth(defaultUserVal);
-    console.log("deslogear");
+    //console.log("deslogear");
     router.push("/");
   };
 

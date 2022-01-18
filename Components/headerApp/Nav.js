@@ -40,27 +40,14 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/agenda" passHref>
             <Link className={classes.tab}>Agenda</Link>
           </NextLink>
-<<<<<<< HEAD
-          <NextLink href="/clientAdmin" passHref>
-            <Link className={classes.tab}>Clientes</Link>
-=======
           <NextLink href="/config" passHref>
             <Link className={classes.tab}>Configuracion</Link>
->>>>>>> develop
           </NextLink>
           <NextLink href="/staff" passHref>
             <Link className={classes.tab}>Staff</Link>
           </NextLink>
-<<<<<<< HEAD
-          <NextLink href="/studio/modif" passHref>
-            <Link className={classes.tab}>Studio</Link>
-          </NextLink>
-          <NextLink href="/config/modif" passHref>
-            <Link className={classes.tab}>Configuracion</Link>
-=======
           <NextLink href="/client" passHref>
             <Link className={classes.tab}>Clientes</Link>
->>>>>>> develop
           </NextLink>
         </>
       );

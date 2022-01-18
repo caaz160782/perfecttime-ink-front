@@ -1,7 +1,7 @@
 
-// import useStyles from "./landing/style.js"
-import { makeStyles } from '@material-ui/core/styles'
-// import useStyles from '../Components/landing/style.js' 
+
+import { makeStyles } from '@mui/styles'
+
 
 const useStyles = makeStyles((theme) => ({
 

@@ -92,7 +92,7 @@ const FrmStudio = ({
         textAlign: "center",
         flexWrap: "wrap",
         alignItems: "center",
-        m: 18,
+        //m: 18,
       }}
     >
       <Typography component="h5" variant="h5">
@@ -101,7 +101,7 @@ const FrmStudio = ({
       <form id="form" onSubmit={handlerSubmit}>
         <Box>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
             required
             id="name"
             label="Nombre del estudio"

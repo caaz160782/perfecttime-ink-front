@@ -21,13 +21,13 @@ const HeaderApp = dynamic(() => import("./headerApp/Header"));
 const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
   const { auth, logOut } = contextValue;
-  console.log("layout", auth, logOut);
+  //console.log("layout", auth, logOut);
   const router = useRouter();
 
   const [NavComponent, setNavComponent] = useState(() => <></>);
 
   useEffect(() => {
-    console.log("autenticado", auth.autenticado);
+    //console.log("autenticado", auth.autenticado);
     setNavComponent(
       auth?.autenticado ? <HeaderApp logOut={logOut} /> : <Header />
     );

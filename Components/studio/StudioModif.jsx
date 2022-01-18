@@ -3,17 +3,31 @@ import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
 import { Box } from "@mui/material";
 import FrmStudio from "./FrmStudio";
-import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const StudioModif = () => {
-  const { auth, saveinfoStudio } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const MySwal = withReactContent(Swal);
   const [ver, setVer] = useState("visible");
-  const [valuesConfigStudio, setvaluesConfigStudio] = useState({});
+  const [valuesConfigStudio, setvaluesConfigStudio] = useState({
+    name: "",
+    description: "",
+    picture: "",
+    postalCode: "",
+    municipality: "",
+    state: "",
+    city: "",
+    address: "",
+    phoneWhatsApp: "",
+    phoneStudio: "",
+    rfc: "",
+    social: "",
+  });
   const [archivo, guardarArchivo] = useState("");
-  const [cp, setCp] = useState("");
+  //const [cp, setCp] = useState("");
+  const [title, setTitle] = useState("");
+  const [titleButton, setTitleButton] = useState("");
 
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -24,11 +38,12 @@ const StudioModif = () => {
       ...valuesConfigStudio,
       [prop]: event.target.value,
     });
-    if (prop === "postalCode") {
-      setCp(event.target.value);
-    }
+    // if (prop === "postalCode") {
+    //   setCp(event.target.value);
+    // }
   };
-  const cargarStudioInfo = () => {
+
+  const cargarStudioInfo = async () => {
     clienteAxios
       .get(`/studio/${auth.infoStudio.id}`, {
         headers: { apitoken: auth.token },
@@ -47,9 +62,9 @@ const StudioModif = () => {
 
   useEffect(() => {
     cargarStudioInfo();
-  }, []);
-
-  //console.log(valuesConfigStudio);
+    setTitle("Modifica");
+    setTitleButton("Guardar");
+  }, [auth.infoStudio.id, auth.token]);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -74,7 +89,7 @@ const StudioModif = () => {
       })
       .then((response) => {
         cargarStudioInfo();
-        // setLoading(false);
+        setLoading(false);
         MySwal.fire({
           position: "center",
           icon: "success",
@@ -102,19 +117,22 @@ const StudioModif = () => {
         //m: 15,
       }}
     >
-      <FrmStudio
-        title={"Mofique"}
-        cp={cp}
-        setVer={setVer}
-        leerArchivo={leerArchivo}
-        valuesConfigStudio={valuesConfigStudio}
-        setvaluesConfigStudio={setvaluesConfigStudio}
-        handleChange={handleChange}
-        handlerSubmit={handlerSubmit}
-        loading={loading}
-        setLoading={setLoading}
-        butonLabel={"Guardar"}
-      />
+      {
+        <FrmStudio
+          title={title}
+          cargarStudioInfo={cargarStudioInfo}
+          ver={ver}
+          setVer={setVer}
+          leerArchivo={leerArchivo}
+          valuesConfigStudio={valuesConfigStudio}
+          setvaluesConfigStudio={setvaluesConfigStudio}
+          handleChange={handleChange}
+          handlerSubmit={handlerSubmit}
+          loading={loading}
+          setLoading={setLoading}
+          butonLabel={titleButton}
+        />
+      }
     </Box>
   );
 };

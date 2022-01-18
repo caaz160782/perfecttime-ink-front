@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
-const oneDate = () => {
-  //const router = useRouter();
-  //const { id } = router.query;
+const Onedate = () => {
+  const router = useRouter();
+
+  const { id } = router.query;
+  console.log(id);
   return (
     <div>
       <h1>agend id</h1>
@@ -11,4 +13,4 @@ const oneDate = () => {
   );
 };
 
-export default oneDate;
+export default Onedate;

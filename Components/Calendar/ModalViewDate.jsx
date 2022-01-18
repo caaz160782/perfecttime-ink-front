@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AlertDelete from "./AlertDelete";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
-//import Image from "next/image";
+import Image from "next/image";
 
 const ModalViewDate = ({
   openViewModal,
@@ -66,7 +66,8 @@ const ModalViewDate = ({
       console.log(error);
     }
   };
-
+  const ruta =
+    "https://www.istockphoto.com/es/vector/tatoo-tribal-gm516853992-89193597";
   return (
     <div>
       <Modal
@@ -87,9 +88,7 @@ const ModalViewDate = ({
               </Typography>
             </Box>
 
-            <Box>
-              <h1>imagen</h1>
-            </Box>
+            <Box></Box>
 
             <Box>
               <Typography variant="body2" color="text.secondary">
@@ -127,12 +126,12 @@ const ModalViewDate = ({
 export default ModalViewDate;
 
 /*
-          <Image
-              // src={`${item.img}?w=248&fit=crop&auto=format`}
-              src={`https://www.istockphoto.com/es/vector/tatoo-tribal-gm516853992-89193597`}
-              // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={infoDate.title}
-              loading="lazy"
-            />
+ <Image
+                // src={`${item.img}?w=248&fit=crop&auto=format`}
+                // src={`${ruta}`}
+                // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                alt={infoDate.title}
+                loading="lazy"
+              />         
   
 */

@@ -34,7 +34,6 @@ const StudioModif = () => {
         headers: { apitoken: auth.token },
       })
       .then((response) => {
-        //console.log(response);
         setvaluesConfigStudio(response.data.payload);
       })
       .catch((error) => {

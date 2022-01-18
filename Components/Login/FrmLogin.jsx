@@ -17,23 +17,18 @@ import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../Context/AuthContext";
 
-import { info } from "sass";
-
 const FrmLogin = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { auth, guardarAuth } = useContext(AuthContext);
-
+  const { guardarAuth } = useContext(AuthContext);
   const [values, setValues] = useState({
     password: "",
     email: "",
     showPassword: false,
   });
-
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -43,15 +38,13 @@ const FrmLogin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("values", values);
     setLoading(true);
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,
@@ -59,7 +52,6 @@ const FrmLogin = () => {
           autenticado,
           infoStudio,
         });
-
         if (
           response.data.autenticado === true &&
           infoUser.rol === "Administrador"
@@ -67,10 +59,8 @@ const FrmLogin = () => {
           if (!infoUser.registerStudio) {
             router.push("/studio");
           } else if (!infoUser.finishConfig) {
-            const { id } = infoStudio;
             router.push("/config");
           } else {
-            const { id } = infoStudio;
             router.push("/agenda");
           }
         }

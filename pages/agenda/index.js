@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import FrmAgenda from "../../Components/agenda/FrmAgenda";
 import Box from "@mui/material/Box";
-import { AuthContext } from "../../Context/AuthContext";
 
 const Agenda = () => {
   return (

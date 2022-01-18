@@ -69,12 +69,7 @@ export default function Home() {
               con nosotros en repetidas ocasiones.
             </Typography>
           </Grid>
-          <Grid item sm={12} md={6}>
-            <img
-              src="https://marvel-b1-cdn.bc0a.com/f00000000107635/daysmart-bodyart.imgix.net/uploads/2019/07/tiptattooartists.jpg?ar=1%3A0.75&auto=format%2Ccompress&crop=center&fit=crop&q=85&w=600"
-              className={classes.imgCard}
-            ></img>
-          </Grid>
+          <Grid item sm={12} md={6}></Grid>
         </Grid>
       </Container>
       <Container maxWidth="lg" className={classes.blogsContainer}>
@@ -149,3 +144,10 @@ export default function Home() {
     </div>
   );
 }
+
+/*
+ <img
+              src="https://marvel-b1-cdn.bc0a.com/f00000000107635/daysmart-bodyart.imgix.net/uploads/2019/07/tiptattooartists.jpg?ar=1%3A0.75&auto=format%2Ccompress&crop=center&fit=crop&q=85&w=600"
+              className={classes.imgCard}
+            ></img>
+            */

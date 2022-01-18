@@ -1,4 +1,3 @@
-import Layout from "../Components/Layout";
 import Image from "next/image";
 import backIma from "../public/images/background.jpg";
 import {
@@ -16,7 +15,7 @@ import {
   CardMedia,
   shadows,
 } from "@mui/material";
-import useStyles from "./landing/style.js";
+import useStyles from "../Components/landing/style";
 // import Image from '../public/images/backgroundtest.jpg'
 // import useStyles from '../Components/landing/style.js'
 

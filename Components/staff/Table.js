@@ -107,7 +107,6 @@ export default function CustomPaginationActionsTable({
     open: false,
     message: "",
     backgroundColor: "",
-    textAlign: "center",
   });
   //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
@@ -151,7 +150,7 @@ export default function CustomPaginationActionsTable({
           open: true,
           message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
-          textAlign: "center",
+          fontWeight: "500",
         });
         setTimeout(() => {
           reload();
@@ -181,8 +180,7 @@ export default function CustomPaginationActionsTable({
           open: true,
           message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
-          border: "1px solid red",
-          textAlign: "center",
+          fontWeight: "500",
         });
         setTimeout(() => {
           reload();
@@ -201,7 +199,7 @@ export default function CustomPaginationActionsTable({
     return (
       <TableRow key={row._id}>
         <TableCell component="th" scope="row">
-          {`${row.name} ${row.lastName}`}
+          {`${row.name.toUpperCase()} ${row.lastName.toUpperCase()}`}
         </TableCell>
 
         <TableCell style={{ width: 100 }} align="left">
@@ -219,17 +217,6 @@ export default function CustomPaginationActionsTable({
             }}
           ></AlertDeleteTable>
         </TableCell>
-        {/* <TableCell style={{ width: 100 }} align="left">
-          <Button
-            variant="outlined"
-            onClick={() => {
-              eliminar(row._id);
-            }}
-            color="error"
-          >
-            {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
-          </Button>
-        </TableCell> */}
       </TableRow>
     );
   };
@@ -241,26 +228,14 @@ export default function CustomPaginationActionsTable({
           component="th"
           scope="row"
         >
-          {`${row.name} ${row.lastName} `}
+          {`${row.name.toUpperCase()} ${row.lastName.toUpperCase()} `}
         </TableCell>
         <TableCell
           style={{ color: "rgb(91, 107, 119)" }}
           component="th"
           scope="row"
-        >
-          <Typography style={{ color: "rgb(91, 107, 119)" }}>
-            INACTIVO
-          </Typography>
-        </TableCell>
+        ></TableCell>
 
-        {/* <TableCell style={{ width: 100 }} align="left">
-                    <Button
-                      variant="outlined"
-                      onClick={(e) => Router.push(`/staff/${row._id}`)}
-                    >
-                      {matches ? <EditIcon></EditIcon> : "editar"}
-                    </Button>
-                  </TableCell> */}
         <TableCell style={{ width: 100 }} align="left">
           <AlertDialog reactivar={() => reactivar(row._id, row)}></AlertDialog>
         </TableCell>
@@ -273,12 +248,14 @@ export default function CustomPaginationActionsTable({
       <Snackbar
         open={alert.open}
         message={alert.message}
+        style={{ height: "100%" }}
         ContentProps={{
           style: {
             backgroundColor: alert.backgroundColor,
+            fontWeight: alert.fontWeight,
           },
         }}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

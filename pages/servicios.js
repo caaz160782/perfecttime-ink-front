@@ -1,5 +1,3 @@
-import Layout from "../Components/Layout";
-
 import {
   Typography,
   TextField,
@@ -15,7 +13,7 @@ import {
   CardMedia,
   shadows,
 } from "@mui/material";
-import useStyles from "./servicios/style.js";
+import useStyles from "../Components/servicios/style.js";
 import Image from "next/image";
 import theme from "../utils/temaConfig";
 // import backimg from "../public/images/hand.png";

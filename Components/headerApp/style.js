@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   //DRAWER
   drawer: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   drawerIconContainer: {
     marginLeft: "auto",
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 550,
     fontSize: "1rem",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
+      textDecoration: `underline ${theme.palette.primary.main}`,
     },
   },
   linkDrawerLogin: {
@@ -48,16 +48,17 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     color: "#fff",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.dark}`,
-      color: theme.palette.secondary.light,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
-    transition: "all .8s",
+    transition: "color .8s",
   },
   loginContainer: {
-    backgroundColor: theme.palette.secondary.dark,
-    transition: "all .8s",
+    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: "#fff",
+    // backgroundColor: "#CAA345",
+    transition: "background-color .8s",
     "&:hover": {
-      // backgroundColor: theme.palette.secondary.light,
+      backgroundColor: theme.palette.secondary.dark,
       // color: theme.palette.primary.dark,
     },
   },

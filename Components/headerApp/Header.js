@@ -260,29 +260,35 @@ const HeaderApp = (props) => {
   }
 
   return (
-    <ElevationScroll>
-      <AppBar position="static" color="primary" style={{ marginBottom: "5px" }}>
-        <Toolbar>
-          <div>
-            <NextLink href="/" passHref>
-              <Link>
-                <img
-                  className={classes.logo}
-                  src="/images/logo.jfif"
-                  alt="logo"
-                />
-              </Link>
-            </NextLink>
-          </div>
-          {matches ? (
-            drawer
-          ) : (
-            <Nav rol={auth?.infoUser?.rol} logOut={logOut}></Nav>
-            //<Nav logout={logout}></Nav>
-          )}
-        </Toolbar>
-      </AppBar>
-    </ElevationScroll>
+    <>
+      <ElevationScroll>
+        <AppBar
+          position="fixed"
+          color="primary"
+          style={{ marginBottom: "5px" }}
+        >
+          <Toolbar>
+            <div>
+              <NextLink href="/" passHref>
+                <Link>
+                  <img
+                    className={classes.logo}
+                    src="/images/logo.jfif"
+                    alt="logo"
+                  />
+                </Link>
+              </NextLink>
+            </div>
+            {matches ? (
+              drawer
+            ) : (
+              <Nav rol={auth?.infoUser?.rol} logOut={logOut}></Nav>
+            )}
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className={classes.toolbarMargin}></div>
+    </>
   );
 };
 export default HeaderApp;

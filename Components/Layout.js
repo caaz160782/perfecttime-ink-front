@@ -50,7 +50,7 @@ const Layout = ({ title, children }) => {
       </Head>
       {/* {auth?.autenticado ? <HeaderApp logout={logOut} /> : <Header />} */}
       {NavComponent}
-      <Container style={{ minHeight: "calc(90vh - 6em)", paddingTop: "3.5em" }}>
+      <Container style={{ minHeight: "calc(90vh - 6em)", paddingTop: "2em" }}>
         {children}
       </Container>
       <footer
@@ -60,7 +60,7 @@ const Layout = ({ title, children }) => {
           justifyContent: "center",
           backgroundColor: "rgb(91, 107, 119)",
           height: "10vh",
-          marginTop: "20px",
+          marginTop: "60px",
         }}
       >
         <Typography style={{ color: "#fff", fontWeight: "500" }}>

@@ -18,7 +18,7 @@ const ModConfig = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        m: 18,
+        //m: 18,
       }}
     >
       {auth?.infoUser.finishConfig && <ConfigModif />}

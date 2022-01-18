@@ -86,7 +86,7 @@ const StudioConfig = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        m: 15,
+        // m: 15,
       }}
     >
       <FrmStudio

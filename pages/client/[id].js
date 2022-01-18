@@ -50,14 +50,14 @@ const OneStaff = () => {
 
   useEffect(() => {
     if (reload) {
-      console.log(id);
+      //console.log(id);
       const consultarAPI = async () => {
         try {
           const respuesta = await clienteAxios.get(`/clientAdmin/${id}`, {
             // headers: { apitoken: valToken.token },
-            headers: { apitoken: auth.token },
+            headers: { apitoken: auth?.token },
           });
-          console.log("respuesta*************", respuesta.data.listClient);
+          //  console.log("respuesta*************", respuesta.data.listClient);
           setStaffMember(respuesta.data.listClient.clientId);
           setLoading(false);
         } catch (error) {
@@ -68,10 +68,10 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      console.log("desmontar");
+      // console.log("desmontar");
       // source.cancel();
     };
-  }, [reload]);
+  }, []);
 
   return (
     <div>

@@ -77,10 +77,10 @@ const Staff = () => {
         //  console.log("respuesta de cleinte", auth.infoStudio.id);
         try {
           const respuesta = await clienteAxios.get(
-            `/findClientByStudy/${auth.infoStudio.id}`,
+            `/findClientByStudy/${auth?.infoStudio.id}`,
             // `/findStaffByStudy/${idStudio.infoStudio.id}`,
             {
-              headers: { apitoken: auth.token },
+              headers: { apitoken: auth?.token },
             }
           );
           const staffArray = respuesta.data.payload;
@@ -94,14 +94,14 @@ const Staff = () => {
           setStaff(staffFirst);
           setLoading(false);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       };
       consultarAPI();
       setReload(false);
     }
     return () => {
-      console.log("desmontar");
+      // console.log("desmontar");
       source.cancel();
     };
   }, [reload]);

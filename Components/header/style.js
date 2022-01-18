@@ -14,13 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
   //DRAWER
   drawer: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
   },
   drawerIconContainer: {
     marginLeft: "auto",
-    "&:hover": {
-      //backgroundColor: "transparent",
-    },
   },
   drawerIcon: {
     width: 40,
@@ -29,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   },
   linkDrawer: {
-    fontFamily: "Raleway",
+    //fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
     fontSize: "1rem",
@@ -41,17 +38,21 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     textTransform: "none",
-    // fontFamily: "Pacifico",
+    textDecoration: "none",
+    fontWeight: 550,
     fontSize: "1.1rem",
     color: "#fff",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      color: theme.palette.secondary.light,
+      textDecoration: `underline ${theme.palette.primary.main}`,
     },
+    transition: "color .8s",
   },
   loginContainer: {
     //backgroundColor: "#EFC437",
-    backgroundColor: "#CAA345",
+    backgroundColor: theme.palette.secondary.main,
     //   alignItems: "left",
+    transition: "all .8s",
   },
   ///NAVEGACION
   tabContainer: {

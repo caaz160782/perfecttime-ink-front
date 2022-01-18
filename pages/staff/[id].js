@@ -17,8 +17,8 @@ const OneStaff = () => {
     },
 
     spanes: {
-      textTransform: "none",
-      fontSize: "0.8rem",
+      // textTransform: "none",
+      //  fontSize: "0.8rem",
     },
     foto: {
       border: "2px solid rgb(173, 173, 173)",

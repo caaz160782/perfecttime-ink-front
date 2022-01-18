@@ -119,11 +119,10 @@ export default function EditCustomizedDialogs({
         headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        console.log(respuesta);
         reload();
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
         });
 
@@ -135,7 +134,7 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          message: err.response.data.error,
+          message: err.response.data.error.toUpperCase(),
           backgroundColor: "#DD4A48",
         });
       });
@@ -148,9 +147,10 @@ export default function EditCustomizedDialogs({
       </Button>
       <Snackbar
         open={alert.open}
+        style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

@@ -123,7 +123,7 @@ export default function CustomizedDialogs({ classes, reload }) {
         console.log(respuesta);
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#4BB543",
         });
 
@@ -139,7 +139,7 @@ export default function CustomizedDialogs({ classes, reload }) {
         console.log(err);
         setAlert({
           open: true,
-          message: err.response.data.error,
+          message: err.response.data.error.toUpperCase(),
           backgroundColor: "#FF3232",
         });
       });
@@ -153,8 +153,9 @@ export default function CustomizedDialogs({ classes, reload }) {
       <Snackbar
         open={alert.open}
         message={alert.message}
+        style={{ height: "100%" }}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

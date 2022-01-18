@@ -28,22 +28,28 @@ export default function MediaCard({ staffMember, classes, atras, reload }) {
   // }
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
-      <CardMedia>
-        <div className={classes.fotoContainer}>
-          <img
-            src={`http://localhost:8000/${staffMember.picture}`}
-            style={{ borderRadius: "50%" }}
-            className={classes.foto}
-          ></img>
-        </div>
-      </CardMedia>
+      <CardMedia
+        component="img"
+        alt="foto"
+        height="auto"
+        image={`http://localhost:8000/${staffMember.picture}`}
+      />
 
       <CardContent align="center">
         <Typography gutterBottom variant="h5" component="div">
           {`${staffMember.name} ${staffMember.lastName} `}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <span style={{ fontWeight: 600 }} className={classes.spanes}>
+          <span
+            // style={{
+            //   display: "flex",
+            //   alignItems: "center",
+            //   justifyContent: "center",
+            //   border: "2px solid red",
+            // }}
+            style={{ fontWeight: 600 }}
+            className={classes.spanes}
+          >
             <MailOutlineIcon></MailOutlineIcon> Email:
           </span>{" "}
           {`${staffMember.email} `}

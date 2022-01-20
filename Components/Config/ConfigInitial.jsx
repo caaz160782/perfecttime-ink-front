@@ -8,6 +8,7 @@ import FrmConfig from "./FrmConfig";
 const Config = () => {
   const router = useRouter();
   const { auth } = useContext(AuthContext);
+  const [title, setTitle] = useState("Configurar");
   const [valuesConfig, setValuesConfig] = useState({
     id_tatoostudios: auth?.infoStudio.id,
     picture: "",
@@ -70,7 +71,7 @@ const Config = () => {
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <FrmConfig
-        title={"Configurar"}
+        title={title}
         handlerSubmit={handlerSubmit}
         handleChange={handleChange}
         leerArchivo={leerArchivo}

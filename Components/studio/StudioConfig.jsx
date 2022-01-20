@@ -26,8 +26,8 @@ const StudioConfig = () => {
     social: "",
   });
   const [archivo, guardarArchivo] = useState("");
-  const [cp, setCp] = useState("");
-  const [ver, setVer] = useState("hidden");
+  //const [cp, setCp] = useState("");
+  const [ver, setVer] = useState("");
   const [title, setTitle] = useState("");
 
   const leerArchivo = (e) => {
@@ -39,15 +39,16 @@ const StudioConfig = () => {
       ...valuesConfigStudio,
       [prop]: event.target.value,
     });
-    if (prop === "postalCode") {
+
+    /* if (prop === "postalCode") {
       setCp(event.target.value);
-    }
+    }*/
   };
 
   useEffect(() => {
     setTitle("Ingresa");
     setTitleButton("Registrar");
-    cargarStudioInfo();
+    setVer("hidden");
   }, []);
 
   const handlerSubmit = (e) => {
@@ -99,7 +100,7 @@ const StudioConfig = () => {
     >
       <FrmStudio
         title={title}
-        cp={cp}
+        //cp={cp}
         ver={ver}
         setVer={setVer}
         leerArchivo={leerArchivo}

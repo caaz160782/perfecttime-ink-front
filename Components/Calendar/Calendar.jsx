@@ -9,6 +9,7 @@ import ModalDate from "./ModalDate";
 import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
+import { isBefore } from "date-fns";
 
 const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   const { auth } = useContext(AuthContext);
@@ -18,28 +19,45 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   const [even, setEven] = useState([]);
   const [valueDate, setValuDate] = useState({
     id_studio: auth.infoStudio.id,
-    id_cliente: "61a5c587cb1557cfd225dd8e",
-    id_staff: "61a5c587cb1557cfd225dd8e",
+    picture: "",
   });
   const [infoDate, setinfoDate] = useState({});
 
   const handleDateClick = (arg) => {
-    setValuDate({ ...valueDate, addDate: arg.dateStr });
-    setFecha(arg.dateStr);
-    setOpen(true);
+    const fechaSelec = arg.date;
+    const tiempoTranscurrido = Date.now();
+    const hoy = new Date(tiempoTranscurrido);
+    fechaSelec.setHours(0, 0, 0, 0);
+    hoy.setHours(0, 0, 0, 0);
+    //no permite generar una cita en un dia anterior al actual
+    if (fechaSelec.getTime() >= hoy.getTime()) {
+      setValuDate({ ...valueDate, addDate: arg.dateStr });
+      setFecha(arg.dateStr);
+      setOpen(true);
+    } else {
+      alert("No se pueden generar citas en dias anteriores");
+    }
   };
 
   const HandleEventClick = (info) => {
-    //console.log(info.event._def);
-    setinfoDate(info.event._def);
+    let dateTatooInfo = info.event._def;
+    dateTatooInfo = {
+      ...dateTatooInfo,
+      end: info.event.end,
+      endStr: info.event.endStr,
+      start: info.event.start,
+      startStr: info.event.startStr,
+    };
+    //console.log(dateTatooInfo);
+    setinfoDate(dateTatooInfo);
     setOpenViewModal(true);
   };
 
   const cargaDates = async () => {
     try {
       clienteAxios
-        .get(`/dateTatoo/${auth.infoStudio.id}`, {
-          //headers: { apitoken: token },
+        .get(`/dateTatooByStudio/${auth.infoStudio.id}`, {
+          headers: { apitoken: auth.token },
         })
         .then((response) => {
           if (response.data.code) {

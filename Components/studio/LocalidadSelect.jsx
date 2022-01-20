@@ -7,14 +7,10 @@ const LocalidadSelect = ({
   localidad,
   setLocalidad,
 }) => {
-  console.log(valuesConfigStudio.city);
-  console.log(valuesConfigStudio);
   return (
     <Box>
       <FormControl sx={{ m: 1, width: "30ch" }}>
-        <InputLabel id="demo-simple-select-autowidth-label">
-          Localidad
-        </InputLabel>
+        <InputLabel id="demo-simple-select-autowidth-label">Colonia</InputLabel>
         <Select
           //defaultValue=""
           value={valuesConfigStudio.city}

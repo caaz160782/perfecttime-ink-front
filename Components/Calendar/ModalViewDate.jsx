@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Box, Typography, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -7,6 +7,8 @@ import AlertDelete from "./AlertDelete";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { AuthContext } from "../../Context/AuthContext";
+import { format } from "date-fns";
 
 const ModalViewDate = ({
   openViewModal,
@@ -27,19 +29,36 @@ const ModalViewDate = ({
   };
   const router = useRouter();
   const [openAlert, setopenAlert] = useState(false);
-
+  const { auth } = useContext(AuthContext);
   const handleClose = () => {
     setOpenViewModal(false);
   };
 
   const handleDeleteAlert = () => {
-    setopenAlert(true);
+    //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
+    const tiempoTranscurrido = Date.now();
+    const hoy = new Date(tiempoTranscurrido);
+    //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
+    const startCita = infoDate.startStr;
+
+    format(hoy);
+
+    console.log(infoDate);
+    //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
+
+    //console.log(fecha2.diff(fecha1, "days"));
+
+    // var fecha2 = moment("2016-08-01");
+
+    // console.log(fecha2.diff(fecha1, "days"), " dias de diferencia");
+
+    // console.log(horaCita + "-" + hrActual);
+    // cita;
+    //setopenAlert(true);
   };
 
   const handleEdit = () => {
-    //ruta con id
-    router.push(`/dateTatoo/${infoDate.extendedProps?._id}`);
-    //console.log("edit");
+    router.push(`/agenda/${infoDate.extendedProps?._id}`);
   };
 
   const deleteDate = async () => {
@@ -47,12 +66,13 @@ const ModalViewDate = ({
       console.log("Delete");
       clienteAxios
         .delete(`/dateTatoo/${infoDate.extendedProps?._id}`, {
-          //headers: { apitoken: token },
+          headers: { apitoken: auth.token },
         })
         .then((response) => {
           if (response.data.ok) {
             cargaDates();
             setOpenViewModal(false);
+            setopenAlert(false);
           }
         })
         .catch((error) => {
@@ -66,8 +86,15 @@ const ModalViewDate = ({
       console.log(error);
     }
   };
-  const ruta =
-    "https://www.istockphoto.com/es/vector/tatoo-tribal-gm516853992-89193597";
+  //console.log(infoDate);
+  //const ruta = "image="{`http://localhost:8000/${infoDate.picture}`}";
+  //return `http://localhost:8000/${src}?w=${width}&q=${quality || 75}`;
+  const myLoader = ({ src, width, quality }) => {
+    return `${process.env.NEXT_PUBLIC_BASE_URL}/${src}?w=${width}&q=${
+      quality || 75
+    }`;
+  };
+
   return (
     <div>
       <Modal
@@ -88,7 +115,15 @@ const ModalViewDate = ({
               </Typography>
             </Box>
 
-            <Box></Box>
+            <Box>
+              <Image
+                loader={myLoader}
+                src={infoDate.extendedProps?.desPhotoTatoo}
+                alt="Picture of the author"
+                width={500}
+                height={500}
+              />
+            </Box>
 
             <Box>
               <Typography variant="body2" color="text.secondary">
@@ -104,7 +139,7 @@ const ModalViewDate = ({
               }}
             >
               <Box>
-                <DeleteForeverIcon onClick={handleDeleteAlert} />
+                <DeleteForeverIcon color="error" onClick={handleDeleteAlert} />
                 <AlertDelete
                   openAlert={openAlert}
                   setopenAlert={setopenAlert}
@@ -113,7 +148,7 @@ const ModalViewDate = ({
                 />
               </Box>
               <Box>
-                <EditIcon onClick={handleEdit} />
+                <EditIcon color="secondary" onClick={handleEdit} />
               </Box>
             </Box>
           </Box>
@@ -124,14 +159,3 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
-
-/*
- <Image
-                // src={`${item.img}?w=248&fit=crop&auto=format`}
-                // src={`${ruta}`}
-                // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={infoDate.title}
-                loading="lazy"
-              />         
-  
-*/

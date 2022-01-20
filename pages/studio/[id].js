@@ -19,7 +19,7 @@ const ModStudio = () => {
         //m: 18,
       }}
     >
-      {auth?.infoUser.registerStudio ? <StudioModif /> : <StudioConfig />}
+      {auth?.infoStudio.id ? <StudioModif /> : <StudioConfig />}
     </Box>
   );
 };

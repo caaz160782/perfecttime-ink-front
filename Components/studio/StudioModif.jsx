@@ -25,7 +25,6 @@ const StudioModif = () => {
     social: "",
   });
   const [archivo, guardarArchivo] = useState("");
-  //const [cp, setCp] = useState("");
   const [title, setTitle] = useState("");
   const [titleButton, setTitleButton] = useState("");
 

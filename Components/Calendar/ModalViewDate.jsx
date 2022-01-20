@@ -33,13 +33,21 @@ const ModalViewDate = ({
   };
 
   const handleDeleteAlert = () => {
-    setopenAlert(true);
+    //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
+    const tiempoTranscurrido = Date.now();
+    const hoy = new Date(tiempoTranscurrido);
+    const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
+    const startCita = infoDate.start;
+    const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
+    console.log(horaCita - hrActual);
+
+    // cita;
+
+    //setopenAlert(true);
   };
 
   const handleEdit = () => {
-    //ruta con id
-    router.push(`/dateTatoo/${infoDate.extendedProps?._id}`);
-    //console.log("edit");
+    router.push(`/agenda/${infoDate.extendedProps?._id}`);
   };
 
   const deleteDate = async () => {
@@ -47,12 +55,13 @@ const ModalViewDate = ({
       console.log("Delete");
       clienteAxios
         .delete(`/dateTatoo/${infoDate.extendedProps?._id}`, {
-          //headers: { apitoken: token },
+          headers: { apitoken: auth.token },
         })
         .then((response) => {
           if (response.data.ok) {
             cargaDates();
             setOpenViewModal(false);
+            setopenAlert(false);
           }
         })
         .catch((error) => {
@@ -66,8 +75,15 @@ const ModalViewDate = ({
       console.log(error);
     }
   };
-  const ruta =
-    "https://www.istockphoto.com/es/vector/tatoo-tribal-gm516853992-89193597";
+  //console.log(infoDate);
+  //const ruta = "image="{`http://localhost:8000/${infoDate.picture}`}";
+  //return `http://localhost:8000/${src}?w=${width}&q=${quality || 75}`;
+  const myLoader = ({ src, width, quality }) => {
+    return `${process.env.NEXT_PUBLIC_BASE_URL}/${src}?w=${width}&q=${
+      quality || 75
+    }`;
+  };
+
   return (
     <div>
       <Modal
@@ -88,7 +104,15 @@ const ModalViewDate = ({
               </Typography>
             </Box>
 
-            <Box></Box>
+            <Box>
+              <Image
+                loader={myLoader}
+                src={infoDate.extendedProps?.desPhotoTatoo}
+                alt="Picture of the author"
+                width={500}
+                height={500}
+              />
+            </Box>
 
             <Box>
               <Typography variant="body2" color="text.secondary">
@@ -124,14 +148,3 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
-
-/*
- <Image
-                // src={`${item.img}?w=248&fit=crop&auto=format`}
-                // src={`${ruta}`}
-                // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={infoDate.title}
-                loading="lazy"
-              />         
-  
-*/

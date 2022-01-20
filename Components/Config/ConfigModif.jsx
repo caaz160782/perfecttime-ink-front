@@ -8,6 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const Config = () => {
   const { auth } = useContext(AuthContext);
+  const [title, setTitle] = useState("Modificar");
   const MySwal = withReactContent(Swal);
 
   const [valuesConfig, setValuesConfig] = useState({
@@ -18,8 +19,6 @@ const Config = () => {
     dayNotAvailables: [],
     notifications: "",
   });
-
-  const [archivo, guardarArchivo] = useState("");
 
   useEffect(() => {
     const cargarSetting = async () => {
@@ -58,7 +57,7 @@ const Config = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("modif");
+    //console.log("modif");
     const formData = new FormData();
     formData.append("id_tatoostudios", auth.infoStudio.id);
     formData.append("timeToOpen", valuesConfig.timeToOpen);
@@ -103,7 +102,7 @@ const Config = () => {
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <FrmConfig
-        title={"Modificar"}
+        title={title}
         handlerSubmit={handlerSubmit}
         handleChange={handleChange}
         leerArchivo={leerArchivo}

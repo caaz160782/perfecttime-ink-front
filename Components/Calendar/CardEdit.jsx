@@ -86,9 +86,7 @@ const CardEdit = ({ dateSingle, iddate }) => {
   };
 
   return (
-    <Box
-    //sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
+    <Box>
       <Card sx={{ maxWidth: 345 }}>
         {dateSingle && (
           <Image
@@ -149,27 +147,32 @@ const CardEdit = ({ dateSingle, iddate }) => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "center",
+                flexDirection: "row",
+                alignContent: "space-between",
               }}
             >
-              <LoadingButton
-                endIcon={<SendIcon />}
-                loading={loading}
-                loadingPosition="end"
-                variant="contained"
-                type="submit"
-              >
-                Enviar
-              </LoadingButton>
-            </Box>
-            <Box>
-              <LoadingButton
-                color="error"
-                variant="contained"
-                onClick={hanCancelar}
-              >
-                Cancelar
-              </LoadingButton>
+              <Box>
+                <LoadingButton
+                  color="error"
+                  variant="contained"
+                  onClick={hanCancelar}
+                >
+                  Cancelar
+                </LoadingButton>
+              </Box>
+
+              <Box>
+                <LoadingButton
+                  endIcon={<SendIcon />}
+                  loading={loading}
+                  loadingPosition="end"
+                  variant="contained"
+                  type="submit"
+                >
+                  Enviar
+                </LoadingButton>
+              </Box>
             </Box>
           </CardActions>
         </form>

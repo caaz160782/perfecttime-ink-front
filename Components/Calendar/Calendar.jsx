@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Box from "@mui/material/Box";
+import { Box, Snackbar } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -22,6 +22,11 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     picture: "",
   });
   const [infoDate, setinfoDate] = useState({});
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const handleDateClick = (arg) => {
     const fechaSelec = arg.date;
@@ -29,26 +34,41 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     const hoy = new Date(tiempoTranscurrido);
     fechaSelec.setHours(0, 0, 0, 0);
     hoy.setHours(0, 0, 0, 0);
-    //no permite generar una cita en un dia anterior al actual
     if (fechaSelec.getTime() >= hoy.getTime()) {
       setValuDate({ ...valueDate, addDate: arg.dateStr });
       setFecha(arg.dateStr);
       setOpen(true);
     } else {
-      alert("No se pueden generar citas en dias anteriores");
+      setAlert({
+        open: true,
+        message: "No se pueden generar citas en dias anteriores",
+        backgroundColor: "#DD4A48",
+        //#519259
+      });
     }
   };
 
   const HandleEventClick = (info) => {
-    let dateTatooInfo = info.event._def;
+    let dateTatooInfo = {};
     dateTatooInfo = {
       ...dateTatooInfo,
+      addDate: info.event.extendedProps.addDate,
+      cost: info.event.extendedProps.cost,
+      desPhotoTatoo: info.event.extendedProps.desPhotoTatoo,
+      description: info.event.extendedProps.description,
+      estimated: info.event.extendedProps.estimated,
+      id_cliente: info.event.extendedProps.id_cliente,
+      id_size: info.event.extendedProps.id_size,
+      id_studio: info.event.extendedProps.id_studio,
+      id_tatuador: info.event.extendedProps.id_tatuador,
+      statusPago: info.event.extendedProps.statusPago,
+      tipoTatoo: info.event.extendedProps.tipoTatoo,
+      _id: info.event.extendedProps._id,
       end: info.event.end,
       endStr: info.event.endStr,
       start: info.event.start,
       startStr: info.event.startStr,
     };
-    //console.log(dateTatooInfo);
     setinfoDate(dateTatooInfo);
     setOpenViewModal(true);
   };
@@ -82,14 +102,25 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
 
   return (
     <div>
+      <Snackbar
+        open={alert.open}
+        style={{ height: "100%" }}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={2000}
+      />
       <div>
         <ModalDate
           open={open}
           setOpen={setOpen}
           fechaHoy={fechaHoy}
           setValuDate={setValuDate}
+          setOpenViewModal={setOpenViewModal}
           valueDate={valueDate}
           cargaDates={cargaDates}
+          setinfoDate={setinfoDate}
         />
       </div>
       <div>

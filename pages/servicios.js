@@ -1,21 +1,11 @@
-import Layout from "../Components/Layout";
-
 import {
   Typography,
-  TextField,
-  Box,
-  IconButton,
-  styled,
   Button,
   Container,
   Grid,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  shadows
+  Box,
 } from "@mui/material";
-import useStyles from './servicios/style.js';
+import useStyles from '../Components/servicios/style.js';
 import Image from 'next/image'
 import theme from "../utils/temaConfig";
 // import backimg from "../public/images/hand.png";
@@ -24,7 +14,6 @@ import theme from "../utils/temaConfig";
 const Servicios = ()=>{
   const classes = useStyles() 
   return (
-     <Layout>
        <div>
           <Box className={classes.title}>
             <Typography variant="h2" className={classes.blogsTitle}>
@@ -48,7 +37,7 @@ const Servicios = ()=>{
                 <Image 
                   src="/images/hand.png"
                   height="300px"
-                  width="400px"
+                  width="500px"
                   alt="hand"
                 />
               </Grid>
@@ -70,7 +59,6 @@ const Servicios = ()=>{
             </Box>
           </Container>
        </div>  
-     </Layout>
    );
 }
 export default Servicios

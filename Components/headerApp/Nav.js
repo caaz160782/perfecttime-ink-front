@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import { Link, Tabs, Tab, Button, makeStyles } from "@mui/material";
+import { useRouter } from "next/router";
 
 import theme from "./../../utils/temaConfig";
 //import LinkTab from "./LinkTab";
@@ -14,7 +15,7 @@ import Fade from "@mui/material/Fade";
 
 export const Nav = ({ logOut }) => {
   const { auth, guardarAuth } = useContext(AuthContext);
-
+  const router = useRouter();
   //  console.log("nav", auth);
 
   //  console.log("nav===", auth.infoUser.rol);
@@ -32,25 +33,57 @@ export const Nav = ({ logOut }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  console.log("pahtname-----", router.pathname);
   const Linkes = () => {
     if (rol === "Administrador") {
       return (
         <>
           <NextLink href="/agenda" passHref>
-            <Link className={classes.tab}>Agenda</Link>
+            <Link
+              className={
+                router.pathname == "/agenda" ? classes.active : classes.tab
+              }
+            >
+              Agenda
+            </Link>
           </NextLink>
           <NextLink href="/staff" passHref>
-            <Link className={classes.tab}>Staff</Link>
+            <Link
+              className={
+                router.pathname == "/staff" ? classes.active : classes.tab
+              }
+            >
+              Staff
+            </Link>
           </NextLink>
           <NextLink href="/client" passHref>
-            <Link className={classes.tab}>Clientes</Link>
+            <Link
+              className={
+                router.pathname == "/client" ? classes.active : classes.tab
+              }
+            >
+              Clientes
+            </Link>
           </NextLink>
           <NextLink href="/studio/modif" passHref>
-            <Link className={classes.tab}>Estudio</Link>
+            <Link
+              className={
+                router.pathname == "/studio/modif"
+                  ? classes.active
+                  : classes.tab
+              }
+            >
+              Estudio
+            </Link>
           </NextLink>
           <NextLink href="/config/modif" passHref>
-            <Link className={classes.tab}>Configuracion</Link>
+            <Link
+              className={
+                router.pathname == "/config/[id]" ? classes.active : classes.tab
+              }
+            >
+              Configuracion
+            </Link>
           </NextLink>
         </>
       );
@@ -83,7 +116,9 @@ export const Nav = ({ logOut }) => {
     <div className={classes.tabContainer}>
       {" "}
       <NextLink href="/" passHref>
-        <Link className={classes.tab}>Home</Link>
+        <Link className={router.pathname == "/" ? classes.active : classes.tab}>
+          Home
+        </Link>
       </NextLink>
       <Linkes></Linkes>
       <Button

@@ -4,14 +4,13 @@ import theme from "../../utils/temaConfig";
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: "2em",
-    [theme.breakpoints.down("sm")]: {
-      marginBottom: "1em",
-    },
+    marginBottom: "7em",
+  },
+  prueba: {
+    backgroundColor: "red",
   },
   logo: {
-    height: "6em",
-    borderRadius: "50%",
+    height: "9em",
     [theme.breakpoints.down("sm")]: {
       height: "5.5em",
     },
@@ -26,66 +25,51 @@ const useStyles = makeStyles((theme) => ({
   drawerIcon: {
     width: 40,
     height: 40,
+
     color: "#fff",
-    "&:hover": {
-      //color: theme.palette.secondary.light,
-    },
   },
   linkDrawer: {
-    // fontFamily: "Raleway",
+    //fontFamily: "Raleway",
     color: "#fff",
     fontWeight: 550,
     fontSize: "1rem",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.main}`,
-    },
-  },
-  activeDrawer: {
-    // fontFamily: "Raleway",
-    color: theme.palette.secondary.light,
-    //color: "#fff",
-    fontWeight: 550,
-    fontSize: "1rem",
-    "&:hover": {
-      textDecoration: `underline ${theme.palette.primary.main}`,
+      textDecoration: `underline ${theme.palette.secondary.dark}`,
     },
   },
   linkDrawerLogin: {
     padding: 0,
     margin: 0,
     textTransform: "none",
+    textDecoration: "none",
     fontWeight: 550,
-    fontSize: "1rem",
+    fontSize: "1.1rem",
     color: "#fff",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      color: theme.palette.secondary.light,
+      textDecoration: `underline ${theme.palette.primary.main}`,
     },
     transition: "color .8s",
   },
   loginContainer: {
+    //backgroundColor: "#EFC437",
     backgroundColor: theme.palette.secondary.main,
-    // backgroundColor: "#fff",
-    // backgroundColor: "#CAA345",
-    transition: "background-color .8s",
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.dark,
-      // color: theme.palette.primary.dark,
-    },
+    //   alignItems: "left",
+    transition: "all .8s",
   },
   ///NAVEGACION
   tabContainer: {
     marginLeft: "auto",
   },
   tab: {
-    // ...theme.typography.tab,
+    ...theme.typography.tab,
     textDecoration: "none",
     color: "#fff",
+    //color: "red",
     fontSize: "1.5rem",
-    fontWeight: "600",
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
-      // textDecoration: "underline #F8F8F8",
       textDecoration: "underline #334756",
       color: theme.palette.secondary.light,
     },
@@ -97,7 +81,8 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     color: "#fff",
     textTransform: "none",
-    fontSize: "1.4rem",
+    textDecoration: `underline ${theme.palette.primary}`,
+    fontSize: "1.5rem",
     borderRadius: "30px",
     marginLeft: "50px",
     marginRight: "25px",
@@ -112,26 +97,7 @@ const useStyles = makeStyles((theme) => ({
       padding: "2px 10px",
     },
   },
-  active: {
-    //...theme.typography.tab,
-    color: "#fff",
-    textDecoration: "underline",
-    //backgroundColor: theme.palette.primary.light,
-    // padding: "13px 5px",
-    fontSize: "1.5rem",
-    fontWeight: "600",
-    marginLeft: "40px",
-    // "&:hover": {
-    //   transition: "color 0.7s ease",
-    //   // textDecoration: "underline #F8F8F8",
-    //   textDecoration: "underline #334756",
-    //   color: theme.palette.primary.light,
-    // },
-    [theme.breakpoints.down("lg")]: {
-      fontSize: "1.3rem",
-      marginLeft: "30px",
-    },
-  },
+  active: {},
 }));
 
 export default useStyles;

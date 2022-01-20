@@ -12,7 +12,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { createTheme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
-
+import HeaderAct from "./headerAct/Header";
 //importacion dinamica
 import dynamic from "next/dynamic";
 const Header = dynamic(() => import("./header/Header"));
@@ -47,6 +47,7 @@ const Layout = ({ title, children }) => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Pacifico|Raleway:100,400,400i,700|Roboto:300,400,500,700&display=swap"
         />
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
       </Head>
       {/* {auth?.autenticado ? <HeaderApp logout={logOut} /> : <Header />} */}
       {NavComponent}

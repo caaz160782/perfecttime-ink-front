@@ -18,6 +18,7 @@ import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
 import useStyles from "./style";
 import { AuthContext } from "../../Context/AuthContext";
+import { useRouter } from "next/router";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -47,7 +48,7 @@ const HeaderApp = (props) => {
   };
 
   let rol = auth?.infoUser?.rol;
-  //console.log(rol);
+  const router = useRouter();
 
   let drawer = undefined;
   if (rol === "Administrador") {
@@ -69,7 +70,15 @@ const HeaderApp = (props) => {
               onClick={() => setValue(0)}
             >
               <NextLink href="/agenda" passHref>
-                <Link className={classes.linkDrawer}>Agenda</Link>
+                <Link
+                  className={
+                    router.pathname == "/agenda"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Agenda
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -79,7 +88,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(1)}
             >
               <NextLink href="/config" passHref>
-                <Link className={classes.linkDrawer}>Configuracion</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/config"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Configuracion
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -89,7 +107,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(2)}
             >
               <NextLink href="/client" passHref>
-                <Link className={classes.linkDrawer}>Clientes</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/client"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Clientes
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -99,7 +126,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(3)}
             >
               <NextLink href="/staff" passHref>
-                <Link className={classes.linkDrawer}>Staff</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/staff"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Staff
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -144,7 +180,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(0)}
             >
               <NextLink href="/" passHref>
-                <Link className={classes.linkDrawer}>Home</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Home
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -154,7 +199,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(0)}
             >
               <NextLink href="/agenda" passHref>
-                <Link className={classes.linkDrawer}>Agenda</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/agenda"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Agenda
+                </Link>
               </NextLink>
             </ListItem>
             <ListItem
@@ -164,7 +218,16 @@ const HeaderApp = (props) => {
               onClick={() => setValue(1)}
             >
               <NextLink href="/clientAdmin" passHref>
-                <Link className={classes.linkDrawer}>Clientes</Link>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/agenda"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Clientes
+                </Link>
               </NextLink>
             </ListItem>
 

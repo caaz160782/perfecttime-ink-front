@@ -9,6 +9,7 @@ import ModalDate from "./ModalDate";
 import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
+import { isBefore } from "date-fns";
 
 const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   const { auth } = useContext(AuthContext);

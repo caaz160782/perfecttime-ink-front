@@ -10,7 +10,6 @@ const ModifDate = () => {
   const { auth } = useContext(AuthContext);
   const { id } = router.query;
   const [dateSingle, setdateSingle] = useState();
-  //console.log(id);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -22,7 +21,6 @@ const ModifDate = () => {
             })
             .then((response) => {
               if (response.data.code) {
-                console.log(response);
                 setdateSingle(response.data.payload);
               }
             })
@@ -46,7 +44,7 @@ const ModifDate = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <CardEdit dateSingle={dateSingle} />
+      <CardEdit iddate={id} dateSingle={dateSingle} />
     </Box>
   );
 };

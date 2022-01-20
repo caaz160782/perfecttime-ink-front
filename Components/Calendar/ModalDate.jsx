@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -17,14 +17,16 @@ import {
   Button,
   TextField,
   Box,
-  IconButton,
   styled,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
   FormLabel,
+  InputAdornment,
+  OutlinedInput,
 } from "@mui/material";
+
 const ModalDate = ({
   open,
   setOpen,
@@ -40,10 +42,12 @@ const ModalDate = ({
   });
   const [loading, setLoading] = useState(false);
   const [archivo, guardarArchivo] = useState("");
+  const [adelanto, setAdelanto] = useState(0);
   const { auth } = useContext(AuthContext);
 
   const handleClose = () => {
     setOpen(false);
+    setAdelanto(0);
   };
 
   const leerArchivo = (e) => {
@@ -64,8 +68,15 @@ const ModalDate = ({
         end: valueDate.addDate + "T" + event.target.value,
       });
     }
+    if (prop === "cost") {
+      let cost = event.target.value;
+      let cal = parseInt(cost) * 0.2;
+      setAdelanto(cal);
+      setValuDate({ ...valueDate, estimated: cal });
+    }
   };
 
+  console.log(valueDate);
   const handleGuardar = (e) => {
     e.preventDefault();
 
@@ -229,31 +240,60 @@ const ModalDate = ({
                 />
               </Box>
               <Box>
-                <TextField
-                  id="cost"
-                  required
-                  size="small"
-                  label="Costo Aprox"
-                  type="text"
-                  onChange={handleChangeDate("cost")}
-                />
+                <FormControl fullWidth sx={{ m: 1, width: "25ch" }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Costo Aprox*
+                  </InputLabel>
+                  <OutlinedInput
+                    id="cost"
+                    size="small"
+                    type="text"
+                    onChange={handleChangeDate("cost")}
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    label="Amount"
+                  />
+                </FormControl>
               </Box>
-              <Box>
-                <TextField
-                  sx={{ m: 1, width: "25ch" }}
-                  required
-                  id="estimated"
-                  size="small"
-                  label="Adelanto"
-                  type="text"
-                  onChange={handleChangeDate("estimated")}
-                />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box>
+                  <FormControl fullWidth sx={{ m: 1, width: "15ch" }}>
+                    <InputLabel htmlFor="outlined-adornment-amount">
+                      A pagar*
+                    </InputLabel>
+                    <OutlinedInput
+                      id="estimated"
+                      size="small"
+                      disabled
+                      type="text"
+                      value={adelanto}
+                      //onChange={handleChangeDate("estimated")}
+                      startAdornment={
+                        <InputAdornment position="start">$</InputAdornment>
+                      }
+                      label="Amount"
+                    />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <Button variant="contained">Pagar</Button>
+                </Box>
               </Box>
             </Box>
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={handleClose}>Cerrar</Button>
+            <Button color="error" onClick={handleClose}>
+              Cerrar
+            </Button>
             <LoadingButton
               endIcon={<SendIcon />}
               loading={loading}
@@ -270,6 +310,3 @@ const ModalDate = ({
   );
 };
 export default ModalDate;
-/*<Box>
-<SelectDuracion handleChangeDate={handleChangeDate} />
-</Box>*/

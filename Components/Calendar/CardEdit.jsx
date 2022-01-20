@@ -20,7 +20,7 @@ import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
 
-const CardEdit = ({ dateSingle }) => {
+const CardEdit = ({ dateSingle, iddate }) => {
   const { auth } = useContext(AuthContext);
   const [value, setValue] = useState(new Date("2014-08-18T21:11:54"));
   const [loading, setLoading] = useState(false);
@@ -54,25 +54,15 @@ const CardEdit = ({ dateSingle }) => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     //    setLoading(true);
-    console.log(valuesModif);
+
     clienteAxios
-      .patch(`/dateTatoo/${auth.infoStudio.id}`, valuesModif, {
+      .patch(`/dateTatoo/${iddate}`, valuesModif, {
         headers: { apitoken: auth?.token },
       })
       .then((response) => {
         const { code } = response.data;
-        console.log(response.data);
         if (code) {
           router.push(`/agenda`);
-          // cargarSetting();
-          // setLoading(false);
-          // MySwal.fire({
-          //   position: "center",
-          //   icon: "success",
-          //   title: "Actualizado Correctamente",
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          // });
         }
       })
       .catch((error) => {
@@ -83,6 +73,10 @@ const CardEdit = ({ dateSingle }) => {
           console.log(error);
         }
       });
+  };
+
+  const hanCancelar = () => {
+    router.push(`/agenda`);
   };
 
   const myLoader = ({ src, width, quality }) => {
@@ -164,9 +158,17 @@ const CardEdit = ({ dateSingle }) => {
                 loadingPosition="end"
                 variant="contained"
                 type="submit"
-                // onClick={handlerSubmit}
               >
                 Enviar
+              </LoadingButton>
+            </Box>
+            <Box>
+              <LoadingButton
+                color="error"
+                variant="contained"
+                onClick={hanCancelar}
+              >
+                Cancelar
               </LoadingButton>
             </Box>
           </CardActions>

@@ -56,7 +56,7 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      console.log("desmontar");
+      //console.log("desmontar");
       // source.cancel();
     };
   }, [reload]);
@@ -82,12 +82,5 @@ const OneStaff = () => {
     </div>
   );
 };
-
-//  export async function getServerSideProps (ctx) {
-//      const clienteConsulta = await clienteAxios.get(`/staff/${ctx.query.id}`);
-//      const staffMember = clienteConsulta.data.listUser.userFound;
-//      console.log(clienteConsulta.data.listUser.userFound);
-//     return { props: { staffMember } };
-//   };
 
 export default OneStaff;

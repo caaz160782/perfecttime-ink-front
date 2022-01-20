@@ -72,7 +72,7 @@ const FrmAgenda = () => {
   } else {
     return (
       <div>
-        <h1>que paso</h1>
+        <h1>no tiene autorizacion</h1>
       </div>
     );
   }

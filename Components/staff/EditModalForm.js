@@ -101,7 +101,7 @@ export default function EditCustomizedDialogs({
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("user---", user);
+    //console.log("user---", user);
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Box, Typography, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -7,6 +7,8 @@ import AlertDelete from "./AlertDelete";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { AuthContext } from "../../Context/AuthContext";
+import { format } from "date-fns";
 
 const ModalViewDate = ({
   openViewModal,
@@ -27,7 +29,7 @@ const ModalViewDate = ({
   };
   const router = useRouter();
   const [openAlert, setopenAlert] = useState(false);
-
+  const { auth } = useContext(AuthContext);
   const handleClose = () => {
     setOpenViewModal(false);
   };
@@ -36,13 +38,22 @@ const ModalViewDate = ({
     //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
     const tiempoTranscurrido = Date.now();
     const hoy = new Date(tiempoTranscurrido);
-    const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
-    const startCita = infoDate.start;
-    const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
-    console.log(horaCita - hrActual);
+    //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
+    const startCita = infoDate.startStr;
 
+    format(hoy);
+
+    console.log(infoDate);
+    //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
+
+    //console.log(fecha2.diff(fecha1, "days"));
+
+    // var fecha2 = moment("2016-08-01");
+
+    // console.log(fecha2.diff(fecha1, "days"), " dias de diferencia");
+
+    // console.log(horaCita + "-" + hrActual);
     // cita;
-
     //setopenAlert(true);
   };
 
@@ -128,7 +139,7 @@ const ModalViewDate = ({
               }}
             >
               <Box>
-                <DeleteForeverIcon onClick={handleDeleteAlert} />
+                <DeleteForeverIcon color="error" onClick={handleDeleteAlert} />
                 <AlertDelete
                   openAlert={openAlert}
                   setopenAlert={setopenAlert}
@@ -137,7 +148,7 @@ const ModalViewDate = ({
                 />
               </Box>
               <Box>
-                <EditIcon onClick={handleEdit} />
+                <EditIcon color="secondary" onClick={handleEdit} />
               </Box>
             </Box>
           </Box>

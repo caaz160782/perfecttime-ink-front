@@ -21,8 +21,8 @@ const ModConfig = () => {
         //m: 18,
       }}
     >
-      {auth?.infoUser.finishConfig && <ConfigModif />}
-      {!auth?.infoUser.finishConfig && <ConfigInitial />}
+      {auth?.infoStudio.id && <ConfigModif />}
+      {!auth?.infoStudio.id && <ConfigInitial />}
     </Box>
   );
 };

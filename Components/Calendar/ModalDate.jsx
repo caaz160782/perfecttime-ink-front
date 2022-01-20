@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,6 +11,7 @@ import SelectSize from "./SelectSize";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
+import { AuthContext } from "../../Context/AuthContext";
 import {
   InputLabel,
   Button,
@@ -24,8 +25,6 @@ import {
   FormControl,
   FormLabel,
 } from "@mui/material";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-
 const ModalDate = ({
   open,
   setOpen,
@@ -40,9 +39,15 @@ const ModalDate = ({
     display: "none",
   });
   const [loading, setLoading] = useState(false);
+  const [archivo, guardarArchivo] = useState("");
+  const { auth } = useContext(AuthContext);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
   };
 
   const handleChangeDate = (prop) => (event) => {
@@ -63,14 +68,32 @@ const ModalDate = ({
 
   const handleGuardar = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("id_studio", auth.infoStudio.id);
+    formData.append("title", valueDate.title);
+    formData.append("id_tatuador", valueDate.id_tatuador);
+    formData.append("id_cliente", valueDate.id_cliente);
+    formData.append("id_size", valueDate.id_size);
+    formData.append("start", valueDate.start);
+    formData.append("end", valueDate.end);
+    formData.append("description", valueDate.description);
+    formData.append("tipoTatoo", valueDate.tipoTatoo);
+    formData.append("cost", valueDate.cost);
+    formData.append("estimated", valueDate.estimated);
+    formData.append("picture", archivo);
     setLoading(true);
     clienteAxios
-      .post("/dateTatoo", valueDate, {
-        //   headers: { apitoken: valToken.token },
+      //.post("/dateTatoo", valueDate, {
+      .post("/dateTatoo", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          apitoken: auth?.token,
+        },
       })
       .then((response) => {
         const { code } = response.data;
-        if (code === "Succesful") {
+        if (code === "Created") {
           cargaDates();
           setOpen(false);
           setLoading(false);
@@ -147,33 +170,17 @@ const ModalDate = ({
                   onChange={handleChangeDate("description")}
                 />
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  p: 1,
-                }}
-              >
-                <InputLabel>Subir Imagen Muestra</InputLabel>
-                <label htmlFor="icon-button-file">
-                  <Input
-                    //required
-                    size="small"
-                    accept="image/*"
-                    id="icon-button-file"
-                    type="file"
-                    onChange={handleChangeDate("desPhoto")}
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
+              <Box sx={{}}>
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    sx={{ m: 1, width: "175px" }}
+                    id="desPhotoTatoo"
+                    name="desPhotoTatoo"
+                    inputProps={{ type: "file" }}
+                    onChange={leerArchivo}
+                  ></TextField>
+                  <Box></Box>
+                </Box>
               </Box>
               <Box>
                 <FormControl component="fieldset">

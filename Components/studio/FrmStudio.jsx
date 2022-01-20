@@ -34,19 +34,11 @@ const FrmStudio = ({
   const { auth } = useContext(AuthContext);
   const [estado, setEstado] = useState("");
   const [municipio, setMunicipio] = useState("");
-
   const [localidad, setLocalidad] = useState([
     { _id: 0, localidad: "Nothing" },
   ]);
 
   const [loadingCP, setLoadingCP] = useState(false);
-
-  const findCP = (e) => {
-    setVer("visible");
-    e.preventDefault();
-    setLoadingCP(true);
-    postaCodeFind(valuesConfigStudio.postalCode);
-  };
 
   const postaCodeFind = async (cp) => {
     clienteAxios
@@ -55,7 +47,6 @@ const FrmStudio = ({
       })
       .then((response) => {
         if (response.data.ok) {
-          //   console.log(response);
           let info = response.data.payload;
           const stado = info.reduce((accum, esta) => {
             const { Estado } = esta;
@@ -74,9 +65,7 @@ const FrmStudio = ({
                 };
           }, {});
           setMunicipio(muni.nombre[0].nombreMunicipio);
-
           setLocalidad(info);
-          setLoadingCP(false);
           setvaluesConfigStudio({
             ...valuesConfigStudio,
             state: stado.nombre[0].Estado,
@@ -94,12 +83,11 @@ const FrmStudio = ({
   };
 
   useEffect(() => {
-    console.log(1);
+    console.log(ver);
     if (valuesConfigStudio.postalCode !== "") {
       postaCodeFind(valuesConfigStudio.postalCode);
     }
   }, [valuesConfigStudio.postalCode]);
-  //console.log(valuesConfigStudio);
 
   return (
     <Box
@@ -221,22 +209,14 @@ const FrmStudio = ({
             value={valuesConfigStudio.postalCode}
             onChange={handleChange("postalCode")}
           ></TextField>
-          <Box>
-            <LoadingButton
-              endIcon={<SearchIcon />}
-              loading={loadingCP}
-              loadingPosition="end"
-              variant="contained"
-              onClick={findCP}
-            ></LoadingButton>
-          </Box>
         </Box>
 
-        <Box component="div" sx={{ visibility: { ver } }}>
+        <Box>
           <Box>
             <TextField
               sx={{ m: 1, width: "30ch" }}
               required
+              label="Estado"
               id="state"
               name="state"
               value={valuesConfigStudio.state}
@@ -249,6 +229,7 @@ const FrmStudio = ({
               sx={{ m: 1, width: "30ch" }}
               required
               id="municipality"
+              label="Municipio"
               name="municipality"
               value={valuesConfigStudio.municipality}
               inputProps={{ type: "text" }}

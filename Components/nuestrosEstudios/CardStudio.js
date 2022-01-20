@@ -48,8 +48,8 @@ export default function CardStudio({ study }) {
           <Button color="success" size="small">
             Unirme
           </Button>
-          <Button color="warning" size="small">
-            Saber más
+          <Button color="success" size="small">
+            CONOCER
           </Button>
         </CardActions>
       </Card>

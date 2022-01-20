@@ -256,6 +256,14 @@ const ModalDate = ({
             >
               Enviar
             </LoadingButton>
+            <form action="http://localhost:8000/checkout" method="post">
+              <input type="hidden" name="price" value="20" />
+              <input type="hidden" name="title" value="el mejor tatuaje " />
+              <Button type="submit" value="comprar">
+                {" "}
+                pagar
+              </Button>
+            </form>
           </DialogActions>
         </form>
       </Dialog>

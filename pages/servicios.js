@@ -10,9 +10,8 @@ import Image from 'next/image'
 import theme from "../utils/temaConfig";
 // import backimg from "../public/images/hand.png";
 
-
-const Servicios = ()=>{
-  const classes = useStyles() 
+const Servicios = () => {
+  const classes = useStyles();
   return (
        <div>
           <Box className={classes.title}>

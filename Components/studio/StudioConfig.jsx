@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
 import { Box } from "@mui/material";
@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 const StudioConfig = () => {
   const { auth, saveinfoStudio } = useContext(AuthContext);
+  const [titleButton, setTitleButton] = useState("");
   const router = useRouter();
 
   const [valuesConfigStudio, setvaluesConfigStudio] = useState({
@@ -27,6 +28,7 @@ const StudioConfig = () => {
   const [archivo, guardarArchivo] = useState("");
   const [cp, setCp] = useState("");
   const [ver, setVer] = useState("hidden");
+  const [title, setTitle] = useState("");
 
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -41,6 +43,12 @@ const StudioConfig = () => {
       setCp(event.target.value);
     }
   };
+
+  useEffect(() => {
+    setTitle("Ingresa");
+    setTitleButton("Registrar");
+    cargarStudioInfo();
+  }, []);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -86,11 +94,11 @@ const StudioConfig = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        m: 15,
+        // m: 15,
       }}
     >
       <FrmStudio
-        title={"Ingrese"}
+        title={title}
         cp={cp}
         ver={ver}
         setVer={setVer}
@@ -101,7 +109,7 @@ const StudioConfig = () => {
         handlerSubmit={handlerSubmit}
         loading={loading}
         setLoading={setLoading}
-        butonLabel={"Registrar"}
+        butonLabel={titleButton}
       />
     </Box>
   );

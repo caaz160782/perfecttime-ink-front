@@ -68,7 +68,6 @@ const FrmAdmin = () => {
           textAlign: "center",
           flexWrap: "wrap",
           p: 1,
-          m: 20,
         }}
       >
         <Typography component="h6" variant="h6">

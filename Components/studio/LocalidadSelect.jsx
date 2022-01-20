@@ -1,8 +1,14 @@
 import React from "react";
 import { InputLabel, MenuItem, FormControl, Select, Box } from "@mui/material";
 
-const LocalidadSelect = ({ valuesConfigStudio, handleChange, localidad }) => {
-  //console.log(valuesConfigStudio);
+const LocalidadSelect = ({
+  valuesConfigStudio,
+  handleChange,
+  localidad,
+  setLocalidad,
+}) => {
+  console.log(valuesConfigStudio.city);
+  console.log(valuesConfigStudio);
   return (
     <Box>
       <FormControl sx={{ m: 1, width: "30ch" }}>
@@ -10,8 +16,8 @@ const LocalidadSelect = ({ valuesConfigStudio, handleChange, localidad }) => {
           Localidad
         </InputLabel>
         <Select
-          defaultValue=""
-          value={valuesConfigStudio?.city}
+          //defaultValue=""
+          value={valuesConfigStudio.city}
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           onChange={handleChange("city")}

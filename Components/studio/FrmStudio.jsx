@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Typography,
   TextField,
@@ -17,7 +17,7 @@ import LocalidadSelect from "./LocalidadSelect";
 
 const FrmStudio = ({
   title,
-  cp,
+  cargarStudioInfo,
   leerArchivo,
   valuesConfigStudio,
   setvaluesConfigStudio,
@@ -32,23 +32,30 @@ const FrmStudio = ({
     display: "none",
   });
   const { auth } = useContext(AuthContext);
-
   const [estado, setEstado] = useState("");
   const [municipio, setMunicipio] = useState("");
-  const [localidad, setLocalidad] = useState([]);
+
+  const [localidad, setLocalidad] = useState([
+    { _id: 0, localidad: "Nothing" },
+  ]);
+
   const [loadingCP, setLoadingCP] = useState(false);
 
   const findCP = (e) => {
     setVer("visible");
     e.preventDefault();
     setLoadingCP(true);
+    postaCodeFind(valuesConfigStudio.postalCode);
+  };
+
+  const postaCodeFind = async (cp) => {
     clienteAxios
       .get(`/localidad/${cp}`, {
         headers: { apitoken: auth?.token },
       })
       .then((response) => {
         if (response.data.ok) {
-          console.log(response);
+          //   console.log(response);
           let info = response.data.payload;
           const stado = info.reduce((accum, esta) => {
             const { Estado } = esta;
@@ -61,9 +68,13 @@ const FrmStudio = ({
             const { nombreMunicipio } = municipio;
             return !accum[nombreMunicipio]
               ? { ...accum, nombre: [municipio] }
-              : { ...accum, nombre: [...accum[nombreMunicipio], municipio] };
+              : {
+                  ...accum,
+                  nombre: [...accum[nombreMunicipio], municipio],
+                };
           }, {});
           setMunicipio(muni.nombre[0].nombreMunicipio);
+
           setLocalidad(info);
           setLoadingCP(false);
           setvaluesConfigStudio({
@@ -82,6 +93,12 @@ const FrmStudio = ({
       });
   };
 
+  useEffect(() => {
+    console.log(1);
+    if (valuesConfigStudio.postalCode !== "") {
+      postaCodeFind(valuesConfigStudio.postalCode);
+    }
+  }, [valuesConfigStudio.postalCode]);
   //console.log(valuesConfigStudio);
 
   return (
@@ -92,7 +109,7 @@ const FrmStudio = ({
         textAlign: "center",
         flexWrap: "wrap",
         alignItems: "center",
-        m: 18,
+        //m: 18,
       }}
     >
       <Typography component="h5" variant="h5">
@@ -101,12 +118,13 @@ const FrmStudio = ({
       <form id="form" onSubmit={handlerSubmit}>
         <Box>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
+            size="small"
             required
-            id="name"
             label="Nombre del estudio"
             name="name"
-            defaultValue={valuesConfigStudio.name}
+            id="name"
+            value={valuesConfigStudio.name}
             inputProps={{ type: "text" }}
             onChange={handleChange("name")}
           ></TextField>
@@ -115,6 +133,7 @@ const FrmStudio = ({
           <TextField
             sx={{ m: 1, width: "30ch" }}
             required
+            size="small"
             id="description"
             label="Description"
             name="description"
@@ -127,6 +146,7 @@ const FrmStudio = ({
           <TextField
             sx={{ m: 1, width: "175px" }}
             id="picture"
+            size="small"
             //required
             name="picture"
             inputProps={{ type: "file" }}
@@ -165,6 +185,7 @@ const FrmStudio = ({
           <TextField
             sx={{ m: 1, width: "30ch" }}
             required
+            size="small"
             id="phoneWhatsApp"
             label="Whatsapp"
             name="phoneWhatsApp"
@@ -202,7 +223,7 @@ const FrmStudio = ({
           ></TextField>
           <Box>
             <LoadingButton
-              startIcon={<SearchIcon />}
+              endIcon={<SearchIcon />}
               loading={loadingCP}
               loadingPosition="end"
               variant="contained"
@@ -211,14 +232,13 @@ const FrmStudio = ({
           </Box>
         </Box>
 
-        <Box component="div" sx={{ visibility: ver }}>
+        <Box component="div" sx={{ visibility: { ver } }}>
           <Box>
             <TextField
               sx={{ m: 1, width: "30ch" }}
               required
               id="state"
               name="state"
-              //value={estado}
               value={valuesConfigStudio.state}
               inputProps={{ type: "text" }}
               onChange={handleChange("state")}
@@ -230,7 +250,6 @@ const FrmStudio = ({
               required
               id="municipality"
               name="municipality"
-              //value={municipio}
               value={valuesConfigStudio.municipality}
               inputProps={{ type: "text" }}
               onChange={handleChange("municipality")}
@@ -240,6 +259,7 @@ const FrmStudio = ({
           <Box>
             <LocalidadSelect
               handleChange={handleChange}
+              setLocalidad={setLocalidad}
               localidad={localidad}
               valuesConfigStudio={valuesConfigStudio}
             />

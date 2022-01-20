@@ -94,14 +94,14 @@ const Staff = () => {
           setStaff(staffFirst);
           setLoading(false);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       };
       consultarAPI();
       setReload(false);
     }
     return () => {
-      console.log("desmontar");
+      // console.log("desmontar");
       source.cancel();
     };
   }, [reload]);

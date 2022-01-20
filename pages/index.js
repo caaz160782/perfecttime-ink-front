@@ -18,11 +18,10 @@ import {
 } from "@mui/material";
 import useStyles from '../Components/landing/style.js';
 // import Image from '../public/images/backgroundtest.jpg'
-// import useStyles from '../Components/landing/style.js' 
+// import useStyles from '../Components/landing/style.js'
 
 export default function Home() {
-
-  const classes = useStyles()
+  const classes = useStyles();
   return (
       <>
         <Container>
@@ -142,3 +141,10 @@ export default function Home() {
       </>
   )
 }
+
+/*
+ <img
+              src="https://marvel-b1-cdn.bc0a.com/f00000000107635/daysmart-bodyart.imgix.net/uploads/2019/07/tiptattooartists.jpg?ar=1%3A0.75&auto=format%2Ccompress&crop=center&fit=crop&q=85&w=600"
+              className={classes.imgCard}
+            ></img>
+            */

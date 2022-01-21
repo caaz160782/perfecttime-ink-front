@@ -25,6 +25,7 @@ import {
   FormLabel,
   InputAdornment,
   OutlinedInput,
+  Snackbar,
 } from "@mui/material";
 
 const ModalDate = ({
@@ -34,6 +35,8 @@ const ModalDate = ({
   valueDate,
   setValuDate,
   cargaDates,
+  setOpenViewModal,
+  setinfoDate,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -44,6 +47,11 @@ const ModalDate = ({
   const [archivo, guardarArchivo] = useState("");
   const [adelanto, setAdelanto] = useState(0);
   const { auth } = useContext(AuthContext);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const handleClose = () => {
     setOpen(false);
@@ -72,14 +80,13 @@ const ModalDate = ({
       let cost = event.target.value;
       let cal = parseInt(cost) * 0.2;
       setAdelanto(cal);
-      setValuDate({ ...valueDate, estimated: cal });
+      setValuDate({ ...valueDate, cost: event.target.value, estimated: cal });
     }
   };
 
   console.log("value date--------", valueDate);
   const handleGuardar = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("id_studio", auth.infoStudio.id);
     formData.append("title", valueDate.title);
@@ -107,13 +114,20 @@ const ModalDate = ({
         if (code === "Created") {
           cargaDates();
           setOpen(false);
+          setinfoDate(response.data.payload);
           setLoading(false);
+          setOpenViewModal(true);
         }
       })
       .catch((error) => {
         setLoading(false);
         if (error.response) {
           console.log(error.response.data);
+          setAlert({
+            open: true,
+            message: error.response.data.error.toUpperCase(),
+            backgroundColor: "#519259",
+          });
         } else {
           console.log(error);
         }
@@ -122,6 +136,15 @@ const ModalDate = ({
 
   return (
     <div>
+      <Snackbar
+        open={alert.open}
+        style={{ height: "100%" }}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={2000}
+      />
       <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
         <DialogTitle>
           Agendar {fechaHoy.split("-").reverse().join("/")}
@@ -282,24 +305,6 @@ const ModalDate = ({
                       label="Amount"
                     />
                   </FormControl>
-                </Box>
-                <Box>
-                  <form action="http://localhost:8000/checkout" method="post">
-                    <input
-                      type="hidden"
-                      name="price"
-                      value={valueDate.estimated}
-                    />
-                    <input
-                      type="hidden"
-                      name="title"
-                      value={`tatuaje:${valueDate.description}`}
-                    />
-                    <Button variant="outlined" type="submit" value="comprar">
-                      {" "}
-                      pagar
-                    </Button>
-                  </form>
                 </Box>
               </Box>
             </Box>

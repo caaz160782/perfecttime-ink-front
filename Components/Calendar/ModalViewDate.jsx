@@ -34,6 +34,8 @@ const ModalViewDate = ({
     setOpenViewModal(false);
   };
 
+  //console.log(infoDate);
+
   const handleDeleteAlert = () => {
     //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
     const tiempoTranscurrido = Date.now();
@@ -41,9 +43,9 @@ const ModalViewDate = ({
     //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
     const startCita = infoDate.startStr;
 
-    format(hoy);
+    //format(hoy);
 
-    console.log(infoDate);
+    //console.log(infoDate);
     //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
 
     //console.log(fecha2.diff(fecha1, "days"));
@@ -54,18 +56,18 @@ const ModalViewDate = ({
 
     // console.log(horaCita + "-" + hrActual);
     // cita;
-    //setopenAlert(true);
+    setopenAlert(true);
   };
 
   const handleEdit = () => {
-    router.push(`/agenda/${infoDate.extendedProps?._id}`);
+    router.push(`/agenda/${infoDate?._id}`);
   };
 
   const deleteDate = async () => {
     try {
       console.log("Delete");
       clienteAxios
-        .delete(`/dateTatoo/${infoDate.extendedProps?._id}`, {
+        .delete(`/dateTatoo/${infoDate?._id}`, {
           headers: { apitoken: auth.token },
         })
         .then((response) => {
@@ -118,7 +120,7 @@ const ModalViewDate = ({
             <Box>
               <Image
                 loader={myLoader}
-                src={infoDate.extendedProps?.desPhotoTatoo}
+                src={infoDate?.desPhotoTatoo}
                 alt="Picture of the author"
                 width={500}
                 height={500}
@@ -127,10 +129,10 @@ const ModalViewDate = ({
 
             <Box>
               <Typography variant="body2" color="text.secondary">
-                {infoDate.extendedProps?.description}
+                {infoDate?.description}
               </Typography>
             </Box>
-
+            <Box>aqui va el boton pagar</Box>
             <Box
               sx={{
                 display: "flex",

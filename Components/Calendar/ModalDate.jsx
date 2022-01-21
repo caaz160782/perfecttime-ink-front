@@ -76,7 +76,7 @@ const ModalDate = ({
     }
   };
 
-  console.log(valueDate);
+  console.log("value date--------", valueDate);
   const handleGuardar = (e) => {
     e.preventDefault();
 
@@ -284,7 +284,22 @@ const ModalDate = ({
                   </FormControl>
                 </Box>
                 <Box>
-                  <Button variant="contained">Pagar</Button>
+                  <form action="http://localhost:8000/checkout" method="post">
+                    <input
+                      type="hidden"
+                      name="price"
+                      value={valueDate.estimated}
+                    />
+                    <input
+                      type="hidden"
+                      name="title"
+                      value={`tatuaje:${valueDate.description}`}
+                    />
+                    <Button variant="outlined" type="submit" value="comprar">
+                      {" "}
+                      pagar
+                    </Button>
+                  </form>
                 </Box>
               </Box>
             </Box>
@@ -303,14 +318,6 @@ const ModalDate = ({
             >
               Enviar
             </LoadingButton>
-            <form action="http://localhost:8000/checkout" method="post">
-              <input type="hidden" name="price" value="20" />
-              <input type="hidden" name="title" value="el mejor tatuaje " />
-              <Button type="submit" value="comprar">
-                {" "}
-                pagar
-              </Button>
-            </form>
           </DialogActions>
         </form>
       </Dialog>

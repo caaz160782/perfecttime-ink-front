@@ -2,11 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Calendar from "../Calendar/Calendar";
 import clienteAxios from "../../utils/axios";
+import { useRouter } from "next/router";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
   const [config, setConfig] = useState({});
   const [reload, setReload] = useState("true");
+  const router = useRouter();
+
+  const paymentStatus = router.query.status ? router.query.status : "";
+
+  console.log("----router query", paymentStatus);
 
   useEffect(() => {
     if (reload) {

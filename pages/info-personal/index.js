@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 //import MediaCard from "../../Components/client/CardStaff";
-import MediaCard from "../../Components/infoPersonal/CardStaff";
+import MediaCard from "../../Components/infoPersonal/CardInfoPersonal";
 //import useStyles from "./style";
 import { Typography, Container, Button, Link } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
@@ -14,9 +14,8 @@ const InfoPersonal = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
       color: "#fff",
-      fontFamily: "Pacifico",
       textTransform: "none",
-      fontSize: "1.6rem",
+      fontSize: "1.4rem",
     },
     imgBack: {
       border: "3px solid red",
@@ -80,7 +79,6 @@ const InfoPersonal = () => {
 
   return (
     <div>
-      <div>esta es mi cuenta</div>
       <Container align="center" maxWidth={600}>
         {loading ? (
           <div align="center">
@@ -91,7 +89,7 @@ const InfoPersonal = () => {
             atras={"/"}
             classes={classes}
             staffMember={staffMember}
-            role={"user"}
+            // role={"user"}
             reload={() => setReload(true)}
           ></MediaCard>
         )}

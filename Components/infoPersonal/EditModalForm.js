@@ -283,7 +283,7 @@ export default function EditCustomizedDialogs({
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnRegister}
+                  className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Guardar cambios
                 </Button>

@@ -69,6 +69,24 @@ const HeaderApp = (props) => {
               selected={value === 0}
               onClick={() => setValue(0)}
             >
+              <NextLink href="/" passHref>
+                <Link
+                  className={
+                    router.pathname == "/"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Inicio
+                </Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 0}
+              onClick={() => setValue(0)}
+            >
               <NextLink href="/agenda" passHref>
                 <Link
                   className={
@@ -78,44 +96,6 @@ const HeaderApp = (props) => {
                   }
                 >
                   Agenda
-                </Link>
-              </NextLink>
-            </ListItem>
-            <ListItem
-              divider
-              button
-              selected={value === 1}
-              onClick={() => setValue(1)}
-            >
-              <NextLink href="/config" passHref>
-                <Link
-                  Link
-                  className={
-                    router.pathname == "/config"
-                      ? classes.activeDrawer
-                      : classes.linkDrawer
-                  }
-                >
-                  Configuracion
-                </Link>
-              </NextLink>
-            </ListItem>
-            <ListItem
-              divider
-              button
-              selected={value === 2}
-              onClick={() => setValue(2)}
-            >
-              <NextLink href="/client" passHref>
-                <Link
-                  Link
-                  className={
-                    router.pathname == "/client"
-                      ? classes.activeDrawer
-                      : classes.linkDrawer
-                  }
-                >
-                  Clientes
                 </Link>
               </NextLink>
             </ListItem>
@@ -138,6 +118,65 @@ const HeaderApp = (props) => {
                 </Link>
               </NextLink>
             </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 2}
+              onClick={() => setValue(2)}
+            >
+              <NextLink href="/client" passHref>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/client"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Clientes
+                </Link>
+              </NextLink>
+            </ListItem>
+
+            <ListItem
+              divider
+              button
+              selected={value === 1}
+              onClick={() => setValue(1)}
+            >
+              <NextLink href="/studio/modif" passHref>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/studio/[id]"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Estudio
+                </Link>
+              </NextLink>
+            </ListItem>
+            <ListItem
+              divider
+              button
+              selected={value === 1}
+              onClick={() => setValue(1)}
+            >
+              <NextLink href="/config" passHref>
+                <Link
+                  Link
+                  className={
+                    router.pathname == "/config"
+                      ? classes.activeDrawer
+                      : classes.linkDrawer
+                  }
+                >
+                  Configuracion
+                </Link>
+              </NextLink>
+            </ListItem>
+
             <ListItem
               divider
               button

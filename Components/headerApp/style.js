@@ -64,8 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
   loginContainer: {
     backgroundColor: theme.palette.secondary.main,
-    // backgroundColor: "#fff",
-    // backgroundColor: "#CAA345",
     transition: "background-color .8s",
     "&:hover": {
       backgroundColor: theme.palette.secondary.dark,
@@ -85,29 +83,27 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "40px",
     "&:hover": {
       transition: "color 0.7s ease",
-      // textDecoration: "underline #F8F8F8",
-      textDecoration: "underline #334756",
       color: theme.palette.secondary.light,
     },
     [theme.breakpoints.down("lg")]: {
-      fontSize: "1.3rem",
-      marginLeft: "30px",
+      fontSize: "1.2rem",
+      marginLeft: "20px",
     },
   },
   btn: {
     color: "#fff",
     textTransform: "none",
     fontSize: "1.4rem",
-    borderRadius: "30px",
-    marginLeft: "50px",
+    borderRadius: "15px",
+    marginLeft: "20px",
     marginRight: "25px",
-    padding: "2px 20px",
+    padding: "1px 15px",
     "&:hover": {
-      textDecoration: `underline ${theme.palette.secondary.dark}`,
+      textDecoration: `none`,
     },
     [theme.breakpoints.down("lg")]: {
-      fontSize: "1.3rem",
-      marginLeft: "40px",
+      fontSize: "1.1rem",
+      marginLeft: "15px",
       marginRight: "20px",
       padding: "2px 10px",
     },
@@ -116,20 +112,25 @@ const useStyles = makeStyles((theme) => ({
     //...theme.typography.tab,
     color: "#fff",
     textDecoration: "underline",
-    //backgroundColor: theme.palette.primary.light,
-    // padding: "13px 5px",
     fontSize: "1.5rem",
     fontWeight: "600",
     marginLeft: "40px",
-    // "&:hover": {
-    //   transition: "color 0.7s ease",
-    //   // textDecoration: "underline #F8F8F8",
-    //   textDecoration: "underline #334756",
-    //   color: theme.palette.primary.light,
-    // },
     [theme.breakpoints.down("lg")]: {
-      fontSize: "1.3rem",
-      marginLeft: "30px",
+      fontSize: "1.2rem",
+      marginLeft: "20px",
+    },
+  },
+  admon: {
+    color: "#fff",
+    "&:hover": {
+      textDecoration: `none`,
+    },
+  },
+  activeAdmon: {
+    color: "#fff",
+    textDecoration: "underline",
+    "&:hover": {
+      textDecoration: `none`,
     },
   },
 }));

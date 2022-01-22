@@ -1,22 +1,18 @@
 import NextLink from "next/link";
 import { Link, Tabs, Tab, Button, makeStyles } from "@mui/material";
 import { useRouter } from "next/router";
-
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import theme from "./../../utils/temaConfig";
-//import LinkTab from "./LinkTab";
 import { useState, useEffect, useContext } from "react";
 import useStyles from "./style";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { AuthContext } from "../../Context/AuthContext";
-
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Fade from "@mui/material/Fade";
 
 export const Nav = ({ logOut }) => {
   const { auth, guardarAuth } = useContext(AuthContext);
   const router = useRouter();
-  //  console.log("nav", auth);
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   //  console.log("nav===", auth.infoUser.rol);
 
@@ -68,9 +64,7 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/studio/modif" passHref>
             <Link
               className={
-                router.pathname == "/studio/modif"
-                  ? classes.active
-                  : classes.tab
+                router.pathname == "/studio/[id]" ? classes.active : classes.tab
               }
             >
               Estudio
@@ -79,7 +73,7 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/config/modif" passHref>
             <Link
               className={
-                router.pathname == "/config/[id]" ? classes.active : classes.tab
+                router.pathname == "/config" ? classes.active : classes.tab
               }
             >
               Configuracion
@@ -113,7 +107,10 @@ export const Nav = ({ logOut }) => {
   };
 
   return (
-    <div className={classes.tabContainer}>
+    <div
+      style={{ display: "flex", justifyContent: "center" }}
+      className={classes.tabContainer}
+    >
       {" "}
       <NextLink href="/" passHref>
         <Link className={router.pathname == "/" ? classes.active : classes.tab}>
@@ -121,14 +118,35 @@ export const Nav = ({ logOut }) => {
         </Link>
       </NextLink>
       <Linkes></Linkes>
-      <Button
-        onClick={logOut}
-        className={classes.btn}
-        variant="contained"
-        color="secondary"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginLeft: "30px",
+        }}
       >
-        Logout
-      </Button>
+        <SupervisorAccountIcon />
+        <NextLink href="/info-personal" passHref>
+          <Link
+            className={
+              router.pathname == "/info-personal"
+                ? classes.activeAdmon
+                : classes.admon
+            }
+          >
+            Administrador
+          </Link>
+        </NextLink>
+        <Button
+          onClick={logOut}
+          className={classes.btn}
+          variant="contained"
+          color="secondary"
+        >
+          Logout
+        </Button>
+      </div>
     </div>
   );
 };

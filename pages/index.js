@@ -10,11 +10,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  FiCard,
-  FiCardActionArea,
-  FiCardActions,
-  FiCardContent,
-  FiCardMedia,
+  CssBaseline,
 } from "@mui/material";
 import useStyles from '../Components/landing/style.js';
 // import Image from '../public/images/backgroundtest.jpg'
@@ -24,39 +20,16 @@ export default function Home() {
   const classes = useStyles();
   return (
       <>
-        <Container>
-          {/* <Box>
-            <Card>
-              <FiCard className={classes.hero}>
-                  <FiCardMedia
-                    media="picture"
-                    alt="background"
-                    image="/images/background.jpg"
-                    title="background"
-                  />
-                <FiCardContent className={classes.title}>
-                  <Typography gutterBottom variant="h2" component="h2">
-                    Bienvenido a la mejor opcion de control de agenda para tatuajes
-                  </Typography>
-                </FiCardContent>
-                <FiCardActions>
-                  <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
-                    Conoce mas de nuestros servicios
-                  </Button>
-                </FiCardActions>
-              </FiCard>
-            </Card>
-          </Box> */}
-        
-
+        <Container className={classes.Container}>       
           <Box className={classes.hero}>
-
-            <Typography variant="h2" > Bienvenido a la mejor opcion de control de agenda para tatuajes</Typography>
-            
-            <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
-              Conoce mas de nuestros servicios
-            </Button>
+            <Box >
+              <Typography className={classes.Title}> Bienvenido a la mejor opcion de control de agenda para tatuajes</Typography>
+              <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
+                Conoce mas de nuestros servicios
+              </Button>
+            </Box>
           </Box>
+
           <Box maxWidth="lg" className={classes.blogsContainer}>
             <Typography variant="h4" className={classes.blogsTitle}>
               Por que elegir Perfect Time INK?
@@ -79,9 +52,9 @@ export default function Home() {
                   className={classes.imgCard}
                 ></img>
               </Grid>
-            </Grid>
-            
+            </Grid>  
           </Box>
+
           <Box maxWidth="lg" className={classes.blogsContainer}>
             <Typography variant="h4" className={classes.blogsTitle}>
               Contactanos

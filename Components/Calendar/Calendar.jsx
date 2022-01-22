@@ -49,6 +49,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const HandleEventClick = (info) => {
+    console.log(info);
     let dateTatooInfo = {};
     dateTatooInfo = {
       ...dateTatooInfo,
@@ -63,6 +64,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       id_tatuador: info.event.extendedProps.id_tatuador,
       statusPago: info.event.extendedProps.statusPago,
       tipoTatoo: info.event.extendedProps.tipoTatoo,
+      title: info.event.title,
       _id: info.event.extendedProps._id,
       end: info.event.end,
       endStr: info.event.endStr,
@@ -107,9 +109,9 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        // anchorOrigin={{ vertical, horizontal }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
       />
       <div>
         <ModalDate
@@ -149,8 +151,59 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         dateClick={handleDateClick}
         eventClick={HandleEventClick}
         events={even}
+        // events={[
+        //   {
+        //     _id: "61e8cdb8c3fb01c5c92f1b2c",
+        //     id_studio: "61e61570ea90a93081fda151",
+        //     id_tatuador: "61e615bbea90a93081fda160",
+        //     id_cliente: "61e61626ea90a93081fda16b",
+        //     id_size: "61de76fbc5ac1b41c7bea24b",
+        //     start: "2022-01-22T10:30",
+        //     //myDuration: "02:30",
+        //     end: "2022-01-22T13:00",
+        //     addDate: "2022-01-20T02:49:28.469+00:00",
+        //     title: "example",
+        //     description: "tatuajes retro ejemplook",
+        //     desPhotoTatoo: "ZjtePmWzM.jpeg",
+        //     tipoTatoo: "Blanco y Negro",
+        //     motivo: "exampĺe 12",
+        //     cost: 5000,
+        //     estimated: 200,
+        //     display: "block",
+        //     backgroundColor: "red",
+        //     //borderColor: "green",
+        //     //textColor: "red",
+        //     extendedProps: {
+        //       department: "BioChemistry",
+        //     },
+        //     description: "Lecture",
+        //   },
+        //   {
+        //     _id: "61e8cdb8c3fb01c5c92f1b2c",
+        //     id_studio: "61e61570ea90a93081fda151",
+        //     id_tatuador: "61e615bbea90a93081fda160",
+        //     id_cliente: "61e61626ea90a93081fda16b",
+        //     id_size: "61de76fbc5ac1b41c7bea24b",
+        //     start: "2022-01-22T13:30",
+        //     end: "2022-01-20T15:00",
+        //     addDate: "2022-01-20T02:49:28.469+00:00",
+        //     title: "example2",
+        //     description: "tatuajes retro ejemplook",
+        //     desPhotoTatoo: "ZjtePmWzM.jpeg",
+        //     tipoTatoo: "Blanco y Negro",
+        //     motivo: "exampĺe 12",
+        //     cost: 5000,
+        //     estimated: 200,
+        //     eventBackgroundColor: "red",
+        //   },
+        // ]}
+        // fc-past={background-color:"red"}
+        //eventColor="#378006"
+        //eventDisplay=""
+
+        //eventTextColor="#378006"
         //eventDurationEditable={true}
-        //eventBackgroundColor="violet" //color por tatuador
+        //
       />
     </div>
   );

@@ -16,7 +16,6 @@ import { useState, useEffect, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -134,7 +133,7 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          message: err.response.data.error.toUpperCase(),
+          message: err.respuesta.data.error.toUpperCase(),
           backgroundColor: "#DD4A48",
         });
       });

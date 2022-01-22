@@ -37,9 +37,6 @@ const StudioModif = () => {
       ...valuesConfigStudio,
       [prop]: event.target.value,
     });
-    // if (prop === "postalCode") {
-    //   setCp(event.target.value);
-    // }
   };
 
   const cargarStudioInfo = async () => {

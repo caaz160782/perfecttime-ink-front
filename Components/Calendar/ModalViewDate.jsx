@@ -34,18 +34,18 @@ const ModalViewDate = ({
     setOpenViewModal(false);
   };
 
-  //console.log(infoDate);
-
   const handleDeleteAlert = () => {
+    console.log(infoDate);
+
     //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
     const tiempoTranscurrido = Date.now();
     const hoy = new Date(tiempoTranscurrido);
     //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
     const startCita = infoDate.startStr;
 
-    //format(hoy);
+    console.log(format(hoy, "MM/dd/yyyy"));
 
-    //console.log(infoDate);
+    //   console.log(infoDate);
     //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
 
     //console.log(fecha2.diff(fecha1, "days"));
@@ -56,7 +56,7 @@ const ModalViewDate = ({
 
     // console.log(horaCita + "-" + hrActual);
     // cita;
-    setopenAlert(true);
+    //setopenAlert(true);
   };
 
   const handleEdit = () => {
@@ -132,7 +132,7 @@ const ModalViewDate = ({
                 {infoDate?.description}
               </Typography>
             </Box>
-            <Box>aqui va el boton pagar</Box>
+
             <Box
               sx={{
                 display: "flex",

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Typography, TextField, Box, FormControl } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Box,
+  FormControl,
+  Snackbar,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -22,6 +28,11 @@ const FrmAdmin = () => {
     email: "",
     password: "",
     showPassword: false,
+  });
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
   });
 
   const handleChange = (prop) => (event) => {
@@ -53,6 +64,13 @@ const FrmAdmin = () => {
       .catch((error) => {
         setLoading(false);
         if (error.response) {
+          setAlert({
+            open: true,
+            message: error.response.data.errors[0].msg,
+            //message: "No se pueden generar citas en dias anteriores",
+            backgroundColor: "#DD4A48",
+            //#519259
+          });
           console.log(error.response.data);
         } else {
           console.log(error);
@@ -62,6 +80,15 @@ const FrmAdmin = () => {
 
   return (
     <div style={{ width: "100%" }}>
+      <Snackbar
+        open={alert.open}
+        style={{ height: "100%" }}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        // anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <Box
         sx={{
           display: "flex",

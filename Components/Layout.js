@@ -49,7 +49,6 @@ const Layout = ({ title, children }) => {
         />
         <script src="https://sdk.mercadopago.com/js/v2"></script>
       </Head>
-      {/* {auth?.autenticado ? <HeaderApp logout={logOut} /> : <Header />} */}
       {NavComponent}
       <Container style={{ minHeight: "calc(90vh - 6em)", paddingTop: "2em" }}>
         {children}

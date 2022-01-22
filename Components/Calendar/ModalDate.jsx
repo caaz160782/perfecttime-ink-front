@@ -84,8 +84,6 @@ const ModalDate = ({
     }
   };
 
-  console.log("value date--------", valueDate);
-  console.log("archivo--------", archivo);
   const handleGuardar = (e) => {
     e.preventDefault();
     const formData = new FormData();

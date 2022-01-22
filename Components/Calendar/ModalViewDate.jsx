@@ -34,7 +34,7 @@ const ModalViewDate = ({
     setOpenViewModal(false);
   };
 
-  console.log(infoDate);
+  console.log(infoDate.statusPago);
 
   const handleDeleteAlert = () => {
     console.log(infoDate);
@@ -45,7 +45,7 @@ const ModalViewDate = ({
     //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
     const startCita = infoDate.startStr;
 
-    console.log(format(hoy, "MM/dd/yyyy"));
+    //console.log(format(hoy, "MM/dd/yyyy"));
 
     //   console.log(infoDate);
     //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
@@ -134,36 +134,55 @@ const ModalViewDate = ({
                 {infoDate?.description}
               </Typography>
             </Box>
-            <Box>
-              <form action="http://localhost:8000/checkout" method="post">
-                <input type="hidden" name="price" value={infoDate.estimated} />
-                <input type="hidden" name="reference" value={infoDate._id} />
-                <input
-                  type="hidden"
-                  name="title"
-                  value={infoDate.description}
-                />
-                <input class="btn btn-primary" type="submit" value="pagar" />
-              </form>
-            </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
               }}
             >
-              <Box>
-                <DeleteForeverIcon color="error" onClick={handleDeleteAlert} />
-                <AlertDelete
-                  openAlert={openAlert}
-                  setopenAlert={setopenAlert}
-                  texto={"¿Realmente deseas eliminar la cita?"}
-                  deleteDate={deleteDate}
-                />
-              </Box>
-              <Box>
-                <EditIcon color="secondary" onClick={handleEdit} />
+              {!infoDate.statusPago ? (
+                <form action="http://localhost:8000/checkout" method="post">
+                  <input
+                    type="hidden"
+                    name="price"
+                    value={infoDate.estimated}
+                  />
+                  <input type="hidden" name="reference" value={infoDate._id} />
+                  <input
+                    type="hidden"
+                    name="title"
+                    value={infoDate.description}
+                  />
+                  <Button variant="outlined" type="submit" value="pagar">
+                    PAGAR ANTICIPO
+                  </Button>
+                </form>
+              ) : (
+                <Typography>Anticipo pagado</Typography>
+              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Box>
+                  <DeleteForeverIcon
+                    color="error"
+                    onClick={handleDeleteAlert}
+                  />
+                  <AlertDelete
+                    openAlert={openAlert}
+                    setopenAlert={setopenAlert}
+                    texto={"¿Realmente deseas eliminar la cita?"}
+                    deleteDate={deleteDate}
+                  />
+                </Box>
+                <Box>
+                  <EditIcon color="secondary" onClick={handleEdit} />
+                </Box>
               </Box>
             </Box>
           </Box>

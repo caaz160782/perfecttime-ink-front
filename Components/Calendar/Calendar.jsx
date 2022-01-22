@@ -82,6 +82,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
           headers: { apitoken: auth.token },
         })
         .then((response) => {
+          console.log(response.data.payload.dates);
           if (response.data.code) {
             setEven(response.data.payload.dates);
           }

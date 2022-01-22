@@ -8,8 +8,9 @@ import withReactContent from "sweetalert2-react-content";
 
 const Config = () => {
   const { auth } = useContext(AuthContext);
+  const [title, setTitle] = useState("Modificar");
   const MySwal = withReactContent(Swal);
-
+  const [archivo, guardarArchivo] = useState("");
   const [valuesConfig, setValuesConfig] = useState({
     id_tatoostudios: auth?.infoStudio.id,
     picture: "",
@@ -19,26 +20,24 @@ const Config = () => {
     notifications: "",
   });
 
-  const [archivo, guardarArchivo] = useState("");
+  const cargarSetting = async () => {
+    clienteAxios
+      .get(`/setting/${auth.infoStudio.id}`, {
+        headers: { apitoken: auth.token },
+      })
+      .then((response) => {
+        setValuesConfig(response.data.payload);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+        } else {
+          console.log(error);
+        }
+      });
+  };
 
   useEffect(() => {
-    const cargarSetting = async () => {
-      clienteAxios
-        .get(`/setting/${auth.infoStudio.id}`, {
-          headers: { apitoken: auth.token },
-        })
-        .then((response) => {
-          setValuesConfig(response.data.payload);
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log(error.response.data);
-          } else {
-            console.log(error);
-          }
-        });
-    };
-
     cargarSetting();
   }, []);
 
@@ -58,7 +57,7 @@ const Config = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log("modif");
+    //console.log("modif");
     const formData = new FormData();
     formData.append("id_tatoostudios", auth.infoStudio.id);
     formData.append("timeToOpen", valuesConfig.timeToOpen);
@@ -103,7 +102,7 @@ const Config = () => {
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <FrmConfig
-        title={"Modificar"}
+        title={title}
         handlerSubmit={handlerSubmit}
         handleChange={handleChange}
         leerArchivo={leerArchivo}

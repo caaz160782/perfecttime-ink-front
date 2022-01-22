@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,20 +11,22 @@ import SelectSize from "./SelectSize";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
+import { AuthContext } from "../../Context/AuthContext";
 import {
   InputLabel,
   Button,
   TextField,
   Box,
-  IconButton,
   styled,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
   FormLabel,
+  InputAdornment,
+  OutlinedInput,
+  Snackbar,
 } from "@mui/material";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const ModalDate = ({
   open,
@@ -33,6 +35,8 @@ const ModalDate = ({
   valueDate,
   setValuDate,
   cargaDates,
+  setOpenViewModal,
+  setinfoDate,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -40,9 +44,22 @@ const ModalDate = ({
     display: "none",
   });
   const [loading, setLoading] = useState(false);
+  const [archivo, guardarArchivo] = useState("");
+  const [adelanto, setAdelanto] = useState(0);
+  const { auth } = useContext(AuthContext);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const handleClose = () => {
     setOpen(false);
+    setAdelanto(0);
+  };
+
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
   };
 
   const handleChangeDate = (prop) => (event) => {
@@ -59,27 +76,58 @@ const ModalDate = ({
         end: valueDate.addDate + "T" + event.target.value,
       });
     }
+    if (prop === "cost") {
+      let cost = event.target.value;
+      let cal = parseInt(cost) * 0.2;
+      setAdelanto(cal);
+      setValuDate({ ...valueDate, cost: event.target.value, estimated: cal });
+    }
   };
 
+  //console.log(valueDate);
   const handleGuardar = (e) => {
     e.preventDefault();
-    setLoading(true);
+    const formData = new FormData();
+    formData.append("id_studio", auth.infoStudio.id);
+    formData.append("title", valueDate.title);
+    formData.append("id_tatuador", valueDate.id_tatuador);
+    formData.append("id_cliente", valueDate.id_cliente);
+    formData.append("id_size", valueDate.id_size);
+    formData.append("start", valueDate.start);
+    formData.append("end", valueDate.end);
+    formData.append("description", valueDate.description);
+    formData.append("tipoTatoo", valueDate.tipoTatoo);
+    formData.append("cost", valueDate.cost);
+    formData.append("estimated", valueDate.estimated);
+    formData.append("picture", archivo);
+    //console.log(archivo);
+    //setLoading(archivo);
     clienteAxios
-      .post("/dateTatoo", valueDate, {
-        //   headers: { apitoken: valToken.token },
+      .post("/dateTatoo", formData, {
+        headers: {
+          //"Content-Type": "multipart/form-data",
+          apitoken: auth?.token,
+        },
       })
       .then((response) => {
         const { code } = response.data;
-        if (code === "Succesful") {
+        if (code === "Created") {
           cargaDates();
           setOpen(false);
+          setinfoDate(response.data.payload);
           setLoading(false);
+          setOpenViewModal(true);
         }
       })
       .catch((error) => {
         setLoading(false);
         if (error.response) {
           console.log(error.response.data);
+          setAlert({
+            open: true,
+            message: error.response.data.message.toUpperCase(),
+            backgroundColor: "#519259",
+          });
         } else {
           console.log(error);
         }
@@ -96,19 +144,21 @@ const ModalDate = ({
           <DialogContent>
             <Box
               sx={{
-                width: 350,
+                width: 260,
+                height: 600,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "flex-start",
               }}
             >
               <Box>
                 <TextField
+                  sx={{ m: 1 }}
                   id="title"
                   size="small"
                   required
-                  label="title "
+                  label="Titulo"
                   type="text"
                   onChange={handleChangeDate("title")}
                 />
@@ -121,7 +171,7 @@ const ModalDate = ({
               </Box>
               <Box>
                 <TextField
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "26ch" }}
                   id="hourTatooStart"
                   size="small"
                   //required
@@ -139,6 +189,7 @@ const ModalDate = ({
               </Box>
               <Box>
                 <TextField
+                  sx={{ m: 1 }}
                   required
                   size="small"
                   id="description"
@@ -147,40 +198,25 @@ const ModalDate = ({
                   onChange={handleChangeDate("description")}
                 />
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  p: 1,
-                }}
-              >
-                <InputLabel>Subir Imagen Muestra</InputLabel>
-                <label htmlFor="icon-button-file">
-                  <Input
-                    //required
+              <Box s>
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    sx={{ m: 1, width: "175px" }}
                     size="small"
-                    accept="image/*"
-                    id="icon-button-file"
-                    type="file"
-                    onChange={handleChangeDate("desPhoto")}
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
+                    id="desPhotoTatoo"
+                    name="desPhotoTatoo"
+                    inputProps={{ type: "file" }}
+                    onChange={leerArchivo}
+                  ></TextField>
+
+                  <Box></Box>
+                </Box>
               </Box>
               <Box>
-                <FormControl component="fieldset">
+                <FormControl sx={{ m: 1 }} component="fieldset">
                   <FormLabel component="legend">Tipo Tatuaje</FormLabel>
                   <RadioGroup
                     row
-                    //required
                     size="small"
                     aria-label="tipeTattoo"
                     name="row-radio-buttons-group"
@@ -205,7 +241,7 @@ const ModalDate = ({
               </Box>
               <Box>
                 <TextField
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "26ch" }}
                   id="hourTatooFinish"
                   required
                   size="small"
@@ -222,31 +258,57 @@ const ModalDate = ({
                 />
               </Box>
               <Box>
-                <TextField
-                  id="cost"
-                  required
-                  size="small"
-                  label="Costo Aprox"
-                  type="text"
-                  onChange={handleChangeDate("cost")}
-                />
+                <FormControl fullWidth sx={{ m: 1, width: "26ch" }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Costo Aprox*
+                  </InputLabel>
+                  <OutlinedInput
+                    id="cost"
+                    size="small"
+                    type="text"
+                    onChange={handleChangeDate("cost")}
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    label="Amount"
+                  />
+                </FormControl>
               </Box>
-              <Box>
-                <TextField
-                  sx={{ m: 1, width: "25ch" }}
-                  required
-                  id="estimated"
-                  size="small"
-                  label="Adelanto"
-                  type="text"
-                  onChange={handleChangeDate("estimated")}
-                />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box>
+                  <FormControl fullWidth sx={{ m: 1, width: "26ch" }}>
+                    <InputLabel htmlFor="outlined-adornment-amount">
+                      A pagar*
+                    </InputLabel>
+                    <OutlinedInput
+                      id="estimated"
+                      size="small"
+                      disabled
+                      type="text"
+                      value={adelanto}
+                      //onChange={handleChangeDate("estimated")}
+                      startAdornment={
+                        <InputAdornment position="start">$</InputAdornment>
+                      }
+                      label="Amount"
+                    />
+                  </FormControl>
+                </Box>
               </Box>
             </Box>
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={handleClose}>Cerrar</Button>
+            <Button color="error" onClick={handleClose}>
+              Cerrar
+            </Button>
             <LoadingButton
               endIcon={<SendIcon />}
               loading={loading}
@@ -263,6 +325,3 @@ const ModalDate = ({
   );
 };
 export default ModalDate;
-/*<Box>
-<SelectDuracion handleChangeDate={handleChangeDate} />
-</Box>*/

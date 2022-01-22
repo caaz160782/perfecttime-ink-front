@@ -15,7 +15,7 @@ const FrmAgenda = () => {
           //   headers: { apitoken: auth.token },
         })
         .then((response) => {
-          console.log(2, response);
+          //console.log(2, response);
           setConfig(response.data.payload);
         })
         .catch((error) => {
@@ -72,7 +72,7 @@ const FrmAgenda = () => {
   } else {
     return (
       <div>
-        <h1>que paso</h1>
+        <h1>no tiene autorizacion</h1>
       </div>
     );
   }

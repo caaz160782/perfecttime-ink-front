@@ -50,10 +50,10 @@ const Servicios = () => {
             </Grid>
             <Box className={classes.boxcont}>
             <Typography variant="body2" className={classes.title}>
-              Da click aqui si deseas crear un perfil con nosotros
+              Incia tu preoceso con nosotros aqui,
             </Typography>
             <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
-              Log in
+              Crear cuenta
             </Button>
             </Box>
           </Container>

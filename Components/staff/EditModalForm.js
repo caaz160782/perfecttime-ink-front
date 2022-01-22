@@ -122,7 +122,7 @@ export default function EditCustomizedDialogs({
         reload();
         setAlert({
           open: true,
-          message: respuesta.data.message.toUpperCase(),
+          message: respuesta.data.message,
           backgroundColor: "#519259",
         });
 
@@ -134,7 +134,7 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          message: err.response.data.error.toUpperCase(),
+          message: err.response.data.error,
           backgroundColor: "#DD4A48",
         });
       });

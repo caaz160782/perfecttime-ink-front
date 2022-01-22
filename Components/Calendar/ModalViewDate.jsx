@@ -34,7 +34,7 @@ const ModalViewDate = ({
     setOpenViewModal(false);
   };
 
-  //console.log(infoDate);
+  console.log(infoDate);
 
   const handleDeleteAlert = () => {
     //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
@@ -88,7 +88,7 @@ const ModalViewDate = ({
       console.log(error);
     }
   };
-  //console.log(infoDate);
+  console.log(infoDate);
   //const ruta = "image="{`http://localhost:8000/${infoDate.picture}`}";
   //return `http://localhost:8000/${src}?w=${width}&q=${quality || 75}`;
   const myLoader = ({ src, width, quality }) => {
@@ -132,7 +132,18 @@ const ModalViewDate = ({
                 {infoDate?.description}
               </Typography>
             </Box>
-            <Box>aqui va el boton pagar</Box>
+            <Box>
+              <form action="http://localhost:8000/checkout" method="post">
+                <input type="hidden" name="price" value={infoDate.estimated} />
+                <input type="hidden" name="reference" value={infoDate._id} />
+                <input
+                  type="hidden"
+                  name="title"
+                  value={infoDate.description}
+                />
+                <input class="btn btn-primary" type="submit" value="pagar" />
+              </form>
+            </Box>
             <Box
               sx={{
                 display: "flex",

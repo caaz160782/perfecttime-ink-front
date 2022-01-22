@@ -11,8 +11,25 @@ const FrmAgenda = () => {
   const router = useRouter();
 
   const paymentStatus = router.query.status ? router.query.status : "";
+  const reference = router.query.external_reference
+    ? router.query.external_reference
+    : "";
 
-  console.log("----router query", paymentStatus);
+  console.log("----router query", paymentStatus, reference);
+  useEffect(() => {
+    if (paymentStatus === "approved") {
+      console.log("mando updated");
+      clienteAxios
+        .patch(`/datePayment/${reference}`)
+        .then((response) => {
+          console.log(response);
+          // setConfig(response.data.payload);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  });
 
   useEffect(() => {
     if (reload) {

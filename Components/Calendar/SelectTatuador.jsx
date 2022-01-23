@@ -45,7 +45,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
           </MenuItem>
           {tatuadorValue.map((t) => (
             <MenuItem key={t._id} value={t._id}>
-              {t.name}
+              {t.name} {t.lastName}
             </MenuItem>
           ))}
         </Select>

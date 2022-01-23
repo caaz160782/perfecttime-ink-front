@@ -137,7 +137,7 @@ const ModalDate = ({
   return (
     <div>
       <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
-        <DialogTitle>
+        <DialogTitle sx={{m: 1, width: "26ch", textAlign: "center"}}>
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
@@ -154,7 +154,7 @@ const ModalDate = ({
             >
               <Box>
                 <TextField
-                  sx={{ m: 1 }}
+                  sx={{ m: 1, width: "26ch"  }}
                   id="title"
                   size="small"
                   required
@@ -189,7 +189,7 @@ const ModalDate = ({
               </Box>
               <Box>
                 <TextField
-                  sx={{ m: 1 }}
+                  sx={{ m: 1, width: "26ch" }}
                   required
                   size="small"
                   id="description"
@@ -201,7 +201,7 @@ const ModalDate = ({
               <Box s>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
                   <TextField
-                    sx={{ m: 1, width: "175px" }}
+                    sx={{ m: 1, width: "26ch" }}
                     size="small"
                     id="desPhotoTatoo"
                     name="desPhotoTatoo"
@@ -213,7 +213,7 @@ const ModalDate = ({
                 </Box>
               </Box>
               <Box>
-                <FormControl sx={{ m: 1 }} component="fieldset">
+                <FormControl sx={{ m: 1, width: "26ch", textAlign: "center"}} component="fieldset">
                   <FormLabel component="legend">Tipo Tatuaje</FormLabel>
                   <RadioGroup
                     row
@@ -237,7 +237,7 @@ const ModalDate = ({
                 </FormControl>
               </Box>
               <Box>
-                <SelectSize handleChangeDate={handleChangeDate} />
+                <SelectSize sx={{ m: 1, width: "26ch" }} handleChangeDate={handleChangeDate} />
               </Box>
               <Box>
                 <TextField
@@ -305,7 +305,12 @@ const ModalDate = ({
             </Box>
           </DialogContent>
 
-          <DialogActions>
+          <DialogActions sx={{display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+          >
             <Button color="error" onClick={handleClose}>
               Cerrar
             </Button>

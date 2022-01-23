@@ -46,11 +46,15 @@ export default function Home() {
                 Perfect Time INK es una aplicación que busca acompañar al usuario en el proceso de la realización de un tatuaje, facilitando el proceso para agendar una cita, dándole a conocer de manera sencilla y detallada las obras del tatuador con quien desea trabajar, brindando las condiciones sanitarias en las que se encuentra el estudio, todo esto, con la finalidad de eliminar miedos y dar la confianza de que el servicio que se le esta brindando sea de la mejor calidad, y claro, esperando que vuelva con nosotros en repetidas ocasiones.  
               </Typography>
               </Grid>
-              <Grid item sm={12} md={6}>
-                <img 
-                  src="https://marvel-b1-cdn.bc0a.com/f00000000107635/daysmart-bodyart.imgix.net/uploads/2019/07/tiptattooartists.jpg?ar=1%3A0.75&auto=format%2Ccompress&crop=center&fit=crop&q=85&w=600"
+              <Grid item sm={12} md={6} className={classes.imgGrid}>
+                <Image 
+                  src="/images/tiptattooartists.webp"
+                  height={300}
+                  width={500}
+                  alt="Tatuador"
                   className={classes.imgCard}
-                ></img>
+                  
+                ></Image>
               </Grid>
             </Grid>  
           </Box>
@@ -115,9 +119,3 @@ export default function Home() {
   )
 }
 
-/*
- <img
-              src="https://marvel-b1-cdn.bc0a.com/f00000000107635/daysmart-bodyart.imgix.net/uploads/2019/07/tiptattooartists.jpg?ar=1%3A0.75&auto=format%2Ccompress&crop=center&fit=crop&q=85&w=600"
-              className={classes.imgCard}
-            ></img>
-            */

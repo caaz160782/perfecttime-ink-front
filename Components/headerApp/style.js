@@ -82,14 +82,15 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     // ...theme.typography.tab,
     textDecoration: "none",
-    color: "rgb(123, 136, 146)",
+    //color: "rgb(123, 136, 146)",
+    color: "#fff",
     fontSize: "1.4rem",
     fontWeight: "600",
     marginLeft: "50px",
     "&:hover": {
       transition: "color 0.6s ease",
       //color: theme.palette.secondary.light,
-      color: "#fff",
+      color: "rgb(123, 136, 146)",
     },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.3rem",
@@ -123,34 +124,40 @@ const useStyles = makeStyles((theme) => ({
   active: {
     //...theme.typography.tab,
     // color: "#03a9f4",
-    color: "rgb(123, 136, 146)",
+    color: "#fff",
     textDecoration: "underline",
     fontWeight: "600",
     fontSize: "1.4rem",
     marginLeft: "50px",
+    "&:hover": {
+      color: "rgb(123, 136, 146)",
+    },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.2rem",
       marginLeft: "20px",
     },
   },
   admon: {
-    color: "rgb(123, 136, 146)",
+    color: "#fff",
     // marginLeft: "5px",
     marginRight: "10px",
-    "&:hover": {
-      textDecoration: `none`,
-      // color: theme.palette.secondary.light,
-    },
     [theme.breakpoints.down("lg")]: {
       marginLeft: "10px",
       marginRight: "10px",
     },
+    "&:hover": {
+      color: "rgb(123, 136, 146)",
+      textDecoration: `none`,
+    },
   },
   admonIcon: {
-    color: "rgb(123, 136, 146)",
+    color: "#fff",
     marginLeft: "10px",
     [theme.breakpoints.down("lg")]: {
       marginLeft: "10px",
+    },
+    "&:hover": {
+      textDecoration: `none`,
     },
   },
   activeAdmon: {

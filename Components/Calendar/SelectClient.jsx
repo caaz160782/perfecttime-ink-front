@@ -28,7 +28,7 @@ const SelectClient = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 230 }}>
+      <FormControl sx={{ width: "26ch" }}>
         <InputLabel id="lblInpCli">Cliente</InputLabel>
         <Select
           size="small"

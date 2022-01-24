@@ -143,6 +143,7 @@ const ModalDate = ({
           setOpen(false);
           setinfoDate(response.data.payload);
           setLoading(false);
+          setAdelanto(0);
           setOpenViewModal(true);
         }
       })
@@ -173,14 +174,14 @@ const ModalDate = ({
         autoHideDuration={1000}
       />
       <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
-        <DialogTitle>
+        <DialogTitle sx={{ textAlign: "center" }}>
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
           <Box
             sx={{
               width: 360,
-              height: 700,
+              height: 650,
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -199,10 +200,10 @@ const ModalDate = ({
                   onChange={handleChangeDate("title")}
                 />
               </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <SelectTatuador handleChangeDate={handleChangeDate} />
               </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <SelectClient handleChangeDate={handleChangeDate} />
               </Box>
               <Box sx={{ m: 1 }}>
@@ -320,24 +321,21 @@ const ModalDate = ({
                     disabled
                     type="text"
                     value={adelanto}
-                    //onChange={handleChangeDate("estimated")}
                     startAdornment={
                       <InputAdornment position="start">$</InputAdornment>
                     }
-                    label="Amount"
                   />
                 </FormControl>
               </Box>
-            </DialogContent>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <DialogActions>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  m: 1,
+                }}
+              >
                 <Button color="error" onClick={handleClose}>
                   Cerrar
                 </Button>
@@ -350,8 +348,8 @@ const ModalDate = ({
                 >
                   Enviar
                 </LoadingButton>
-              </DialogActions>
-            </Box>
+              </Box>
+            </DialogContent>
           </Box>
         </form>
       </Dialog>

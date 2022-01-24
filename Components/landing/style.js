@@ -27,22 +27,33 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color:"#fff",
     fontWeight:"bold",
-    padding:0,
-    fontSize:70,
+    minWidth:"100%",
+    [theme.breakpoints.down('md')]:{
+      height:'400px',
+    },
     [theme.breakpoints.down('sm')]:{
       height:'300px',
-      fontSize:18
   }
   },
 
 
   Title:{
     fontSize:70,
-    width:'80%',
+    display: "flex",
+    justifyContent: "center",
+    flexDirection:"column",
+    alignItems: "center",
+    flexWrap: "wrap",
+    textAlign: "center",
+    fontWeight: "400",
+    [theme.breakpoints.down('md')]:{
+      height:'200px',
+      fontSize:50
+    },
     [theme.breakpoints.down('sm')]:{
-      height:'300px',
-      fontSize:12
-    }  
+      height:'150px',
+      fontSize:30
+    },
   },
 
   btn: {
@@ -64,11 +75,15 @@ const useStyles = makeStyles((theme) => ({
       fontSize:14,
     },
   },
+  imgGrid: {
+    textAlign: "center",
+  },
 
   imgCard:{
     maxHeight: "300px",
     maxWidth: "400px",
-    borderRadius: 16
+    borderRadius: 16,
+    
   },
 
   blogsContainer:{

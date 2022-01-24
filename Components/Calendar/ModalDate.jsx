@@ -12,12 +12,12 @@ import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
+import { format, addHours, parseISO } from "date-fns";
 import {
   InputLabel,
   Button,
   TextField,
   Box,
-  styled,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -34,15 +34,14 @@ const ModalDate = ({
   fechaHoy,
   valueDate,
   setValuDate,
+  evenByDay,
   cargaDates,
   setOpenViewModal,
   setinfoDate,
+  timeToOpen,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const Input = styled("input")({
-    display: "none",
-  });
   const [loading, setLoading] = useState(false);
   const [archivo, guardarArchivo] = useState("");
   const [adelanto, setAdelanto] = useState(0);
@@ -52,6 +51,8 @@ const ModalDate = ({
     message: "",
     backgroundColor: "",
   });
+
+  useEffect(() => {}, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -63,16 +64,43 @@ const ModalDate = ({
   };
 
   const handleChangeDate = (prop) => (event) => {
-    setValuDate({ ...valueDate, [prop]: event.target.value });
+    setValuDate({
+      ...valueDate,
+      [prop]: event.target.value,
+    });
+    if (prop === "id_tatuador") {
+      const tatoo = evenByDay.filter(
+        (tatuador) => tatuador.id_tatuador._id === event.target.value
+      );
+      const finDate = tatoo.length > 0 ? tatoo.pop() : {};
+      if (Object.keys(finDate).length !== 0) {
+        const newDateEqualDay = addHours(parseISO(finDate.end), 1);
+        const NewDareFinhish = addHours(parseISO(finDate.end), 2);
+        setValuDate({
+          ...valueDate,
+          id_tatuador: event.target.value,
+          hourTatooStart: format(newDateEqualDay, "HH:mm"),
+          hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+        });
+      } else {
+        setValuDate({
+          ...valueDate,
+          id_tatuador: event.target.value,
+        });
+      }
+    }
+
     if (prop === "hourTatooStart") {
       setValuDate({
         ...valueDate,
+        hourTatooStart: event.target.value,
         start: valueDate.addDate + "T" + event.target.value,
       });
     }
     if (prop === "hourTatooFinish") {
       setValuDate({
         ...valueDate,
+        hourTatooFinish: event.target.value,
         end: valueDate.addDate + "T" + event.target.value,
       });
     }
@@ -84,7 +112,6 @@ const ModalDate = ({
     }
   };
 
-  //console.log(valueDate);
   const handleGuardar = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -95,17 +122,17 @@ const ModalDate = ({
     formData.append("id_size", valueDate.id_size);
     formData.append("start", valueDate.start);
     formData.append("end", valueDate.end);
+    formData.append("hourTatooStart", valueDate.hourTatooStart);
+    formData.append("hourTatooFinish", valueDate.hourTatooFinish);
     formData.append("description", valueDate.description);
     formData.append("tipoTatoo", valueDate.tipoTatoo);
     formData.append("cost", valueDate.cost);
     formData.append("estimated", valueDate.estimated);
     formData.append("picture", archivo);
-    //console.log(archivo);
-    //setLoading(archivo);
     clienteAxios
       .post("/dateTatoo", formData, {
         headers: {
-          //"Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
           apitoken: auth?.token,
         },
       })
@@ -116,6 +143,7 @@ const ModalDate = ({
           setOpen(false);
           setinfoDate(response.data.payload);
           setLoading(false);
+          setAdelanto(0);
           setOpenViewModal(true);
         }
       })
@@ -136,25 +164,34 @@ const ModalDate = ({
 
   return (
     <div>
+      <Snackbar
+        open={alert.open}
+        style={{ height: "100%" }}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        // anchorOrigin={{ vertical, horizontal }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={1000}
+      />
       <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
-        <DialogTitle sx={{m: 1, width: "26ch", textAlign: "center"}}>
+        <DialogTitle sx={{ textAlign: "center" }}>
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
-          <DialogContent>
-            <Box
-              sx={{
-                width: 260,
-                height: 600,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "flex-start",
-              }}
-            >
-              <Box>
+          <Box
+            sx={{
+              width: 360,
+              height: 650,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <DialogContent>
+              <Box sx={{ m: 1 }}>
                 <TextField
-                  sx={{ m: 1, width: "26ch"  }}
+                  sx={{ width: "26ch" }}
                   id="title"
                   size="small"
                   required
@@ -163,21 +200,21 @@ const ModalDate = ({
                   onChange={handleChangeDate("title")}
                 />
               </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <SelectTatuador handleChangeDate={handleChangeDate} />
               </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <SelectClient handleChangeDate={handleChangeDate} />
               </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <TextField
-                  sx={{ m: 1, width: "26ch" }}
+                  sx={{ width: "26ch" }}
                   id="hourTatooStart"
                   size="small"
-                  //required
+                  required
                   label="Hora Cita"
                   type="time"
-                  defaultValue="09:00"
+                  value={valueDate.hourTatooStart}
                   onChange={handleChangeDate("hourTatooStart")}
                   InputLabelProps={{
                     shrink: true,
@@ -187,33 +224,8 @@ const ModalDate = ({
                   }}
                 />
               </Box>
-              <Box>
-                <TextField
-                  sx={{ m: 1, width: "26ch" }}
-                  required
-                  size="small"
-                  id="description"
-                  label="Descripcion Tatuaje"
-                  type="text"
-                  onChange={handleChangeDate("description")}
-                />
-              </Box>
-              <Box s>
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                  <TextField
-                    sx={{ m: 1, width: "26ch" }}
-                    size="small"
-                    id="desPhotoTatoo"
-                    name="desPhotoTatoo"
-                    inputProps={{ type: "file" }}
-                    onChange={leerArchivo}
-                  ></TextField>
-
-                  <Box></Box>
-                </Box>
-              </Box>
-              <Box>
-                <FormControl sx={{ m: 1, width: "26ch", textAlign: "center"}} component="fieldset">
+              <Box sx={{ m: 1 }}>
+                <FormControl component="fieldset">
                   <FormLabel component="legend">Tipo Tatuaje</FormLabel>
                   <RadioGroup
                     row
@@ -236,18 +248,42 @@ const ModalDate = ({
                   </RadioGroup>
                 </FormControl>
               </Box>
-              <Box>
-                <SelectSize sx={{ m: 1, width: "26ch" }} handleChangeDate={handleChangeDate} />
-              </Box>
-              <Box>
+              <Box sx={{ m: 1 }}>
                 <TextField
-                  sx={{ m: 1, width: "26ch" }}
+                  sx={{ width: "26ch" }}
+                  required
+                  size="small"
+                  id="description"
+                  label="Descripcion Tatuaje"
+                  type="text"
+                  onChange={handleChangeDate("description")}
+                />
+              </Box>
+              <Box sx={{ m: 1 }}>
+                <SelectSize handleChangeDate={handleChangeDate} />
+              </Box>
+              <Box sx={{ m: 1 }}>
+                <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    sx={{ width: "26ch" }}
+                    size="small"
+                    id="desPhotoTatoo"
+                    name="desPhotoTatoo"
+                    inputProps={{ type: "file" }}
+                    onChange={leerArchivo}
+                  ></TextField>
+                  <Box></Box>
+                </Box>
+              </Box>
+              <Box sx={{ m: 1 }}>
+                <TextField
+                  sx={{ width: "26ch" }}
                   id="hourTatooFinish"
                   required
                   size="small"
                   label="Hora Fin"
                   type="time"
-                  defaultValue="09:00"
+                  value={valueDate.hourTatooFinish}
                   onChange={handleChangeDate("hourTatooFinish")}
                   InputLabelProps={{
                     shrink: true,
@@ -257,8 +293,8 @@ const ModalDate = ({
                   }}
                 />
               </Box>
-              <Box>
-                <FormControl fullWidth sx={{ m: 1, width: "26ch" }}>
+              <Box sx={{ m: 1 }}>
+                <FormControl fullWidth sx={{ width: "26ch" }}>
                   <InputLabel htmlFor="outlined-adornment-amount">
                     Costo Aprox*
                   </InputLabel>
@@ -274,56 +310,47 @@ const ModalDate = ({
                   />
                 </FormControl>
               </Box>
+              <Box sx={{ m: 1 }}>
+                <FormControl sx={{ width: "26ch" }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Adelanto*
+                  </InputLabel>
+                  <OutlinedInput
+                    id="estimated"
+                    size="small"
+                    disabled
+                    type="text"
+                    value={adelanto}
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Box>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  m: 1,
                 }}
               >
-                <Box>
-                  <FormControl fullWidth sx={{ m: 1, width: "26ch" }}>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      A pagar*
-                    </InputLabel>
-                    <OutlinedInput
-                      id="estimated"
-                      size="small"
-                      disabled
-                      type="text"
-                      value={adelanto}
-                      //onChange={handleChangeDate("estimated")}
-                      startAdornment={
-                        <InputAdornment position="start">$</InputAdornment>
-                      }
-                      label="Amount"
-                    />
-                  </FormControl>
-                </Box>
+                <Button color="error" onClick={handleClose}>
+                  Cerrar
+                </Button>
+                <LoadingButton
+                  endIcon={<SendIcon />}
+                  loading={loading}
+                  loadingPosition="end"
+                  variant="contained"
+                  type="submit"
+                >
+                  Enviar
+                </LoadingButton>
               </Box>
-            </Box>
-          </DialogContent>
-
-          <DialogActions sx={{display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
-          >
-            <Button color="error" onClick={handleClose}>
-              Cerrar
-            </Button>
-            <LoadingButton
-              endIcon={<SendIcon />}
-              loading={loading}
-              loadingPosition="end"
-              variant="contained"
-              type="submit"
-            >
-              Enviar
-            </LoadingButton>
-          </DialogActions>
+            </DialogContent>
+          </Box>
         </form>
       </Dialog>
     </div>

@@ -27,7 +27,7 @@ const SelectSize = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 230 }}>
+      <FormControl sx={{ width: "26ch" }}>
         <InputLabel id="lblInpSize">Tamaño</InputLabel>
         <Select
           defaultValue=""

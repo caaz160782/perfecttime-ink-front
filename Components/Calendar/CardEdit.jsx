@@ -2,15 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import { useRouter } from "next/router";
-import {
-  Button,
-  Box,
-  Typography,
-  TextareaAutosize,
-  TextField,
-} from "@mui/material";
+import { Box, Typography, TextareaAutosize, TextField } from "@mui/material";
 import Image from "next/image";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -19,26 +12,40 @@ import DateTimePicker from "@mui/lab/DateTimePicker";
 import { LoadingButton } from "@mui/lab";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
+import { differenceInHours, parseISO, addHours, format } from "date-fns";
 
 const CardEdit = ({ dateSingle, iddate }) => {
   const { auth } = useContext(AuthContext);
-  const [value, setValue] = useState(new Date("2014-08-18T21:11:54"));
+  const [valueNewDay, setValueNewDay] = useState(
+    new Date("2022-01-01T00:00:00")
+  );
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [valuesModif, setValuesModif] = useState({});
-  const [valuesTxtAreaDes, setValuesTxtAreaDes] = useState({});
   const [valuesTxtAreaMot, setValuesTxtAreaMot] = useState("");
 
   const datapicker = (newValue) => {
-    setValue(newValue);
-    setValuesModif({ ...valuesModif, start: newValue });
+    setValueNewDay(newValue);
+    let duracionCitas = differenceInHours(
+      parseISO(dateSingle.end),
+      parseISO(dateSingle.start)
+    );
+    //console.log(newValue);
+    //console.log(dateSingle);
+
+    const finDateNew = addHours(new Date(newValue), duracionCitas);
+    setValuesModif({
+      ...valuesModif,
+      start: newValue,
+      hourTatooStart: format(newValue, "HH:mm"),
+      end: finDateNew,
+      hourTatooFinish: format(finDateNew, "HH:mm"),
+    });
   };
+  console.log(valuesModif);
 
   const handleChange = (prop) => (event) => {
     setValuesModif({ ...valuesModif, [prop]: event.target.value });
-    if (prop === "description") {
-      setValuesTxtAreaDes(event.target.value);
-    }
     if (prop === "motivo") {
       setValuesTxtAreaMot(event.target.value);
     }
@@ -46,11 +53,9 @@ const CardEdit = ({ dateSingle, iddate }) => {
 
   useEffect(() => {
     if (dateSingle !== undefined) {
-      setValue(dateSingle.start);
-      setValuesTxtAreaDes(dateSingle.description);
+      setValueNewDay(dateSingle.start);
     }
   }, [dateSingle]);
-
   const handlerSubmit = (e) => {
     e.preventDefault();
     //    setLoading(true);
@@ -78,16 +83,21 @@ const CardEdit = ({ dateSingle, iddate }) => {
   const hanCancelar = () => {
     router.push(`/agenda`);
   };
-
   const myLoader = ({ src, width, quality }) => {
     return `${process.env.NEXT_PUBLIC_BASE_URL}/${src}?w=${width}&q=${
       quality || 75
     }`;
   };
-
   return (
     <Box>
-      <Card sx={{ maxWidth: 345 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
         {dateSingle && (
           <Image
             loader={myLoader}
@@ -97,6 +107,8 @@ const CardEdit = ({ dateSingle, iddate }) => {
             height={250}
           />
         )}
+      </Box>
+      <Card sx={{ maxWidth: 345 }}>
         <form id="form" onSubmit={handlerSubmit}>
           <CardContent>
             <Box
@@ -111,21 +123,24 @@ const CardEdit = ({ dateSingle, iddate }) => {
                 {dateSingle && dateSingle.title}/
                 {dateSingle && dateSingle.tipoTatoo}
               </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                Tatuador: {dateSingle && dateSingle.id_tatuador.name}{" "}
+                {dateSingle && dateSingle.id_tatuador.lastName}
+              </Typography>
               <Box>
                 <TextareaAutosize
                   aria-label="minimum height"
                   minRows={3}
-                  placeholder="Minimum 3 rows"
-                  value={valuesTxtAreaDes}
+                  disabled
+                  placeholder={dateSingle?.description}
                   style={{ width: 270 }}
-                  onChange={handleChange("description")}
                 />
               </Box>
               <Box sx={{ m: 1 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
                     label="Nueva Fecha y hora "
-                    value={value}
+                    value={valueNewDay}
                     onChange={datapicker}
                     renderInput={(params) => <TextField {...params} />}
                   />
@@ -135,6 +150,7 @@ const CardEdit = ({ dateSingle, iddate }) => {
                 <TextareaAutosize
                   aria-label="minimum height"
                   minRows={3}
+                  required
                   placeholder="Motivo de reagendar"
                   value={valuesTxtAreaMot}
                   onChange={handleChange("motivo")}
@@ -143,22 +159,23 @@ const CardEdit = ({ dateSingle, iddate }) => {
               </Box>
             </Box>
           </CardContent>
-          <CardActions>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "row",
-                alignContent: "space-between",
-              }}
-            >
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "row",
+              alignContent: "space-between",
+            }}
+          >
+            <CardActions>
               <Box>
                 <LoadingButton
-                  color="error"
+                  //color="error"
                   variant="contained"
                   onClick={hanCancelar}
                 >
-                  Cancelar
+                  Return
                 </LoadingButton>
               </Box>
 
@@ -173,8 +190,8 @@ const CardEdit = ({ dateSingle, iddate }) => {
                   Enviar
                 </LoadingButton>
               </Box>
-            </Box>
-          </CardActions>
+            </CardActions>
+          </Box>
         </form>
       </Card>
     </Box>

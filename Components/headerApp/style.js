@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
+    //    marginLeft: "2px",
     height: "6em",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
@@ -73,33 +74,44 @@ const useStyles = makeStyles((theme) => ({
   ///NAVEGACION
   tabContainer: {
     marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+    //border: "2px solid red",
   },
   tab: {
     // ...theme.typography.tab,
     textDecoration: "none",
-    color: "#fff",
-    fontSize: "1.5rem",
+    color: "rgb(123, 136, 146)",
+    fontSize: "1.4rem",
     fontWeight: "600",
-    marginLeft: "40px",
+    marginLeft: "50px",
     "&:hover": {
-      transition: "color 0.7s ease",
-      color: theme.palette.secondary.light,
+      transition: "color 0.6s ease",
+      //color: theme.palette.secondary.light,
+      color: "#fff",
     },
     [theme.breakpoints.down("lg")]: {
-      fontSize: "1.2rem",
+      fontSize: "1.3rem",
       marginLeft: "20px",
     },
   },
   btn: {
-    color: "#fff",
+    //  color: "#fff",
+    color: theme.palette.secondary.main,
     textTransform: "none",
-    fontSize: "1.4rem",
+    fontSize: "1.2rem",
     borderRadius: "15px",
+    border: "1.7px solid",
     marginLeft: "20px",
-    marginRight: "25px",
-    padding: "1px 15px",
+    fontWeight: "450",
+    marginRight: "20px",
+    padding: "0px 15px",
+    transition: "all 0.5s ease",
     "&:hover": {
-      textDecoration: `none`,
+      // textDecoration: `none`,
+      color: theme.palette.secondary.light,
+      // border: "2px solid",
     },
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.1rem",
@@ -110,20 +122,35 @@ const useStyles = makeStyles((theme) => ({
   },
   active: {
     //...theme.typography.tab,
-    color: "#fff",
+    // color: "#03a9f4",
+    color: "rgb(123, 136, 146)",
     textDecoration: "underline",
-    fontSize: "1.5rem",
     fontWeight: "600",
-    marginLeft: "40px",
+    fontSize: "1.4rem",
+    marginLeft: "50px",
     [theme.breakpoints.down("lg")]: {
       fontSize: "1.2rem",
       marginLeft: "20px",
     },
   },
   admon: {
-    color: "#fff",
+    color: "rgb(123, 136, 146)",
+    // marginLeft: "5px",
+    marginRight: "10px",
     "&:hover": {
       textDecoration: `none`,
+      // color: theme.palette.secondary.light,
+    },
+    [theme.breakpoints.down("lg")]: {
+      marginLeft: "10px",
+      marginRight: "10px",
+    },
+  },
+  admonIcon: {
+    color: "rgb(123, 136, 146)",
+    marginLeft: "10px",
+    [theme.breakpoints.down("lg")]: {
+      marginLeft: "10px",
     },
   },
   activeAdmon: {
@@ -132,6 +159,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       textDecoration: `none`,
     },
+  },
+  imgUrl: {
+    height: "50px",
+    width: "50px",
+    borderRadius: "50px",
+    border: "2px solid rgb(91, 107, 119)",
   },
 }));
 

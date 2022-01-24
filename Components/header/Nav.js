@@ -8,7 +8,6 @@ import useStyles from "./style";
 
 export const Nav = (props) => {
   const classes = useStyles();
-
   return (
     <div className={classes.tabContainer}>
       {" "}

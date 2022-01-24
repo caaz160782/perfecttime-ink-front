@@ -13,6 +13,7 @@ const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
   const { auth, logOut } = contextValue;
   const router = useRouter();
+  console.log(theme);
 
   const [NavComponent, setNavComponent] = useState(() => <></>);
 
@@ -48,6 +49,7 @@ const Layout = ({ title, children }) => {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "rgb(91, 107, 119)",
+          //  backgroundColor: "#334756",
           height: "10vh",
           marginTop: "60px",
         }}

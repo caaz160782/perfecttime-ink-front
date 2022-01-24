@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 
-//const gris = "rgb(91, 107, 119)";
+//const gris = "rgb(123, 136, 146)";
 const gris = "#334756";
 //const gris = "#476072";
 //const dorado = "#EFC437";//centralizando

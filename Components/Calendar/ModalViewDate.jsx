@@ -34,11 +34,7 @@ const ModalViewDate = ({
     setOpenViewModal(false);
   };
 
-  console.log(infoDate.statusPago);
-
   const handleDeleteAlert = () => {
-    console.log(infoDate);
-
     //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
     const tiempoTranscurrido = Date.now();
     const hoy = new Date(tiempoTranscurrido);
@@ -90,7 +86,6 @@ const ModalViewDate = ({
       console.log(error);
     }
   };
-  console.log(infoDate);
   //const ruta = "image="{`http://localhost:8000/${infoDate.picture}`}";
   //return `http://localhost:8000/${src}?w=${width}&q=${quality || 75}`;
   const myLoader = ({ src, width, quality }) => {

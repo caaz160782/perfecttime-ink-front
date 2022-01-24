@@ -2,10 +2,12 @@ import NextLink from "next/link";
 import { Link, Tabs, Tab, Button, makeStyles } from "@mui/material";
 import { useRouter } from "next/router";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import theme from "./../../utils/temaConfig";
 import { useState, useEffect, useContext } from "react";
 import useStyles from "./style";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -14,9 +16,8 @@ export const Nav = ({ logOut }) => {
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-  //  console.log("nav===", auth.infoUser.rol);
-
   let rol = auth?.infoUser?.rol;
+  let name = auth?.infoUser?.name;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,7 +30,7 @@ export const Nav = ({ logOut }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log("pahtname-----", router.pathname);
+  // console.log("pahtname-----", router.pathname);
   const Linkes = () => {
     if (rol === "Administrador") {
       return (
@@ -73,7 +74,7 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/config/modif" passHref>
             <Link
               className={
-                router.pathname == "/config" ? classes.active : classes.tab
+                router.pathname == "/config/[id]" ? classes.active : classes.tab
               }
             >
               Configuracion
@@ -98,19 +99,13 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/agenda" passHref>
             <Link className={classes.tab}>Agenda</Link>
           </NextLink>
-          <NextLink href="/info-personal" passHref>
-            <Link className={classes.tab}>Mi Cuenta</Link>
-          </NextLink>
         </>
       );
     }
   };
 
   return (
-    <div
-      style={{ display: "flex", justifyContent: "center" }}
-      className={classes.tabContainer}
-    >
+    <div className={classes.tabContainer}>
       {" "}
       <NextLink href="/" passHref>
         <Link className={router.pathname == "/" ? classes.active : classes.tab}>
@@ -126,25 +121,50 @@ export const Nav = ({ logOut }) => {
           marginLeft: "30px",
         }}
       >
-        <SupervisorAccountIcon />
-        <NextLink href="/info-personal" passHref>
-          <Link
-            className={
-              router.pathname == "/info-personal"
-                ? classes.activeAdmon
-                : classes.admon
-            }
-          >
-            Administrador
-          </Link>
-        </NextLink>
+        {rol === "Administrador" ? (
+          <>
+            <SupervisorAccountIcon className={classes.admonIcon} />
+            <NextLink href="/info-personal" passHref>
+              <Link
+                className={
+                  router.pathname == "/info-personal"
+                    ? classes.admon
+                    : classes.admon
+                }
+              >
+                Administrador
+              </Link>
+            </NextLink>
+          </>
+        ) : (
+          <>
+            <AccountCircleIcon></AccountCircleIcon>
+            <NextLink href="/info-personal" passHref>
+              <Link
+                className={
+                  router.pathname == "/info-personal"
+                    ? classes.admon
+                    : classes.admon
+                }
+              >
+                {`Bienvenido ${name}!`}
+              </Link>
+            </NextLink>
+            {/* <img
+              className={classes.imgUrl}
+              src={`http://localhost:8000/${imgUrl}`}
+            ></img> */}
+          </>
+        )}
+
         <Button
           onClick={logOut}
           className={classes.btn}
-          variant="contained"
+          // variant="outlined"
           color="secondary"
         >
-          Logout
+          <LogoutIcon></LogoutIcon>
+          logout
         </Button>
       </div>
     </div>

@@ -63,7 +63,7 @@ const OneStaff = () => {
 
   return (
     <div>
-      <Container align="center" maxWidth={600}>
+      <Container align="center" maxWidth={"600"}>
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>

@@ -12,9 +12,9 @@ import Typography from "@mui/material/Typography";
 import { List, ListItem, TextField, Snackbar } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import clienteAxios from "../../utils/axios";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import theme from "../../utils/temaConfig";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -56,13 +56,16 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ classes, reload }) {
+export default function EditCustomizedDialogs({
+  classes,
+  staffMember,
+  reload,
+}) {
   //const [valToken, setToken] = useLocalStorage("userVal", "");
-  // const [valStudio] = useLocalStorage("studioVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
+  //  console.log("staff", typeRol);
+  //  const foto = staffMember.picture;
   const [archivo, guardarArchivo] = useState("");
-
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
   };
@@ -81,79 +84,70 @@ export default function CustomizedDialogs({ classes, reload }) {
     setOpen(false);
   };
   const initialForm = {
-    name: "",
-    lastName: "",
-    email: "",
+    name: staffMember.name,
+    lastName: staffMember.lastName,
+    // idRole: staffMember.idRole,
+    picture: staffMember.picture,
     password: "",
-    phoneHome: "",
-    curp: "",
-    rfc: " ",
-    phonePersonal: "",
+    phoneHome: staffMember.phoneHome,
+    curp: staffMember.curp,
+    rfc: staffMember.rfc,
+    phonePersonal: staffMember.phonePersonal,
   };
   const [user, actualizarState, reset] = useForm(initialForm);
+  //console.log("initialForm", initialForm);
+  //console.log('user', user);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    const idStudio = auth.infoStudio.id;
+    //console.log("user---", user);
     const formData = new FormData();
-
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
-    // formData.append("idRole", user.idRole);
-    formData.append("Role", "staffTatuador");
+    //formData.append("idRole", "staff");
     formData.append("curp", user.curp);
     formData.append("rfc", user.rfc);
     formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
-    formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("picture", archivo);
-    formData.append("idStudio", idStudio);
-    // formData.append("Role", "Tatoo");
-    console.log("auth", auth.token);
+
     clienteAxios
-      .post("/staff", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          //  apitoken: valToken.token,
-          apitoken: auth.token,
-        },
+      .patch(`/staff/${staffMember._id}`, formData, {
+        // headers: { apitoken: valToken.token },
+        headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        console.log(respuesta);
+        reload();
         setAlert({
           open: true,
-          message: respuesta.data.message.toUpperCase(),
-          backgroundColor: "#4BB543",
+          message: respuesta.data.message,
+          backgroundColor: "#519259",
         });
 
-        setTimeout(() => {
-          console.log("peticion ok");
-          reload();
-        }, 3000);
-
-        // router.push("/"); //dirigir a la pagina de inicio
+        //  router.push("/staff"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
       .catch((err) => {
         console.log(err);
+
         setAlert({
           open: true,
-          message: err.response.data.error.toUpperCase(),
-          backgroundColor: "#FF3232",
+          message: err.response.data.error,
+          backgroundColor: "#DD4A48",
         });
       });
   };
 
   return (
     <div>
-      <Button color="success" variant="contained" onClick={handleClickOpen}>
-        <AddCircleIcon></AddCircleIcon> crear
+      <Button color="primary" onClick={handleClickOpen}>
+        <EditIcon></EditIcon> Editar
       </Button>
       <Snackbar
         open={alert.open}
+        //  style={{ height: "100%" }}
         message={alert.message}
-        //style={{ height: "100%" }}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
@@ -168,14 +162,14 @@ export default function CustomizedDialogs({ classes, reload }) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Ingresar Staff
+          Editar
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <form id="form" onSubmit={handlerSubmit}>
             <List>
               <ListItem>
                 <TextField
-                  variant="outlined"
+                  //  variant="outlined"
                   fullWidth
                   required
                   size="small"
@@ -184,6 +178,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   name="name"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
+                  value={user.name}
                   //  helperText={error ? "Name needs to be 'a'" : "Perfect!"}
                 ></TextField>
               </ListItem>
@@ -192,12 +187,13 @@ export default function CustomizedDialogs({ classes, reload }) {
                   //  variant="outlined"
                   size="small"
                   fullWidth
-                  // required
+                  required
                   id="lastName"
                   label="last name"
                   name="lastName"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
+                  value={user.lastName}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -214,7 +210,7 @@ export default function CustomizedDialogs({ classes, reload }) {
               </ListItem>
               <ListItem>
                 <TextField
-                  //required
+                  required
                   fullWidth
                   size="small"
                   id="phonePersonal"
@@ -222,6 +218,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   name="phonePersonal"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
+                  value={user.phonePersonal}
                 ></TextField>
               </ListItem>
               <ListItem>
@@ -234,35 +231,26 @@ export default function CustomizedDialogs({ classes, reload }) {
                   name="phoneHome"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
+                  value={user.phoneHome}
                 ></TextField>
               </ListItem>
+              <ListItem></ListItem>
               <ListItem>
                 <TextField
+                  fullWidth
                   required
-                  size="small"
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  inputProps={{ type: "email" }}
-                  onChange={actualizarState}
-                ></TextField>
-              </ListItem>
-              <ListItem>
-                <TextField
-                  fullWidth
-                  // required
                   size="small"
                   id="curp"
                   label="curp"
                   name="curp"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
+                  value={user.curp}
                 ></TextField>
               </ListItem>
               <ListItem>
                 <TextField
-                  //  required
+                  required
                   fullWidth
                   size="small"
                   id="rfc"
@@ -270,17 +258,19 @@ export default function CustomizedDialogs({ classes, reload }) {
                   name="rfc"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
+                  value={user.rfc}
                 ></TextField>
               </ListItem>
               <ListItem>
                 <TextField
-                  required
+                  // required
                   size="small"
                   id="password"
                   fullWidth
                   label="Password"
                   name="password"
                   inputProps={{ type: "password" }}
+                  autoComplete="current-password"
                   helperText={
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
@@ -295,12 +285,12 @@ export default function CustomizedDialogs({ classes, reload }) {
                   color="secondary"
                   className={classes.btnRegister}
                 >
-                  <SendIcon></SendIcon> CREAR
+                  <SendIcon></SendIcon> Guardar cambios
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
-              <Button color="primary" autoFocus onClick={handleClose}>
+              <Button autoFocus onClick={handleClose}>
                 <CloseIcon></CloseIcon> Close
               </Button>
             </DialogActions>

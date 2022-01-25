@@ -96,8 +96,9 @@ export default function EditCustomizedDialogs({
   };
   const [user, actualizarState, reset] = useForm(initialForm);
   //console.log("initialForm", initialForm);
-  //console.log('user', user);
+  console.log("rollll", auth.infoUser.rol);
 
+  //console.log("user", auth.infoUser.rol);
   const handlerSubmit = (e) => {
     e.preventDefault();
     //console.log("user---", user);
@@ -111,9 +112,9 @@ export default function EditCustomizedDialogs({
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("password", user.password);
     formData.append("picture", archivo);
-
+    let ruta = auth.infoUser.rol === "Cliente" ? "clientModified" : "staff";
     clienteAxios
-      .patch(`/staff/${staffMember._id}`, formData, {
+      .patch(`/${ruta}/${staffMember._id}`, formData, {
         // headers: { apitoken: valToken.token },
         headers: { apitoken: auth.token },
       })
@@ -146,10 +147,10 @@ export default function EditCustomizedDialogs({
       </Button>
       <Snackbar
         open={alert.open}
-        //  style={{ height: "100%" }}
+        style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
@@ -234,33 +235,39 @@ export default function EditCustomizedDialogs({
                   value={user.phoneHome}
                 ></TextField>
               </ListItem>
-              <ListItem></ListItem>
-              <ListItem>
-                <TextField
-                  fullWidth
-                  required
-                  size="small"
-                  id="curp"
-                  label="curp"
-                  name="curp"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.curp}
-                ></TextField>
-              </ListItem>
-              <ListItem>
-                <TextField
-                  required
-                  fullWidth
-                  size="small"
-                  id="rfc"
-                  label="rfc"
-                  name="rfc"
-                  inputProps={{ type: "text" }}
-                  onChange={actualizarState}
-                  value={user.rfc}
-                ></TextField>
-              </ListItem>
+              {auth.infoUser.rol === "Administrador" || "Staff" ? (
+                <>
+                  <ListItem>
+                    <TextField
+                      fullWidth
+                      required
+                      size="small"
+                      id="curp"
+                      label="curp"
+                      name="curp"
+                      inputProps={{ type: "text" }}
+                      onChange={actualizarState}
+                      value={user.curp}
+                    ></TextField>
+                  </ListItem>
+                  <ListItem>
+                    <TextField
+                      required
+                      fullWidth
+                      size="small"
+                      id="rfc"
+                      label="rfc"
+                      name="rfc"
+                      inputProps={{ type: "text" }}
+                      onChange={actualizarState}
+                      value={user.rfc}
+                    ></TextField>
+                  </ListItem>
+                </>
+              ) : (
+                "jsjsjsjsj"
+              )}
+
               <ListItem>
                 <TextField
                   // required
@@ -283,7 +290,7 @@ export default function EditCustomizedDialogs({
                   type="submit"
                   fullWidth
                   color="secondary"
-                  className={classes.btnRegister}
+                  className={classes.btnLogin}
                 >
                   <SendIcon></SendIcon> Guardar cambios
                 </Button>

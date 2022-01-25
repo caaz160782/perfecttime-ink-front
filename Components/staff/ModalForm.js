@@ -153,9 +153,9 @@ export default function CustomizedDialogs({ classes, reload }) {
       <Snackbar
         open={alert.open}
         message={alert.message}
-        style={{ height: "100%" }}
+        //style={{ height: "100%" }}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

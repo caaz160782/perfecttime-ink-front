@@ -56,14 +56,14 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      //console.log("desmontar");
+      console.log("desmontar");
       // source.cancel();
     };
   }, [reload]);
 
   return (
     <div>
-      <Container align="center" maxWidth={"600"}>
+      <Container align="center" maxWidth={600}>
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>
@@ -82,5 +82,12 @@ const OneStaff = () => {
     </div>
   );
 };
+
+//  export async function getServerSideProps (ctx) {
+//      const clienteConsulta = await clienteAxios.get(`/staff/${ctx.query.id}`);
+//      const staffMember = clienteConsulta.data.listUser.userFound;
+//      console.log(clienteConsulta.data.listUser.userFound);
+//     return { props: { staffMember } };
+//   };
 
 export default OneStaff;

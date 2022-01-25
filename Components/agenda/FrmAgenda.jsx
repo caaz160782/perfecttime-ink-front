@@ -2,11 +2,44 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Calendar from "../Calendar/Calendar";
 import clienteAxios from "../../utils/axios";
+import { useRouter } from "next/router";
+import { Snackbar } from "@mui/material";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
   const [config, setConfig] = useState({});
   const [reload, setReload] = useState("true");
+  const router = useRouter();
+  const paymentId = router.query.payment_id ? router.query.payment_id : "";
+
+  //const paymentStatus = router.query.status ? router.query.status : "";
+  // const reference = router.query.external_reference
+  //   ? router.query.external_reference
+  //   : "";
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
+  //console.log("id pago", paymentId, reload);
+  useEffect(() => {
+    if (paymentId !== "") {
+      clienteAxios
+        .post(`/feedback`, { paymentId })
+        .then((response) => {
+          console.log("=========", response);
+          setAlert({
+            open: true,
+            message:
+              "anticipo recibido, al recargar la pagina se reflejara en la agenda",
+            backgroundColor: "#519259",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [router]);
 
   useEffect(() => {
     if (reload) {
@@ -62,6 +95,15 @@ const FrmAgenda = () => {
 
     return (
       <div>
+        <Snackbar
+          open={alert.open}
+          // style={{ height: "100%" }}
+          message={alert.message}
+          ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={() => setAlert({ ...alert, open: false })}
+          autoHideDuration={4000}
+        />
         <Calendar
           timeToOpen={timeToOpen}
           timeToClose={timeToClose}

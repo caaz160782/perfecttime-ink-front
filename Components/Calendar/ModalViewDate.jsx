@@ -148,25 +148,55 @@ const ModalViewDate = ({
                 {infoDate?.description}
               </Typography>
             </Box>
-
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
               }}
             >
-              <Box>
-                <DeleteForeverIcon color="error" onClick={handleDeleteAlert} />
-                <AlertDelete
-                  openAlert={openAlert}
-                  setopenAlert={setopenAlert}
-                  texto={"¿Realmente deseas eliminar la cita?"}
-                  deleteDate={deleteDate}
-                />
-              </Box>
-              <Box>
-                <EditIcon color="secondary" onClick={handleEdit} />
+              {!infoDate.statusPago ? (
+                <form action="http://localhost:8000/checkout" method="post">
+                  <input
+                    type="hidden"
+                    name="price"
+                    value={infoDate.estimated}
+                  />
+                  <input type="hidden" name="reference" value={infoDate._id} />
+                  <input
+                    type="hidden"
+                    name="title"
+                    value={infoDate.description}
+                  />
+                  <Button variant="outlined" type="submit" value="pagar">
+                    PAGAR ANTICIPO
+                  </Button>
+                </form>
+              ) : (
+                <Typography>Anticipo pagado</Typography>
+              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Box>
+                  <DeleteForeverIcon
+                    color="error"
+                    onClick={handleDeleteAlert}
+                  />
+                  <AlertDelete
+                    openAlert={openAlert}
+                    setopenAlert={setopenAlert}
+                    texto={"¿Realmente deseas eliminar la cita?"}
+                    deleteDate={deleteDate}
+                  />
+                </Box>
+                <Box>
+                  <EditIcon color="secondary" onClick={handleEdit} />
+                </Box>
               </Box>
             </Box>
           </Box>

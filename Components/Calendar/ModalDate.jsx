@@ -169,7 +169,6 @@ const ModalDate = ({
         style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        // anchorOrigin={{ vertical, horizontal }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={1000}
       />

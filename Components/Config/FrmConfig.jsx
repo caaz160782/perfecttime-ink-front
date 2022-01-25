@@ -76,7 +76,7 @@ const FrmConfig = ({
           </Box>
         </Box>
         <Box>
-          <RemSelect handleChange={handleChange} valuesConfig={valuesConfig} />
+          {/* <RemSelect handleChange={handleChange} valuesConfig={valuesConfig} /> */}
         </Box>
         <Box sx={{ p: 1, m: 2 }}>
           <LoadingButton

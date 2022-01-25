@@ -41,6 +41,7 @@ const FrmLogin = () => {
       showPassword: !values.showPassword,
     });
   };
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -50,7 +51,6 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        //console.log(response);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,
@@ -117,7 +117,7 @@ const FrmLogin = () => {
         }}
       >
         <Typography component="h6" variant="h6">
-          Inicia Sesion{" "}
+          Inicia Sesión{" "}
         </Typography>
         <form id="form" onSubmit={handlerSubmit}>
           <Box>

@@ -42,7 +42,7 @@ const CardEdit = ({ dateSingle, iddate }) => {
       hourTatooFinish: format(finDateNew, "HH:mm"),
     });
   };
-  console.log(valuesModif);
+  //console.log(valuesModif);
 
   const handleChange = (prop) => (event) => {
     setValuesModif({ ...valuesModif, [prop]: event.target.value });

@@ -112,11 +112,7 @@ const FrmAgenda = () => {
       </div>
     );
   } else {
-    return (
-      <div>
-        <h1>no tiene autorizacion</h1>
-      </div>
-    );
+    return <div> </div>;
   }
 };
 export default FrmAgenda;

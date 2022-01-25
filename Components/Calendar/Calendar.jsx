@@ -9,7 +9,7 @@ import ModalDate from "./ModalDate";
 import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
-import { isBefore } from "date-fns";
+import { isSameDay, parseISO } from "date-fns";
 
 const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   const { auth } = useContext(AuthContext);
@@ -17,9 +17,12 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [fechaHoy, setFecha] = useState("");
   const [even, setEven] = useState([]);
+  const [evenByDay, setEvenByDay] = useState([]);
   const [valueDate, setValuDate] = useState({
-    id_studio: auth.infoStudio.id,
+    id_studio: auth?.infoStudio.id,
     picture: "",
+    hourTatooStart: "00:00",
+    hourTatooFinish: "00:00",
   });
   const [infoDate, setinfoDate] = useState({});
   const [alert, setAlert] = useState({
@@ -34,9 +37,24 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     const hoy = new Date(tiempoTranscurrido);
     fechaSelec.setHours(0, 0, 0, 0);
     hoy.setHours(0, 0, 0, 0);
+
     if (fechaSelec.getTime() >= hoy.getTime()) {
-      setValuDate({ ...valueDate, addDate: arg.dateStr });
+      if (even !== undefined) {
+        const pruv = even.filter((dates) =>
+          isSameDay(parseISO(dates.start), fechaSelec)
+        );
+        setEvenByDay(pruv);
+      }
+      setValuDate({
+        ...valueDate,
+        id_tatuador: "",
+        addDate: arg.dateStr,
+        start: arg.dateStr + "T" + timeToOpen,
+        hourTatooStart: timeToOpen,
+        hourTatooFinish: timeToOpen,
+      });
       setFecha(arg.dateStr);
+
       setOpen(true);
     } else {
       setAlert({
@@ -49,7 +67,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const HandleEventClick = (info) => {
-    console.log(info);
     let dateTatooInfo = {};
     dateTatooInfo = {
       ...dateTatooInfo,
@@ -61,9 +78,13 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       id_cliente: info.event.extendedProps.id_cliente,
       id_size: info.event.extendedProps.id_size,
       id_studio: info.event.extendedProps.id_studio,
-      id_tatuador: info.event.extendedProps.id_tatuador,
+      id_tatuador: info.event.extendedProps._id,
+      name: info.event.extendedProps.id_tatuador.name,
+      lastName: info.event.extendedProps.id_tatuador.lastName,
       statusPago: info.event.extendedProps.statusPago,
       tipoTatoo: info.event.extendedProps.tipoTatoo,
+      hourTatooStart: info.event.extendedProps.hourTatooStart,
+      hourTatooFinish: info.event.extendedProps.hourTatooFinish,
       title: info.event.title,
       _id: info.event.extendedProps._id,
       end: info.event.end,
@@ -72,6 +93,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       startStr: info.event.startStr,
     };
     setinfoDate(dateTatooInfo);
+
     setOpenViewModal(true);
   };
 
@@ -118,12 +140,15 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         <ModalDate
           open={open}
           setOpen={setOpen}
+          evenByDay={evenByDay}
           fechaHoy={fechaHoy}
           setValuDate={setValuDate}
           setOpenViewModal={setOpenViewModal}
           valueDate={valueDate}
           cargaDates={cargaDates}
           setinfoDate={setinfoDate}
+          timeToOpen={timeToOpen}
+          timeToClose={timeToClose}
         />
       </div>
       <div>
@@ -205,6 +230,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         //eventTextColor="#378006"
         //eventDurationEditable={true}
         //
+        //editable={true}
       />
     </div>
   );

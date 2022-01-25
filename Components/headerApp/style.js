@@ -156,9 +156,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("lg")]: {
       marginLeft: "10px",
     },
-    "&:hover": {
-      textDecoration: `none`,
-    },
   },
   activeAdmon: {
     color: "#fff",

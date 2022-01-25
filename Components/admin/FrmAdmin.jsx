@@ -79,7 +79,7 @@ const FrmAdmin = () => {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <Box>
       <Snackbar
         open={alert.open}
         style={{ height: "100%" }}
@@ -176,7 +176,7 @@ const FrmAdmin = () => {
           </div>
         </form>
       </Box>
-    </div>
+    </Box>
   );
 };
 

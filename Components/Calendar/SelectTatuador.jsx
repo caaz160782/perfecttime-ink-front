@@ -29,7 +29,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 230 }}>
+      <FormControl sx={{ width: "26ch" }}>
         <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
           size="small"
@@ -45,7 +45,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
           </MenuItem>
           {tatuadorValue.map((t) => (
             <MenuItem key={t._id} value={t._id}>
-              {t.name}
+              {t.name} {t.lastName}
             </MenuItem>
           ))}
         </Select>

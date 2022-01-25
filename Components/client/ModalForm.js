@@ -111,7 +111,8 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("email", user.email);
-    formData.append("password", user.password);
+    //formData.append("password", user.password);
+    formData.append("password", "");
     formData.append("picture", archivo);
     formData.append("idStudio", idStudio);
 
@@ -210,7 +211,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   size="small"
                   fullWidth
                   id="picture"
-                  label="picture"
+                  // label="picture"
                   name="picture"
                   inputProps={{ type: "file" }}
                   onChange={leerArchivo}
@@ -265,7 +266,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                 ></TextField>
               </ListItem>
               <ListItem>
-                <TextField
+                {/* <TextField
                   required
                   size="small"
                   id="password"
@@ -277,7 +278,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
                   onChange={actualizarState}
-                ></TextField>
+                ></TextField> */}
               </ListItem>
               <ListItem>
                 <Button

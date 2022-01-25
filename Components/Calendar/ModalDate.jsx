@@ -74,8 +74,10 @@ const ModalDate = ({
       );
       const finDate = tatoo.length > 0 ? tatoo.pop() : {};
       if (Object.keys(finDate).length !== 0) {
+        console.log(finDate);
         const newDateEqualDay = addHours(parseISO(finDate.end), 1);
         const NewDareFinhish = addHours(parseISO(finDate.end), 2);
+        console.log("_______________", newDateEqualDay);
         setValuDate({
           ...valueDate,
           id_tatuador: event.target.value,

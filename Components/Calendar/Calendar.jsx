@@ -11,7 +11,13 @@ import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { isSameDay, parseISO } from "date-fns";
 
-const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
+const Calendar = ({
+  timeToOpen,
+  timeToClose,
+  dayNotAvailables,
+  reloadDate,
+  setReloadDate,
+}) => {
   const { auth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
@@ -120,11 +126,14 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       console.log(error);
     }
   };
-
+  console.log("reload antes", reloadDate);
   useEffect(() => {
-    cargaDates();
-  }, []);
-
+    if (reloadDate) {
+      cargaDates();
+      setReloadDate(false);
+    }
+  }, [reloadDate]);
+  console.log("reload despues", reloadDate);
   return (
     <div>
       <Snackbar

@@ -4,6 +4,7 @@ import Calendar from "../Calendar/Calendar";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import { Snackbar } from "@mui/material";
+import { route } from "next/dist/server/router";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
@@ -12,6 +13,7 @@ const FrmAgenda = () => {
   const router = useRouter();
   const paymentId = router.query.payment_id ? router.query.payment_id : "";
 
+  const [reloadDate, setReloadDate] = useState(true);
   //const paymentStatus = router.query.status ? router.query.status : "";
   // const reference = router.query.external_reference
   //   ? router.query.external_reference
@@ -28,10 +30,11 @@ const FrmAgenda = () => {
         .post(`/feedback`, { paymentId })
         .then((response) => {
           console.log("=========", response);
+          setReloadDate(true);
+          // router.push("/agenda");
           setAlert({
             open: true,
-            message:
-              "anticipo recibido, al recargar la pagina se reflejara en la agenda",
+            message: "anticipo recibido",
             backgroundColor: "#519259",
           });
         })
@@ -108,6 +111,8 @@ const FrmAgenda = () => {
           timeToOpen={timeToOpen}
           timeToClose={timeToClose}
           dayNotAvailables={dayNum}
+          reloadDate={reloadDate}
+          setReloadDate={setReloadDate}
         />
       </div>
     );

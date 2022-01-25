@@ -22,7 +22,7 @@ const EstudiosInscritos = ({ estudios }) => {
         <Grid spacing={4} container>
           {/* <Grid item md={4}></Grid> */}
           {estudios.map((x) => (
-            <CardStudio study={x}></CardStudio>
+            <CardStudio key={x._id} study={x}></CardStudio>
           ))}
         </Grid>
       </Box>

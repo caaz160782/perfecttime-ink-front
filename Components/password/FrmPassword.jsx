@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Container,
   Typography,
   Box,
   FormControl,
@@ -94,14 +95,14 @@ const FrmPassword = ({ hash }) => {
     } else {
       setAlert({
         open: true,
-        message: "Las contraseñas deben ser iguales",
+        message: "El password debe ser el mismo",
         backgroundColor: "#DD4A48",
       });
     }
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <Container fixed>
       <Snackbar
         open={alert.open}
         style={{ height: "100%" }}
@@ -113,94 +114,123 @@ const FrmPassword = ({ hash }) => {
       <Box
         sx={{
           display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
           textAlign: "center",
           flexWrap: "wrap",
           p: 1,
-          //m: 15,
         }}
       >
-        <Typography component="h6" variant="h6">
-          Ingresa Password{" "}
-        </Typography>
-        <form id="form" onSubmit={handlerSubmit}>
-          <Box>
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="msg-password">Password</InputLabel>
-              <OutlinedInput
-                id="msg-password"
-                type={valuesPsw.showPassword ? "text" : "password"}
-                value={valuesPsw.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {valuesPsw.showPassword ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                required
-              />
-            </FormControl>
+        <Box
+          sx={{
+            border: 1,
+            borderRadius: 2,
+            borderColor: "secondary.main",
+            boxShadow: 1,
+            width: 350,
+            minWidth: 200,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "secondary.main",
+              borderRadiusTop: 2,
+              height: 50,
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            <Typography sx={{ m: 1 }} component="h6" variant="h6">
+              Ingresa Password{" "}
+            </Typography>
           </Box>
           <Box>
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="msg-passwordR">Re-Password</InputLabel>
-              <OutlinedInput
-                id="msg-passwordR"
-                type={valuesPswR.showPasswordR ? "text" : "password"}
-                value={valuesPswR.passwordR}
-                onChange={handleChange("passwordR")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPasswordR}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {valuesPswR.showPasswordR ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                required
-              />
-            </FormControl>
+            <form id="form" onSubmit={handlerSubmit}>
+              <Box sx={{ m: 4 }}>
+                <Box sx={{ mt: 3 }}>
+                  <FormControl sx={{ width: "30ch" }} variant="outlined">
+                    <InputLabel htmlFor="msg-password">Password</InputLabel>
+                    <OutlinedInput
+                      id="msg-password"
+                      type={valuesPsw.showPassword ? "text" : "password"}
+                      value={valuesPsw.password}
+                      onChange={handleChange("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {valuesPsw.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      required
+                    />
+                  </FormControl>
+                </Box>
+                <Box sx={{ mt: 3 }}>
+                  <FormControl sx={{ width: "30ch" }} variant="outlined">
+                    <InputLabel htmlFor="msg-passwordR">Re-Password</InputLabel>
+                    <OutlinedInput
+                      id="msg-passwordR"
+                      type={valuesPswR.showPasswordR ? "text" : "password"}
+                      value={valuesPswR.passwordR}
+                      onChange={handleChange("passwordR")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPasswordR}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {valuesPswR.showPasswordR ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      required
+                    />
+                  </FormControl>
+                </Box>
+                <Box sx={{ mt: 3 }}>
+                  <LoadingButton
+                    sx={{ width: "34ch" }}
+                    endIcon={<SendIcon />}
+                    loadingPosition="end"
+                    variant="contained"
+                    type="submit"
+                  >
+                    Enviar
+                  </LoadingButton>
+                </Box>
+                <Box sx={{ mt: 3 }}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    El password debe contener 8 caracteres mínimo (números,
+                    mayúsculas, minúsculas y un carácter especial.)
+                  </Typography>
+                </Box>
+              </Box>
+            </form>
           </Box>
-          <Box sx={{ m: 1 }}>
-            <div>
-              El password debe contener min 8 caracteres numeros mayusculas y
-              minisculas un caracter especial
-            </div>
-          </Box>
-          <div>
-            <LoadingButton
-              endIcon={<SendIcon />}
-              loadingPosition="end"
-              variant="contained"
-              type="submit"
-            >
-              Enviar
-            </LoadingButton>
-          </div>
-        </form>
+        </Box>
       </Box>
-    </div>
+    </Container>
   );
 };
 

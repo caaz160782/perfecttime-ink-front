@@ -95,7 +95,7 @@ const FrmAdmin = () => {
     } else {
       setAlert({
         open: true,
-        message: "Las contraseñas deben ser iguales",
+        message: "El password debe coincidir en ambos campos",
         backgroundColor: "#DD4A48",
       });
       setLoading(false);
@@ -115,119 +115,149 @@ const FrmAdmin = () => {
       <Box
         sx={{
           display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
           textAlign: "center",
           flexWrap: "wrap",
           p: 1,
         }}
       >
-        <Typography component="h6" variant="h6">
-          Crea Cuenta{" "}
-        </Typography>
-        <form id="form" onSubmit={handlerSubmit}>
-          <div>
-            <TextField
-              sx={{ m: 1, width: "25ch" }}
-              size="small"
-              required
-              id="name"
-              label="Nombre"
-              name="name"
-              inputProps={{ type: "text" }}
-              onChange={handleChange("name")}
-            ></TextField>
-          </div>
-          <div>
-            <TextField
-              sx={{ m: 1, width: "25ch" }}
-              size="small"
-              required
-              id="Apellido"
-              label="Apellido"
-              name="lastName"
-              inputProps={{ type: "text" }}
-              onChange={handleChange("lastName")}
-            ></TextField>
-          </div>
-          <div>
-            <TextField
-              required
-              sx={{ m: 1, width: "25ch" }}
-              size="small"
-              id="email"
-              label="Email"
-              name="email"
-              inputProps={{ type: "email" }}
-              onChange={handleChange("email")}
-            ></TextField>
-          </div>
-          <div>
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="msg-password">Password</InputLabel>
-              <OutlinedInput
-                id="msg-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                required
-              />
-            </FormControl>
-          </div>
-
-          <div>
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="msg-passwordR">Re-Password</InputLabel>
-              <OutlinedInput
-                id="msg-passwordR"
-                type={valuesPswR.showPasswordR ? "text" : "password"}
-                value={valuesPswR.passwordR}
-                onChange={handleChange("passwordR")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPasswordR}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {valuesPswR.showPasswordR ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                required
-              />
-            </FormControl>
-          </div>
-          <div>
-            <LoadingButton
-              endIcon={<SendIcon />}
-              loading={loading}
-              loadingPosition="end"
-              variant="contained"
-              type="submit"
-            >
-              Crear Cuenta
-            </LoadingButton>
-          </div>
-        </form>
+        <Box
+          sx={{
+            border: 1,
+            borderRadius: 2,
+            borderColor: "secondary.main",
+            boxShadow: 1,
+            width: 350,
+            minWidth: 200,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "secondary.main",
+              borderRadiusTop: 2,
+              height: 50,
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            <Typography sx={{ m: 1 }} component="h6" variant="h6">
+              Crea una Cuenta{" "}
+            </Typography>
+          </Box>
+          <Box>
+            <form id="form" onSubmit={handlerSubmit}>
+              <Box sx={{ m: 4 }}>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "30ch" }}
+                    required
+                    id="name"
+                    label="Nombre"
+                    name="name"
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("name")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "30ch" }}
+                    required
+                    id="Apellido"
+                    label="Apellido"
+                    name="lastName"
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("lastName")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    required
+                    sx={{ width: "30ch" }}
+                    id="email"
+                    label="Email"
+                    name="email"
+                    inputProps={{ type: "email" }}
+                    onChange={handleChange("email")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <FormControl sx={{ width: "30ch" }} variant="outlined">
+                    <InputLabel htmlFor="msg-password">Password</InputLabel>
+                    <OutlinedInput
+                      id="msg-password"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password}
+                      onChange={handleChange("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      required
+                    />
+                  </FormControl>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <FormControl sx={{ width: "30ch" }} variant="outlined">
+                    <InputLabel htmlFor="msg-passwordR">Re-Password</InputLabel>
+                    <OutlinedInput
+                      id="msg-passwordR"
+                      type={valuesPswR.showPasswordR ? "text" : "password"}
+                      value={valuesPswR.passwordR}
+                      onChange={handleChange("passwordR")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPasswordR}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {valuesPswR.showPasswordR ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      required
+                    />
+                  </FormControl>
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <LoadingButton
+                    sx={{ width: "34ch" }}
+                    endIcon={<SendIcon />}
+                    loading={loading}
+                    loadingPosition="end"
+                    variant="contained"
+                    type="submit"
+                  >
+                    Crear Cuenta
+                  </LoadingButton>
+                </Box>
+              </Box>
+            </form>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

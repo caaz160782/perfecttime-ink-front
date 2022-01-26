@@ -7,7 +7,6 @@ import { Typography, Container, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 
@@ -37,11 +36,8 @@ const OneStaff = () => {
     },
   }));
   const classes = useStyles();
-
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
   const { id } = router.query;
 
@@ -50,14 +46,11 @@ const OneStaff = () => {
 
   useEffect(() => {
     if (reload) {
-      //console.log(id);
       const consultarAPI = async () => {
         try {
           const respuesta = await clienteAxios.get(`/clientAdmin/${id}`, {
-            // headers: { apitoken: valToken.token },
             headers: { apitoken: auth?.token },
           });
-          //  console.log("respuesta*************", respuesta.data.listClient);
           setStaffMember(respuesta.data.listClient.clientId);
           setLoading(false);
         } catch (error) {
@@ -94,12 +87,4 @@ const OneStaff = () => {
     </div>
   );
 };
-
-//  export async function getServerSideProps (ctx) {
-//      const clienteConsulta = await clienteAxios.get(`/staff/${ctx.query.id}`);
-//      const staffMember = clienteConsulta.data.listUser.userFound;
-//      console.log(clienteConsulta.data.listUser.userFound);
-//     return { props: { staffMember } };
-//   };
-
 export default OneStaff;

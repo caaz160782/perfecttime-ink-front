@@ -66,7 +66,7 @@ const FrmConfig = ({
         <Box sx={{ p: 1, m: 1 }}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
-              sx={{ m: 1, width: "175px" }}
+              sx={{ m: 1, width: "30ch" }}
               id="logo"
               name="logo"
               inputProps={{ type: "file" }}
@@ -76,7 +76,7 @@ const FrmConfig = ({
           </Box>
         </Box>
         <Box>
-          <RemSelect handleChange={handleChange} valuesConfig={valuesConfig} />
+          {/* <RemSelect handleChange={handleChange} valuesConfig={valuesConfig} /> */}
         </Box>
         <Box sx={{ p: 1, m: 2 }}>
           <LoadingButton

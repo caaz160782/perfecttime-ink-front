@@ -47,11 +47,8 @@ const FrmAgenda = () => {
   useEffect(() => {
     if (reload) {
       clienteAxios
-        .get(`/findStudiSetting/${auth.infoStudio.id}`, {
-          //   headers: { apitoken: auth.token },
-        })
+        .get(`/findStudiSetting/${auth.infoStudio.id}`, {})
         .then((response) => {
-          //console.log(2, response);
           setConfig(response.data.payload);
         })
         .catch((error) => {
@@ -65,7 +62,6 @@ const FrmAgenda = () => {
     setReload(false);
   }, []);
 
-  // if (auth.token !== "" && Object.keys(config).length !== 0) {
   if (Object.keys(config).length !== 0) {
     const { timeToOpen, timeToClose, dayNotAvailables } = config;
     let dayNum = [];
@@ -100,7 +96,7 @@ const FrmAgenda = () => {
       <div>
         <Snackbar
           open={alert.open}
-          // style={{ height: "100%" }}
+          style={{ height: "100%" }}
           message={alert.message}
           ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}

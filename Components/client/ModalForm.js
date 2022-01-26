@@ -16,7 +16,6 @@ import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -58,10 +57,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes, reload }) {
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
-  // const [valStudio] = useLocalStorage("studioVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -83,18 +79,13 @@ export default function CustomizedDialogs({ classes, reload }) {
   const initialForm = {
     name: "",
     lastName: "",
-    //  Role: "Cliente",
     email: "",
     password: "",
-    phoneHome: "",
     age: "",
-    // idStudio: auth.infoStudio.id,
-    // idStudio: "61df650efc14abb6d4c68ecf",
-    // curp: "",
     // rfc: " ",
     phonePersonal: "",
   };
-  const [user, actualizarState, reset, setValues] = useForm(initialForm);
+  const [user, actualizarState, reset] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -108,10 +99,11 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("lastName", user.lastName);
     formData.append("age", user.age);
     formData.append("Role", "Cliente");
-    formData.append("phoneHome", user.phoneHome);
+    //formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("email", user.email);
-    formData.append("password", user.password);
+    //formData.append("password", user.password);
+    formData.append("password", "");
     formData.append("picture", archivo);
     formData.append("idStudio", idStudio);
 
@@ -120,15 +112,14 @@ export default function CustomizedDialogs({ classes, reload }) {
       .post("/clientAdmin", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          //  apitoken: valToken.token,
           apitoken: auth.token,
         },
       })
       .then((respuesta) => {
-        console.log(respuesta);
+        //console.log(respuesta);
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#4BB543",
         });
 
@@ -136,7 +127,6 @@ export default function CustomizedDialogs({ classes, reload }) {
           console.log("peticion ok");
           reload();
         }, 3000);
-
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
@@ -210,7 +200,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   size="small"
                   fullWidth
                   id="picture"
-                  label="picture"
+                  // label="picture"
                   name="picture"
                   inputProps={{ type: "file" }}
                   onChange={leerArchivo}
@@ -228,7 +218,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   fullWidth
@@ -239,7 +229,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <TextField
                   required
@@ -264,7 +254,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   size="small"
@@ -277,8 +267,8 @@ export default function CustomizedDialogs({ classes, reload }) {
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
                   onChange={actualizarState}
-                ></TextField>
-              </ListItem>
+                ></TextField> 
+              </ListItem>*/}
               <ListItem>
                 <Button
                   variant="contained"
@@ -287,13 +277,13 @@ export default function CustomizedDialogs({ classes, reload }) {
                   color="secondary"
                   //className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon> Register
+                  <SendIcon></SendIcon> Crear
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                <CloseIcon></CloseIcon> Close
+                <CloseIcon></CloseIcon> Cerrar
               </Button>
             </DialogActions>
           </form>

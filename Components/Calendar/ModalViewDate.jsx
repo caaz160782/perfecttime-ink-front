@@ -15,6 +15,8 @@ const ModalViewDate = ({
   setOpenViewModal,
   infoDate,
   cargaDates,
+  cargaDatesClient,
+  cargaDatesStaff,
 }) => {
   const style = {
     position: "absolute",
@@ -81,14 +83,29 @@ const ModalViewDate = ({
         })
         .then((response) => {
           if (response.data.ok) {
-            cargaDates();
+            if (auth.infoUser.rol === "Administrador") {
+              cargaDates();
+            }
+            if (auth.infoUser.rol === "Cliente") {
+              cargaDatesClient();
+            }
+            if (auth.infoUser.rol === "tatuador") {
+              cargaDatesStaff();
+            }
+
             setOpenViewModal(false);
             setopenAlert(false);
           }
         })
         .catch((error) => {
           if (error.response) {
-            console.log(error.response.data);
+            //console.log(error.response.data);
+            setAlert({
+              open: true,
+              message: "no se pueden Elimar la cita",
+              backgroundColor: "#DD4A48",
+              //#519259
+            });
           } else {
             console.log(error);
           }
@@ -103,6 +120,7 @@ const ModalViewDate = ({
       quality || 75
     }`;
   };
+  //console.log(auth);
 
   return (
     <div>
@@ -168,9 +186,13 @@ const ModalViewDate = ({
                     name="title"
                     value={infoDate.description}
                   />
-                  <Button variant="outlined" type="submit" value="pagar">
-                    PAGAR ANTICIPO
-                  </Button>
+                  {auth?.infoUser.rol === "Cliente" ? (
+                    <Button variant="outlined" type="submit" value="pagar">
+                      PAGAR ANTICIPO
+                    </Button>
+                  ) : (
+                    ""
+                  )}
                 </form>
               ) : (
                 <Typography>Anticipo pagado</Typography>

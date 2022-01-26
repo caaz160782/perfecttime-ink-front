@@ -3,9 +3,6 @@ import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/client/CardStaff";
 import { useState, useEffect, useContext } from "react";
 import { Typography, Container, Button, Link } from "@mui/material";
-import NextLink from "next/link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 

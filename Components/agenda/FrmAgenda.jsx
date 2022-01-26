@@ -8,6 +8,7 @@ import { route } from "next/dist/server/router";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
+  console.log(auth);
   const [config, setConfig] = useState({});
   const [reload, setReload] = useState("true");
   const router = useRouter();

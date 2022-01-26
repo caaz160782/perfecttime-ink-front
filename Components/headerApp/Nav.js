@@ -88,7 +88,7 @@ export const Nav = ({ logOut }) => {
           <NextLink href="/agenda" passHref>
             <Link className={classes.tab}>Agenda</Link>
           </NextLink>
-          <NextLink href="/clientAdmin" passHref>
+          <NextLink href="/client" passHref>
             <Link className={classes.tab}>Clientes</Link>
           </NextLink>
         </>

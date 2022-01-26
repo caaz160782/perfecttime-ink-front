@@ -105,6 +105,8 @@ const Calendar = ({
   };
 
   const cargaDates = async () => {
+    console.log("acaaaaaaaaaaaaaaaaaa");
+
     try {
       clienteAxios
         .get(`/dateTatooByStudio/${auth.infoStudio.id}`, {
@@ -190,20 +192,23 @@ const Calendar = ({
   };
 
   useEffect(() => {
-    switch (auth.infoUser.rol) {
-      case "Administrador":
-        cargaDates();
-        break;
-      case "Cliente":
-        cargaDatesClient();
-        break;
-      case "tatuador":
-        cargaDatesStaff();
-        break;
-      default:
-        console.log("example");
+    if (reloadDate) {
+      switch (auth.infoUser.rol) {
+        case "Administrador":
+          cargaDates();
+          break;
+        case "Cliente":
+          cargaDatesClient();
+          break;
+        case "tatuador":
+          cargaDatesStaff();
+          break;
+        default:
+          console.log("example");
+      }
+      setReloadDate(false);
     }
-  }, [auth.infoUser.rol]);
+  }, [auth.infoUser.rol, reloadDate]);
 
   return (
     <div>

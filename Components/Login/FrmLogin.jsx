@@ -51,6 +51,7 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
+        console.log("-------", response.data);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,

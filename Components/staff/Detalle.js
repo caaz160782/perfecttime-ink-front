@@ -10,14 +10,17 @@ import {
 } from "@mui/material";
 import NextLink from "next/link";
 import EditCustomizedDialogs from "./EditModalForm";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Detalle = ({ staffMember, reload, classes }) => {
-  console.log(staffMember);
   return (
-    <>
+    <div style={{ marginTop: "30px", marginBotton: "0px" }}>
       <NextLink href="/staff" passHref>
         <Link>
-          <Button color="primary"> IR ATRAS</Button>
+          <Button color="primary">
+            {" "}
+            <ArrowBackIcon /> IR ATRAS
+          </Button>
         </Link>
       </NextLink>
       <Grid container spacing={1}>
@@ -32,7 +35,7 @@ const Detalle = ({ staffMember, reload, classes }) => {
           <img
             height="400"
             width={"400"}
-            src={`http://localhost:8000/${staffMember.picture}`}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
           />
         </Grid>
         <Grid item md={3} xs={12}>
@@ -67,15 +70,6 @@ const Detalle = ({ staffMember, reload, classes }) => {
                 {staffMember.phoneHome}
               </Typography>
             </ListItem>
-
-            {/* <ListItem>
-              <Typography>
-                Rating: {product.rating} stars ({product.numReviews} reviews)
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Typography> Description: {product.description}</Typography>
-            </ListItem> */}
           </List>
         </Grid>
         <Grid item md={3} xs={12}>
@@ -89,19 +83,19 @@ const Detalle = ({ staffMember, reload, classes }) => {
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography>{`${staffMember.name} ${staffMember.lastName}`}</Typography>
+                    <Typography>{`${staffMember.name} `}</Typography>
                   </Grid>
                 </Grid>
               </ListItem>
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Numero citas:</Typography>
+                    <Typography style={{ fontWeight: "600" }}>
+                      Apellidos:
+                    </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    {/* <Typography>
-                      {product.countInStock > 0 ? "In stock" : "Unavailable"}
-                    </Typography> */}
+                    <Typography>{`${staffMember.lastName} `}</Typography>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -124,7 +118,7 @@ const Detalle = ({ staffMember, reload, classes }) => {
           </Card>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

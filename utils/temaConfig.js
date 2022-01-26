@@ -40,9 +40,9 @@ const theme = createTheme({
     //   fontWeight: 700,
     // },
   },
-  fuente: {
-    fontFamily: "Raleway",
-  },
+  // fuente: {
+  //   fontFamily: "Raleway",
+  // },
 });
 
 export default theme;

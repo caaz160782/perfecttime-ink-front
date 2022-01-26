@@ -6,6 +6,7 @@ import {
   IconButton,
   styled,
   Button,
+  Snackbar,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -75,9 +76,9 @@ const FrmStudio = ({
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data);
+          console.log("ddddd", error.response.data);
         } else {
-          console.log(error);
+          console.log("dddd", error);
         }
       });
   };
@@ -88,7 +89,11 @@ const FrmStudio = ({
       postaCodeFind(valuesConfigStudio.postalCode);
     }
   }, [valuesConfigStudio.postalCode]);
-
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
   return (
     <Box
       sx={{
@@ -100,6 +105,14 @@ const FrmStudio = ({
         //m: 18,
       }}
     >
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <Typography component="h5" variant="h5">
         {title} Datos del Estudio
       </Typography>

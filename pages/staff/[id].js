@@ -16,11 +16,6 @@ const OneStaff = () => {
       textTransform: "none",
       fontSize: "1.4rem",
     },
-
-    spanes: {
-      // textTransform: "none",
-      //  fontSize: "0.8rem",
-    },
     foto: {
       border: "2px solid rgb(173, 173, 173)",
     },
@@ -57,14 +52,14 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      //console.log("desmontar");
+      console.log("desmontar");
       // source.cancel();
     };
   }, [reload]);
 
   return (
     <div>
-      <Container align="center" maxWidth={"600"}>
+      <Container align="center" maxWidth="600">
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>
@@ -79,14 +74,6 @@ const OneStaff = () => {
                 setReload(true);
               }}
             ></Detalle>
-            {/* <MediaCard
-              atras={"/staff"}
-              classes={classes}
-              staffMember={staffMember}
-              reload={() => {
-                setReload(true);
-              }}
-            ></MediaCard> */}
           </>
         )}
       </Container>

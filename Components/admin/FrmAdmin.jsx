@@ -66,10 +66,8 @@ const FrmAdmin = () => {
         if (error.response) {
           setAlert({
             open: true,
-            message: error.response.data.errors[0].msg,
-            //message: "No se pueden generar citas en dias anteriores",
+            message: error.response.data.error,
             backgroundColor: "#DD4A48",
-            //#519259
           });
           console.log(error.response.data);
         } else {
@@ -82,10 +80,9 @@ const FrmAdmin = () => {
     <Box>
       <Snackbar
         open={alert.open}
-        style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        // anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

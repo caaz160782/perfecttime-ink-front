@@ -113,28 +113,11 @@ export const Nav = ({ logOut }) => {
         </Link>
       </NextLink>
       <Linkes></Linkes>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginLeft: "30px",
-        }}
-      >
+      <div className={classes.admon} style={{}}>
         {rol === "Administrador" ? (
           <>
             <SupervisorAccountIcon className={classes.admonIcon} />
-            <NextLink href="/info-personal" passHref>
-              <Link
-                className={
-                  router.pathname == "/info-personal"
-                    ? classes.admon
-                    : classes.admon
-                }
-              >
-                Administrador
-              </Link>
-            </NextLink>
+            Administrador
           </>
         ) : (
           <>
@@ -156,17 +139,16 @@ export const Nav = ({ logOut }) => {
             ></img> */}
           </>
         )}
-
-        <Button
-          onClick={logOut}
-          className={classes.btn}
-          // variant="outlined"
-          color="secondary"
-        >
-          <LogoutIcon></LogoutIcon>
-          logout
-        </Button>
       </div>
+      <Button
+        onClick={logOut}
+        className={classes.btn}
+        // variant="outlined"
+        color="secondary"
+      >
+        <LogoutIcon></LogoutIcon>
+        logout
+      </Button>
     </div>
   );
 };

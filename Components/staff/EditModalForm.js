@@ -145,7 +145,7 @@ export default function EditCustomizedDialogs({
         style={{ color: "#fff" }}
         fullWidth
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={handleClickOpen}
       >
         {/* <EditIcon></EditIcon> */}

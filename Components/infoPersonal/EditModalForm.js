@@ -147,10 +147,9 @@ export default function EditCustomizedDialogs({
       </Button>
       <Snackbar
         open={alert.open}
-        style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />

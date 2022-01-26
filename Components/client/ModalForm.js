@@ -16,7 +16,6 @@ import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -58,10 +57,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes, reload }) {
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
-  // const [valStudio] = useLocalStorage("studioVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -83,13 +79,11 @@ export default function CustomizedDialogs({ classes, reload }) {
   const initialForm = {
     name: "",
     lastName: "",
-    //  Role: "Cliente",
     email: "",
     password: "",
     phoneHome: "",
     age: "",
-    // idStudio: auth.infoStudio.id,
-    // idStudio: "61df650efc14abb6d4c68ecf",
+    idStudio: auth.infoStudio.id,
     // curp: "",
     // rfc: " ",
     phonePersonal: "",
@@ -121,12 +115,11 @@ export default function CustomizedDialogs({ classes, reload }) {
       .post("/clientAdmin", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          //  apitoken: valToken.token,
           apitoken: auth.token,
         },
       })
       .then((respuesta) => {
-        console.log(respuesta);
+        //console.log(respuesta);
         setAlert({
           open: true,
           message: respuesta.data.message,
@@ -137,7 +130,6 @@ export default function CustomizedDialogs({ classes, reload }) {
           console.log("peticion ok");
           reload();
         }, 3000);
-
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })

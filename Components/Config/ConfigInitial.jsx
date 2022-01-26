@@ -51,7 +51,7 @@ const Config = () => {
       .then((response) => {
         const { status } = response.data;
         if (status) {
-          router.push("/agenda");
+          router.push("/staff");
         }
       })
       .catch((error) => {

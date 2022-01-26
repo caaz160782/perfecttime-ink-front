@@ -6,6 +6,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import ModalDate from "./ModalDate";
+import ModalDateTatuador from "./ModalDateTatuador";
+import ModalDateClient from "./ModalDateClient";
 import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
@@ -23,6 +25,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     picture: "",
     hourTatooStart: "00:00",
     hourTatooFinish: "00:00",
+    id_size: -1,
   });
   const [infoDate, setinfoDate] = useState({});
   const [alert, setAlert] = useState({
@@ -37,7 +40,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     const hoy = new Date(tiempoTranscurrido);
     fechaSelec.setHours(0, 0, 0, 0);
     hoy.setHours(0, 0, 0, 0);
-
     if (fechaSelec.getTime() >= hoy.getTime()) {
       if (even !== undefined) {
         const pruv = even.filter((dates) =>
@@ -54,7 +56,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         hourTatooFinish: timeToOpen,
       });
       setFecha(arg.dateStr);
-
       setOpen(true);
     } else {
       setAlert({
@@ -93,7 +94,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       startStr: info.event.startStr,
     };
     setinfoDate(dateTatooInfo);
-
     setOpenViewModal(true);
   };
 
@@ -104,7 +104,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
           headers: { apitoken: auth.token },
         })
         .then((response) => {
-          console.log(response.data.payload.dates);
           if (response.data.code) {
             setEven(response.data.payload.dates);
           }
@@ -121,9 +120,77 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     }
   };
 
+  const cargaDatesStaff = async () => {
+    try {
+      clienteAxios
+        .post(
+          `/staffDate/${auth.infoStudio.id}`,
+          { idStaff: auth.infoUser._id },
+          {
+            headers: { apitoken: auth.token },
+          }
+        )
+        .then((response) => {
+          if (response.data.code) {
+            setEven(response.data.payload.dates);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+          } else {
+            console.log(error);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cargaDatesClient = async () => {
+    try {
+      console.log(auth);
+      clienteAxios
+        .post(
+          `/clientDate/${auth.infoStudio.id}`,
+          { idClient: auth?.infoUser._id },
+          {
+            headers: { apitoken: auth.token },
+          }
+        )
+        .then((response) => {
+          if (response.data.code) {
+            //console.log(response.data.payload.dates);
+            setEven(response.data.payload.dates);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+          } else {
+            console.log(error);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    cargaDates();
-  }, []);
+    switch (auth.infoUser.rol) {
+      case "Administrador":
+        cargaDates();
+        break;
+      case "Cliente":
+        cargaDatesClient();
+        break;
+      case "tatuador":
+        cargaDatesStaff();
+        break;
+      default:
+        console.log("example");
+    }
+  }, [auth.infoUser.rol]);
 
   return (
     <div>
@@ -137,19 +204,57 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         autoHideDuration={1000}
       />
       <div>
-        <ModalDate
-          open={open}
-          setOpen={setOpen}
-          evenByDay={evenByDay}
-          fechaHoy={fechaHoy}
-          setValuDate={setValuDate}
-          setOpenViewModal={setOpenViewModal}
-          valueDate={valueDate}
-          cargaDates={cargaDates}
-          setinfoDate={setinfoDate}
-          timeToOpen={timeToOpen}
-          timeToClose={timeToClose}
-        />
+        {auth.infoUser.rol === "Administrador" ? (
+          <ModalDate
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDates={cargaDates}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
+        {auth.infoUser.rol === "tatuador" ? (
+          <ModalDateTatuador
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDatesStaff={cargaDatesStaff}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
+        {auth.infoUser.rol === "Cliente" ? (
+          <ModalDateClient
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDatesClient={cargaDatesClient}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
       </div>
       <div>
         <ModalViewDate
@@ -160,6 +265,8 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
           setinfoDate={setinfoDate}
           // valueDate={valueDate}
           cargaDates={cargaDates}
+          cargaDatesClient={cargaDatesClient}
+          cargaDatesStaff={cargaDatesStaff}
         />
       </div>
       <FullCalendar

@@ -13,7 +13,7 @@ const Layout = ({ title, children }) => {
   const contextValue = useContext(AuthContext);
   const { auth, logOut } = contextValue;
   const router = useRouter();
-  console.log(theme);
+  //console.log(theme);
 
   const [NavComponent, setNavComponent] = useState(() => <></>);
 

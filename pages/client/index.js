@@ -1,17 +1,10 @@
-import Layout from "../../Components/Layout";
 import CustomizedDialogs from "../../Components/client/ModalForm";
 import CustomPaginationActionsTable from "../../Components/client/Table";
-
 import { CircularProgress } from "@mui/material";
-
 import clienteAxios from "../../utils/axios";
-//import useStyles from "./style";
-import { useState, useEffect } from "react";
-
 import axios from "axios";
+import { useState, useEffect } from "react";
 import CustomizedInputBase from "../../Components/staff/Busqueda";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-
 import { makeStyles } from "@mui/styles";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
@@ -39,16 +32,12 @@ const Staff = () => {
     },
   }));
   const classes = useStyles();
-
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
   let source = axios.CancelToken.source();
   const [staff, setStaff] = useState([]);
   const [staffMentira, setStaffMentira] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
-  //let staffFirst = [];
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
@@ -72,8 +61,6 @@ const Staff = () => {
     if (reload) {
       setLoading(true);
       const consultarAPI = async () => {
-        //const idStudioStored = localStorage.getItem("userVal");
-        // const idStudio = JSON.parse(idStudioStored);
         //  console.log("respuesta de cleinte", auth.infoStudio.id);
         try {
           const respuesta = await clienteAxios.get(

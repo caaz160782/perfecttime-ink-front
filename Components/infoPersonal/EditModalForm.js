@@ -96,8 +96,7 @@ export default function EditCustomizedDialogs({
   };
   const [user, actualizarState, reset] = useForm(initialForm);
   //console.log("initialForm", initialForm);
-  console.log("rollll", auth.infoUser.rol);
-
+  //console.log("rollll", auth.infoUser.rol);
   //console.log("user", auth.infoUser.rol);
   const handlerSubmit = (e) => {
     e.preventDefault();

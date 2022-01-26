@@ -113,7 +113,6 @@ export default function EditCustomizedDialogs({
         headers: { apitoken: auth.token },
       })
       .then((respuesta) => {
-        console.log(respuesta.data.message);
         setAlert({
           open: true,
           message: respuesta.data.message,

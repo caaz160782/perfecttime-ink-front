@@ -139,8 +139,12 @@ const useStyles = makeStyles((theme) => ({
   },
   admon: {
     color: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    // marginLeft: "px",
     // marginLeft: "5px",
-    marginRight: "10px",
+    marginRight: "20px",
     [theme.breakpoints.down("lg")]: {
       marginLeft: "10px",
       marginRight: "10px",
@@ -152,7 +156,7 @@ const useStyles = makeStyles((theme) => ({
   },
   admonIcon: {
     color: "#fff",
-    marginLeft: "10px",
+    marginLeft: "40px",
     [theme.breakpoints.down("lg")]: {
       marginLeft: "10px",
     },

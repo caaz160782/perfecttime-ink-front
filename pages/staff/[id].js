@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/staff/CardStaff";
+import Detalle from "../../Components/staff/Detalle";
 import { Container, Button, Link } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@mui/styles";
@@ -14,11 +15,6 @@ const OneStaff = () => {
       color: "#fff",
       textTransform: "none",
       fontSize: "1.4rem",
-    },
-
-    spanes: {
-      // textTransform: "none",
-      //  fontSize: "0.8rem",
     },
     foto: {
       border: "2px solid rgb(173, 173, 173)",
@@ -56,27 +52,29 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      //console.log("desmontar");
+      console.log("desmontar");
       // source.cancel();
     };
   }, [reload]);
 
   return (
     <div>
-      <Container align="center" maxWidth={"600"}>
+      <Container align="center" maxWidth="600">
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>
           </div>
         ) : (
-          <MediaCard
-            atras={"/staff"}
-            classes={classes}
-            staffMember={staffMember}
-            reload={() => {
-              setReload(true);
-            }}
-          ></MediaCard>
+          <>
+            <Detalle
+              atras={"/staff"}
+              classes={classes}
+              staffMember={staffMember}
+              reload={() => {
+                setReload(true);
+              }}
+            ></Detalle>
+          </>
         )}
       </Container>
     </div>

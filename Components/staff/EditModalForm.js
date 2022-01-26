@@ -140,10 +140,18 @@ export default function EditCustomizedDialogs({
   };
 
   return (
-    <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        <EditIcon></EditIcon> Editar
+    <>
+      <Button
+        style={{ color: "#fff" }}
+        fullWidth
+        variant="contained"
+        color="secondary"
+        onClick={handleClickOpen}
+      >
+        {/* <EditIcon></EditIcon> */}
+        Editar
       </Button>
+
       <Snackbar
         open={alert.open}
         //  style={{ height: "100%" }}
@@ -297,6 +305,6 @@ export default function EditCustomizedDialogs({
           </form>
         </DialogContent>
       </BootstrapDialog>
-    </div>
+    </>
   );
 }

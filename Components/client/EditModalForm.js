@@ -61,7 +61,6 @@ export default function EditCustomizedDialogs({
   staffMember,
   reload,
 }) {
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
   //  console.log("staff", typeRol);
   //  const foto = staffMember.picture;
@@ -89,31 +88,27 @@ export default function EditCustomizedDialogs({
     // idRole: staffMember.idRole,
     picture: staffMember.picture,
     password: "",
-    //phoneHome: staffMember.phoneHome,
     age: staffMember.age,
     phonePersonal: staffMember.phonePersonal,
   };
   const [user, actualizarState, reset] = useForm(initialForm);
   //console.log("initialForm", initialForm);
   //console.log('user', user);
-  let ruta = role === "user" ? "clientModified" : "clientAdmin";
+  //let ruta = role === "user" ? "clientModified" : "clientAdmin";
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    // console.log(user);
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     //formData.append("idRole", "staff");
     formData.append("age", user.age);
-    // formData.append("rfc", user.rfc);
-    //formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("password", user.password);
     formData.append("picture", archivo);
 
     clienteAxios
-      .patch(`/${ruta}/${staffMember._id}`, formData, {
+      .patch(`/clientAdmin/${staffMember._id}`, formData, {
         // headers: { apitoken: valToken.token },
         headers: { apitoken: auth.token },
       })

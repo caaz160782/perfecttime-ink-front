@@ -54,12 +54,12 @@ export default function MediaCard({
             {`${staffMember.email} `}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <span style={{ fontWeight: 600 }} className={classes.spanes}>
+            {/* <span style={{ fontWeight: 600 }} className={classes.spanes}>
               <PhoneAndroidIcon></PhoneAndroidIcon> phone home:{" "}
             </span>
-            {`${staffMember.phoneHome} `}
+            {`${staffMember.phoneHome} `}  */}
             <span style={{ fontWeight: 600 }} className={classes.spanes}>
-              <LocalPhoneIcon></LocalPhoneIcon> phone personal:{" "}
+              <PhoneAndroidIcon></PhoneAndroidIcon> phone personal:{" "}
             </span>
             {`${staffMember.phonePersonal}`}
           </Typography>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
+import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
@@ -22,12 +23,11 @@ export default function MediaCard({
   classes,
   atras,
   reload,
-  role,
 }) {
   const { auth, guardarAuth } = useContext(AuthContext);
   //console.log("auth desde card", auth.infoUser);
-  console.log("clientt", staffMember);
-  console.log(role);
+  //console.log("clientt", staffMember);
+  //console.log(role);
 
   // let typeRol = {};
   // if (auth.infoUser.rol === "Cliente") {
@@ -36,59 +36,59 @@ export default function MediaCard({
   // }
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
-      <CardMedia>
-        <div className={classes.fotoContainer}>
-          <img
-            src={`http://localhost:8000/${staffMember.picture}`}
-            style={{ borderRadius: "50%" }}
-            className={classes.foto}
-          ></img>
-        </div>
-      </CardMedia>
-
-      <CardContent align="center">
-        <Typography gutterBottom variant="h5" component="div">
-          {`${staffMember.name} ${staffMember.lastName} `}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <span style={{ fontWeight: 600 }} className={classes.spanes}>
-            <MailOutlineIcon></MailOutlineIcon> Email:
-          </span>{" "}
-          {`${staffMember.email} `}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <span style={{ fontWeight: 600 }} className={classes.spanes}>
-            <PhoneAndroidIcon></PhoneAndroidIcon> phone home:{" "}
-          </span>
-          {`${staffMember.phoneHome} `}
-          <span style={{ fontWeight: 600 }} className={classes.spanes}>
-            <LocalPhoneIcon></LocalPhoneIcon> phone personal:{" "}
-          </span>
-          {`${staffMember.phonePersonal}`}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <span style={{ fontWeight: 600 }} className={classes.spanes}>
-            <PermIdentityIcon></PermIdentityIcon> Age:
-          </span>
-          {` ${staffMember.age}`}
-        </Typography>
-      </CardContent>
-      <CardActions align="center">
-        <div style={{ border: "" }}>
-          <EditCustomizedDialogs
-            staffMember={staffMember}
-            classes={classes}
-            reload={reload}
-            role={role}
-          ></EditCustomizedDialogs>
-          <NextLink href={atras} passHref>
+      <CardMedia
+        component= "img"
+        alt="foto"
+        height="auto"
+        image={`http://localhost:8000/${staffMember.picture}`}
+      />
+      <CardActionArea>
+        <CardContent align="center">
+          <Typography gutterBottom variant="h5" component="div">
+            {`${staffMember.name} ${staffMember.lastName} `}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <span style={{ fontWeight: 600 }} className={classes.spanes}>
+              <MailOutlineIcon></MailOutlineIcon> Email:
+            </span>{" "}
+            {`${staffMember.email} `}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {/* <span style={{ fontWeight: 600 }} className={classes.spanes}>
+              <PhoneAndroidIcon></PhoneAndroidIcon> phone home:{" "}
+            </span>
+            {`${staffMember.phoneHome} `}  */}
+            <span style={{ fontWeight: 600 }} className={classes.spanes}>
+              <PhoneAndroidIcon></PhoneAndroidIcon> phone personal:{" "}
+            </span>
+            {`${staffMember.phonePersonal}`}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <span style={{ fontWeight: 600 }} className={classes.spanes}>
+              <PermIdentityIcon></PermIdentityIcon> Age:
+            </span>
+            {` ${staffMember.age}`}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions 
+        style={{ 
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <NextLink href={atras} passHref>
             <Link className={classes.tab}>
               <Button color="primary">
                 <ArrowBackIcon></ArrowBackIcon> ATRAS
               </Button>
             </Link>
           </NextLink>
-        </div>
+          <EditCustomizedDialogs
+            staffMember={staffMember}
+            classes={classes}
+            reload={reload}
+          ></EditCustomizedDialogs>
       </CardActions>
     </Card>
   );

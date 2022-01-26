@@ -81,14 +81,11 @@ export default function CustomizedDialogs({ classes, reload }) {
     lastName: "",
     email: "",
     password: "",
-    phoneHome: "",
     age: "",
-    idStudio: auth.infoStudio.id,
-    // curp: "",
     // rfc: " ",
     phonePersonal: "",
   };
-  const [user, actualizarState, reset, setValues] = useForm(initialForm);
+  const [user, actualizarState, reset] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +99,7 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("lastName", user.lastName);
     formData.append("age", user.age);
     formData.append("Role", "Cliente");
-    formData.append("phoneHome", user.phoneHome);
+    //formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("email", user.email);
     //formData.append("password", user.password);
@@ -122,7 +119,7 @@ export default function CustomizedDialogs({ classes, reload }) {
         //console.log(respuesta);
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#4BB543",
         });
 
@@ -221,7 +218,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   fullWidth
@@ -232,7 +229,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <TextField
                   required
@@ -257,8 +254,8 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
-                {/* <TextField
+              {/* <ListItem>
+                <TextField
                   required
                   size="small"
                   id="password"
@@ -270,8 +267,8 @@ export default function CustomizedDialogs({ classes, reload }) {
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
                   onChange={actualizarState}
-                ></TextField> */}
-              </ListItem>
+                ></TextField> 
+              </ListItem>*/}
               <ListItem>
                 <Button
                   variant="contained"
@@ -280,13 +277,13 @@ export default function CustomizedDialogs({ classes, reload }) {
                   color="secondary"
                   //className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon> Register
+                  <SendIcon></SendIcon> Crear
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                <CloseIcon></CloseIcon> Close
+                <CloseIcon></CloseIcon> Cerrar
               </Button>
             </DialogActions>
           </form>

@@ -1,32 +1,23 @@
-import Layout from "../../Components/Layout";
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
-import EditCustomizedDialogs from "../../Components/staff/EditModalForm";
 import MediaCard from "../../Components/client/CardStaff";
+import { useState, useEffect, useContext } from "react";
 import { Typography, Container, Button, Link } from "@mui/material";
-import NextLink from "next/link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 
 import { AuthContext } from "../../Context/AuthContext";
-import { useContext } from "react";
 
 const OneStaff = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
       color: "#fff",
-      fontFamily: "Pacifico",
       textTransform: "none",
-      fontSize: "1.6rem",
-    },
-    imgBack: {
-      border: "3px solid red",
+      fontSize: "1.4rem",
     },
     spanes: {
-      textTransform: "none",
-      fontSize: "0.8rem",
+    // textTransform: "none",
+    // fontSize: "0.8rem",
     },
     foto: {
       border: "2px solid rgb(173, 173, 173)",
@@ -64,11 +55,11 @@ const OneStaff = () => {
       // console.log("desmontar");
       // source.cancel();
     };
-  }, []);
+  }, [reload]);
 
   return (
     <div>
-      <Container align="center" maxWidth={600}>
+      <Container align="center" maxWidth={"600"}>
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>
@@ -87,4 +78,5 @@ const OneStaff = () => {
     </div>
   );
 };
+
 export default OneStaff;

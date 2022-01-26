@@ -28,7 +28,9 @@ import { useState, useContext } from "react";
 //import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 import { set } from "date-fns";
-import Switches from "../staff/SwitchStatus";
+import AlertDialog from "./Alerta";
+import AlertDeleteTable from "./AlertaEliminarTabla";
+
 function TablePaginationActions(props) {
   // const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -144,12 +146,13 @@ export default function CustomPaginationActionsTable({
       .then((respuesta) => {
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
+          fontWeight: "500",
         });
         setTimeout(() => {
           reload();
-        }, 3000);
+        }, 4000);
 
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
@@ -173,8 +176,9 @@ export default function CustomPaginationActionsTable({
       .then((respuesta) => {
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#519259",
+          fontWeight: "500",
         });
         setTimeout(() => {
           reload();
@@ -207,15 +211,12 @@ export default function CustomPaginationActionsTable({
           </Button>
         </TableCell>
         <TableCell style={{ width: 100 }} align="left">
-          <Button
-            variant="outlined"
-            onClick={() => {
+          <AlertDeleteTable
+            eliminar={() => {
               eliminar(row._id);
             }}
             color="error"
-          >
-            {matches ? <DeleteIcon></DeleteIcon> : "eliminar"}
-          </Button>
+          ></AlertDeleteTable>
         </TableCell>
       </TableRow>
     );
@@ -238,24 +239,12 @@ export default function CustomPaginationActionsTable({
           <Typography>INACTIVO</Typography>
         </TableCell>
 
-        {/* <TableCell style={{ width: 100 }} align="left">
-                    <Button
-                      variant="outlined"
-                      onClick={(e) => Router.push(`/staff/${row._id}`)}
-                    >
-                      {matches ? <EditIcon></EditIcon> : "editar"}
-                    </Button>
-                  </TableCell> */}
         <TableCell style={{ width: 100 }} align="left">
-          <Button
-            // variant="outlined"
-            onClick={() => {
+          <AlertDialog 
+            reactivar={() => {
               reactivar(row._id, row);
             }}
-            color="success"
-          >
-            Reactivar
-          </Button>
+          ></AlertDialog>
         </TableCell>
       </TableRow>
     );
@@ -266,12 +255,16 @@ export default function CustomPaginationActionsTable({
       <Snackbar
         open={alert.open}
         message={alert.message}
-        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        ContentProps={{ 
+          style: { 
+            backgroundColor: alert.backgroundColor,
+            fontWeight: alert.fontWeight,
+           },
+        }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
-      <Switches verInactivos={verInactivos} />
       <TableContainer component={Paper}>
         <Table
           md={{ maxWidth: 600 }}

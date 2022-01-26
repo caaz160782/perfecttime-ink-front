@@ -16,7 +16,6 @@ import { useState, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -83,15 +82,9 @@ export default function CustomizedDialogs({ classes, reload }) {
   const initialForm = {
     name: "",
     lastName: "",
-    //  Role: "Cliente",
     email: "",
     password: "",
-    phoneHome: "",
     age: "",
-    // idStudio: auth.infoStudio.id,
-    // idStudio: "61df650efc14abb6d4c68ecf",
-    // curp: "",
-    // rfc: " ",
     phonePersonal: "",
   };
   const [user, actualizarState, reset, setValues] = useForm(initialForm);
@@ -108,7 +101,7 @@ export default function CustomizedDialogs({ classes, reload }) {
     formData.append("lastName", user.lastName);
     formData.append("age", user.age);
     formData.append("Role", "Cliente");
-    formData.append("phoneHome", user.phoneHome);
+    //formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("email", user.email);
     //formData.append("password", user.password);
@@ -129,7 +122,7 @@ export default function CustomizedDialogs({ classes, reload }) {
         console.log(respuesta);
         setAlert({
           open: true,
-          message: respuesta.data.message,
+          message: respuesta.data.message.toUpperCase(),
           backgroundColor: "#4BB543",
         });
 
@@ -229,7 +222,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   fullWidth
@@ -240,7 +233,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <TextField
                   required
@@ -266,7 +259,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                 ></TextField>
               </ListItem>
               <ListItem>
-                {/* <TextField
+                <TextField
                   required
                   size="small"
                   id="password"
@@ -278,7 +271,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
                   onChange={actualizarState}
-                ></TextField> */}
+                ></TextField>
               </ListItem>
               <ListItem>
                 <Button
@@ -288,13 +281,13 @@ export default function CustomizedDialogs({ classes, reload }) {
                   color="secondary"
                   //className={classes.btnLogin}
                 >
-                  <SendIcon></SendIcon> Register
+                  <SendIcon></SendIcon> Crear
                 </Button>
               </ListItem>
             </List>
             <DialogActions>
               <Button type="submit" autoFocus onClick={handleClose}>
-                <CloseIcon></CloseIcon> Close
+                <CloseIcon></CloseIcon> Cerrar
               </Button>
             </DialogActions>
           </form>

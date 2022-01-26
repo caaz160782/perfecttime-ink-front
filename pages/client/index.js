@@ -2,7 +2,7 @@ import Layout from "../../Components/Layout";
 import CustomizedDialogs from "../../Components/client/ModalForm";
 import CustomPaginationActionsTable from "../../Components/client/Table";
 
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Switch, Typography } from "@mui/material";
 
 import clienteAxios from "../../utils/axios";
 //import useStyles from "./style";
@@ -15,6 +15,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { makeStyles } from "@mui/styles";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
+import Switches from "../../Components/client/SwitchStatus";
 
 const Staff = () => {
   const useStyles = makeStyles((theme) => ({
@@ -49,24 +50,45 @@ const Staff = () => {
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
   //let staffFirst = [];
+  let staffInact = [];
+  let staffAct = [];
+
+  const [switchStatus, setSwitchStatus] = useState(false);
 
   const handleChangeBusqueda = ({ target }) => {
     filtrar(target.value);
   };
   const filtrar = (terminoBusqueda) => {
+    if (!switchStatus) {
     var resultadosBusqueda = staffMentira.filter((elemento) => {
       if (
         elemento.name
           .toString()
           .toLowerCase()
-          .includes(terminoBusqueda.toLowerCase())
+          .includes(terminoBusqueda.toLowerCase()) &&
+        elemento.statusUser
       ) {
+        console.log("elemento", elemento, switchStatus)
         return elemento;
       }
     });
-
-    setStaff(resultadosBusqueda);
-  };
+  } else {
+    var resultadosBusqueda = staffMentira.filter((elemento) => {
+      if (
+        elemento.name
+          .toString()
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase()) &&
+        !elemento.statusUser
+      ) {
+        console.log("elemento", elemento, switchStatus);
+        return elemento;
+      }
+    });
+  }
+  
+  setStaff(resultadosBusqueda);
+};
 
   useEffect(() => {
     if (reload) {
@@ -82,19 +104,24 @@ const Staff = () => {
             {
               headers: { apitoken: auth?.token },
             }
-          );
-          const staffArray = respuesta.data.payload;
-          //console.log(respuesta);
-
-          //  setStaff(staffArray);
-          setStaffMentira(staffArray);
-
-          let staffFirst = staffArray.filter((x) => x.statusUser === true);
+          )
+          //const staffArray = respuesta.data.payload;
+          let staffFirst;
+          setStaffMentira( respuesta.data.payload);
+          if (!switchStatus) {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === true
+            );
+          } else {
+            staffFirst = respuesta.data.payload.filter(
+              (x) => x.statusUser === false
+            );
+          }
 
           setStaff(staffFirst);
           setLoading(false);
         } catch (error) {
-          //console.log(error);
+          console.log(error);
         }
       };
       consultarAPI();
@@ -106,7 +133,7 @@ const Staff = () => {
     };
   }, [reload]);
 
-  const [switchStatus, setSwitchStatus] = useState(false);
+  //const [switchStatus, setSwitchStatus] = useState(false);
   const verInactivos = () => {
     setSwitchStatus(!switchStatus);
     if (switchStatus) {
@@ -130,7 +157,14 @@ const Staff = () => {
             <CustomizedInputBase handleChangeBusqueda={handleChangeBusqueda} />
           </div>
 
-          <div style={{ marginBottom: "25px" }}>
+          <div 
+            style={{ 
+              marginBottom: "25px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <CustomizedDialogs
               staff={staff}
               md={{ m: 2 }}
@@ -139,6 +173,17 @@ const Staff = () => {
                 setReload(true);
               }}
             />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography color="primary">
+                {!switchStatus ? "VER INACTIVOS" : "VER ACTIVOS"}
+              </Typography>
+              <Switches verInactivos={verInactivos} />
+            </div>
           </div>
 
           <CustomPaginationActionsTable

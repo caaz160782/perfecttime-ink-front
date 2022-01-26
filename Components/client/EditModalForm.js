@@ -16,7 +16,6 @@ import { useState, useEffect, useContext } from "react";
 import theme from "../../utils/temaConfig";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
-//import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { AuthContext } from "../../Context/AuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -61,7 +60,6 @@ export default function EditCustomizedDialogs({
   classes,
   staffMember,
   reload,
-  role,
 }) {
   //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
@@ -91,7 +89,7 @@ export default function EditCustomizedDialogs({
     // idRole: staffMember.idRole,
     picture: staffMember.picture,
     password: "",
-    phoneHome: staffMember.phoneHome,
+    //phoneHome: staffMember.phoneHome,
     age: staffMember.age,
     phonePersonal: staffMember.phonePersonal,
   };
@@ -109,7 +107,7 @@ export default function EditCustomizedDialogs({
     //formData.append("idRole", "staff");
     formData.append("age", user.age);
     // formData.append("rfc", user.rfc);
-    formData.append("phoneHome", user.phoneHome);
+    //formData.append("phoneHome", user.phoneHome);
     formData.append("phonePersonal", user.phonePersonal);
     formData.append("password", user.password);
     formData.append("picture", archivo);
@@ -177,7 +175,7 @@ export default function EditCustomizedDialogs({
                   required
                   size="small"
                   id="name"
-                  label="name"
+                  label="Nombre"
                   name="name"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
@@ -192,7 +190,7 @@ export default function EditCustomizedDialogs({
                   fullWidth
                   required
                   id="lastName"
-                  label="last name"
+                  label="Apellidos"
                   name="lastName"
                   inputProps={{ type: "text" }}
                   onChange={actualizarState}
@@ -217,14 +215,14 @@ export default function EditCustomizedDialogs({
                   fullWidth
                   size="small"
                   id="phonePersonal"
-                  label="personal phone"
+                  label="Celular"
                   name="phonePersonal"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
                   value={user.phonePersonal}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   fullWidth
@@ -236,14 +234,14 @@ export default function EditCustomizedDialogs({
                   onChange={actualizarState}
                   value={user.phoneHome}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <TextField
                   required
                   fullWidth
                   size="small"
                   id="age"
-                  label="age"
+                  label="Edad"
                   name="age"
                   inputProps={{ type: "phone" }}
                   onChange={actualizarState}
@@ -251,7 +249,7 @@ export default function EditCustomizedDialogs({
                 ></TextField>
               </ListItem>
 
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   // required
                   size="small"
@@ -266,7 +264,7 @@ export default function EditCustomizedDialogs({
                   }
                   onChange={actualizarState}
                 ></TextField>
-              </ListItem>
+              </ListItem> */}
               <ListItem>
                 <Button
                   variant="contained"
@@ -281,7 +279,7 @@ export default function EditCustomizedDialogs({
             </List>
             <DialogActions>
               <Button autoFocus onClick={handleClose}>
-                <CloseIcon></CloseIcon> Close
+                <CloseIcon></CloseIcon> Cerrar
               </Button>
             </DialogActions>
           </form>

@@ -149,7 +149,7 @@ const ModalDate = ({
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "flex-start",
+                alignItems: "center",
               }}
             >
               <Box>

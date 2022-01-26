@@ -43,7 +43,7 @@ export default function Home() {
             >
               <Grid item sm={12} md={6}>
               <Typography variant="body1">
-                Perfect Time INK es una aplicación que busca acompañar al usuario en el proceso de la realización de un tatuaje, facilitando el proceso para agendar una cita, dándole a conocer de manera sencilla y detallada las obras del tatuador con quien desea trabajar, brindando las condiciones sanitarias en las que se encuentra el estudio, todo esto, con la finalidad de eliminar miedos y dar la confianza de que el servicio que se le esta brindando sea de la mejor calidad, y claro, esperando que vuelva con nosotros en repetidas ocasiones.  
+                Perfect Time INK es una aplicación que busca acompañar a los administradores de estudios de tatuaje en el control y organización de la agenda, brindándoles la visibilidad de todas las citas agendadas del estudio, dándoles un control de los miembros de su staff, y facilitando el registro de sus Clientes para un seguimiento de los trabajos realizados.
               </Typography>
               </Grid>
               <Grid item sm={12} md={6} className={classes.imgGrid}>
@@ -53,7 +53,7 @@ export default function Home() {
                   width={500}
                   alt="Tatuador"
                   className={classes.imgCard}
-                  
+
                 ></Image>
               </Grid>
             </Grid>  

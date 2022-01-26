@@ -44,7 +44,7 @@ const Servicios = () => {
                 <Typography variant="body1">
                   Perfect time Ink es una excelente herramienta de control de agenda, ya que todo se presenta de manera virtual, y es fácil de acceder a sus servicios, a través de cualquier dispositivo, brindando la opción a los dueños de estudios de tatuaje el control de su estudio al alcance de sus manos, 
                   Del lado de los tatuadores, les ayuda a llevar un mejor control de su tiempo mediante la visualización de su agenda completa, por mes, día o semana. 
-                  Para los clientes de los estudios, les brinda la facilidad de agendar su cita de una manera más visual, mostrando los espacios disponibles para agendar su cita por cada tatuador, la plataforma les dará la opción de conocer el trabajo de los tatuadores mediante sus redes sociales, y darles recordatorios de sus citas activas.
+                  Para los clientes ya registrados, les brinda la facilidad de agendar su cita de una manera más visual, mostrando los espacios disponibles para agendar su cita por cada tatuador, la plataforma les dará la opción de conocer el trabajo de los tatuadores mediante sus redes sociales, y darles recordatorios de sus citas activas.
                 </Typography>
               </Grid>
             </Grid>

@@ -8,7 +8,7 @@ const Login = () => {
       <FrmLogin />
       <h2>
         <NextLink href="/admin">
-          <a>Registarse</a>
+          <a>Aun no tienes cuenta con nosotros? Crea una aqui</a>
         </NextLink>
       </h2>
     </div>

@@ -57,10 +57,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ classes, reload }) {
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
-  // const [valStudio] = useLocalStorage("studioVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
-
   const [archivo, guardarArchivo] = useState("");
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -85,9 +82,10 @@ export default function CustomizedDialogs({ classes, reload }) {
     email: "",
     password: "",
     age: "",
+    // rfc: " ",
     phonePersonal: "",
   };
-  const [user, actualizarState, reset, setValues] = useForm(initialForm);
+  const [user, actualizarState, reset] = useForm(initialForm);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -114,12 +112,11 @@ export default function CustomizedDialogs({ classes, reload }) {
       .post("/clientAdmin", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          //  apitoken: valToken.token,
           apitoken: auth.token,
         },
       })
       .then((respuesta) => {
-        console.log(respuesta);
+        //console.log(respuesta);
         setAlert({
           open: true,
           message: respuesta.data.message.toUpperCase(),
@@ -130,7 +127,6 @@ export default function CustomizedDialogs({ classes, reload }) {
           console.log("peticion ok");
           reload();
         }, 3000);
-
         // router.push("/"); //dirigir a la pagina de inicio
         //  document.querySelector("#form").reset();
       })
@@ -258,7 +254,7 @@ export default function CustomizedDialogs({ classes, reload }) {
                   onChange={actualizarState}
                 ></TextField>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <TextField
                   required
                   size="small"
@@ -271,8 +267,8 @@ export default function CustomizedDialogs({ classes, reload }) {
                     "Must be a minimum of 8 characters including a number, Upper, Lower And one special character"
                   }
                   onChange={actualizarState}
-                ></TextField>
-              </ListItem>
+                ></TextField> 
+              </ListItem>*/}
               <ListItem>
                 <Button
                   variant="contained"

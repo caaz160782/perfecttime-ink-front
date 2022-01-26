@@ -70,7 +70,7 @@ const FrmLogin = () => {
             router.push("/agenda");
           }
         }
-        if (response.data.autenticado === true && infoUser.rol === "Tatuador") {
+        if (response.data.autenticado === true && infoUser.rol === "tatuador") {
           router.push("/agenda");
         }
         if (response.data.autenticado === true && infoUser.rol === "Cliente") {

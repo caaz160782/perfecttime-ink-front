@@ -3,6 +3,10 @@ import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/client/CardStaff";
 import {  Container, Button, Link } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
+import { Typography, Container, Button, Link } from "@mui/material";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 
@@ -27,11 +31,8 @@ const OneStaff = () => {
     },
   }));
   const classes = useStyles();
-
-  //const [valToken, setToken] = useLocalStorage("userVal", "");
   const { auth, guardarAuth, logOut } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
   const { id } = router.query;
 
@@ -40,14 +41,11 @@ const OneStaff = () => {
 
   useEffect(() => {
     if (reload) {
-      //console.log(id);
       const consultarAPI = async () => {
         try {
           const respuesta = await clienteAxios.get(`/clientAdmin/${id}`, {
-            // headers: { apitoken: valToken.token },
             headers: { apitoken: auth?.token },
           });
-          //  console.log("respuesta*************", respuesta.data.listClient);
           setStaffMember(respuesta.data.listClient.clientId);
           setLoading(false);
         } catch (error) {

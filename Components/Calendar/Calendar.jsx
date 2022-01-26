@@ -126,14 +126,12 @@ const Calendar = ({
       console.log(error);
     }
   };
-  console.log("reload antes", reloadDate);
   useEffect(() => {
     if (reloadDate) {
       cargaDates();
       setReloadDate(false);
     }
   }, [reloadDate]);
-  console.log("reload despues", reloadDate);
   return (
     <div>
       <Snackbar

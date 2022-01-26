@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/staff/CardStaff";
+import Detalle from "../../Components/staff/Detalle";
 import { Container, Button, Link } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@mui/styles";
@@ -69,14 +70,24 @@ const OneStaff = () => {
             <CircularProgress size={40}></CircularProgress>
           </div>
         ) : (
-          <MediaCard
-            atras={"/staff"}
-            classes={classes}
-            staffMember={staffMember}
-            reload={() => {
-              setReload(true);
-            }}
-          ></MediaCard>
+          <>
+            <Detalle
+              atras={"/staff"}
+              classes={classes}
+              staffMember={staffMember}
+              reload={() => {
+                setReload(true);
+              }}
+            ></Detalle>
+            {/* <MediaCard
+              atras={"/staff"}
+              classes={classes}
+              staffMember={staffMember}
+              reload={() => {
+                setReload(true);
+              }}
+            ></MediaCard> */}
+          </>
         )}
       </Container>
     </div>

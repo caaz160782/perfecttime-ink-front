@@ -1,16 +1,17 @@
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/client/CardStaff";
+import Detalle from "../../Components/client/DetalleC";
 import { useState, useEffect, useContext } from "react";
-import { Typography, Container, Button, Link } from "@mui/material";
+import { Container, Button, Link } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { CircularProgress } from "@mui/material";
 
 import { AuthContext } from "../../Context/AuthContext";
 
 const OneStaff = () => {
-  const useStyles = makeStyles((theme) => ({
-    btnLogin: {
+  const useStyles = makeStyles(() => ({
+    btnRegister: {
       color: "#fff",
       textTransform: "none",
       fontSize: "1.4rem",
@@ -52,7 +53,7 @@ const OneStaff = () => {
       setReload(false);
     }
     return () => {
-      // console.log("desmontar");
+      console.log("desmontar");
       // source.cancel();
     };
   }, [reload]);
@@ -65,14 +66,14 @@ const OneStaff = () => {
             <CircularProgress size={40}></CircularProgress>
           </div>
         ) : (
-          <MediaCard
+          <Detalle
             atras={"/client"}
             classes={classes}
             staffMember={staffMember}
             reload={() => {
               setReload(true);
             }}
-          ></MediaCard>
+          ></Detalle>
         )}
       </Container>
     </div>

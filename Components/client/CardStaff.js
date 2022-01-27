@@ -50,10 +50,6 @@ export default function MediaCard({ staffMember, classes, atras, reload }) {
             {`${staffMember.email} `}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {/* <span style={{ fontWeight: 600 }} className={classes.spanes}>
-              <PhoneAndroidIcon></PhoneAndroidIcon> phone home:{" "}
-            </span>
-            {`${staffMember.phoneHome} `}  */}
             <span style={{ fontWeight: 600 }} className={classes.spanes}>
               <PhoneAndroidIcon></PhoneAndroidIcon> phone personal:{" "}
             </span>

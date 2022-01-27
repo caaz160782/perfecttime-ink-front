@@ -120,8 +120,7 @@ const ModalViewDate = ({
       quality || 75
     }`;
   };
-  console.log(auth);
-
+  console.log("next public base url", process.env.NEXT_PUBLIC_BASE_URL);
   return (
     <div>
       <Snackbar

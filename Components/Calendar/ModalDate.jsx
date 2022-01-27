@@ -199,20 +199,6 @@ const ModalDate = ({
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
-<<<<<<< HEAD
-          <DialogContent>
-            <Box
-              sx={{
-                width: 260,
-                height: 600,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box>
-=======
           <Box
             sx={{
               width: 360,
@@ -225,7 +211,6 @@ const ModalDate = ({
           >
             <DialogContent>
               <Box sx={{ m: 1 }}>
->>>>>>> develop
                 <TextField
                   sx={{ width: "26ch" }}
                   id="title"

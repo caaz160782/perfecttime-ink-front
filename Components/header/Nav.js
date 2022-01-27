@@ -12,7 +12,7 @@ export const Nav = (props) => {
       {" "}
       <NextLink href="/" passHref>
         <Link className={router.pathname == "/" ? classes.active : classes.tab}>
-          Home
+          Inicio
         </Link>
       </NextLink>
       <NextLink href="/servicios" passHref>
@@ -31,15 +31,6 @@ export const Nav = (props) => {
           }
         >
           Galeria
-        </Link>
-      </NextLink>
-      <NextLink href="/contacto" passHref>
-        <Link
-          className={
-            router.pathname == "/contacto" ? classes.active : classes.tab
-          }
-        >
-          Contacto
         </Link>
       </NextLink>
       <NextLink href="/login" passHref>

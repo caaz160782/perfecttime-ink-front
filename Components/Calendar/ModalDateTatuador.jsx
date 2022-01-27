@@ -28,14 +28,14 @@ import {
   Snackbar,
 } from "@mui/material";
 
-const ModalDate = ({
+const ModalDateTatuador = ({
   open,
   setOpen,
   fechaHoy,
   valueDate,
   setValuDate,
   evenByDay,
-  cargaDates,
+  cargaDatesStaff,
   setOpenViewModal,
   setinfoDate,
   timeToOpen,
@@ -94,10 +94,8 @@ const ModalDate = ({
       );
       const finDate = tatoo.length > 0 ? tatoo.pop() : {};
       if (Object.keys(finDate).length !== 0) {
-        console.log(finDate);
         const newDateEqualDay = addHours(parseISO(finDate.end), 1);
         const NewDareFinhish = addHours(parseISO(finDate.end), 2);
-        console.log("_______________", newDateEqualDay);
         setValuDate({
           ...valueDate,
           id_tatuador: event.target.value,
@@ -133,13 +131,13 @@ const ModalDate = ({
       setValuDate({ ...valueDate, cost: event.target.value, estimated: cal });
     }
   };
-
+  //console.log(auth);
   const handleGuardar = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("id_studio", auth.infoStudio.id);
     formData.append("title", valueDate.title);
-    formData.append("id_tatuador", valueDate.id_tatuador);
+    formData.append("id_tatuador", auth.infoUser._id);
     formData.append("id_cliente", valueDate.id_cliente);
     formData.append("id_size", valueDate.id_size);
     formData.append("start", valueDate.start);
@@ -161,7 +159,7 @@ const ModalDate = ({
       .then((response) => {
         const { code } = response.data;
         if (code === "Created") {
-          cargaDates();
+          cargaDatesStaff();
           setOpen(false);
           setinfoDate(response.data.payload);
           setLoading(false);
@@ -199,20 +197,6 @@ const ModalDate = ({
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
-<<<<<<< HEAD
-          <DialogContent>
-            <Box
-              sx={{
-                width: 260,
-                height: 600,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box>
-=======
           <Box
             sx={{
               width: 360,
@@ -225,7 +209,6 @@ const ModalDate = ({
           >
             <DialogContent>
               <Box sx={{ m: 1 }}>
->>>>>>> develop
                 <TextField
                   sx={{ width: "26ch" }}
                   id="title"
@@ -236,9 +219,9 @@ const ModalDate = ({
                   onChange={handleChangeDate("title")}
                 />
               </Box>
-              <Box sx={{ m: 1 }}>
+              {/* <Box sx={{ m: 1 }}>
                 <SelectTatuador handleChangeDate={handleChangeDate} />
-              </Box>
+              </Box> */}
               <Box sx={{ m: 1 }}>
                 <SelectClient handleChangeDate={handleChangeDate} />
               </Box>
@@ -396,4 +379,4 @@ const ModalDate = ({
     </div>
   );
 };
-export default ModalDate;
+export default ModalDateTatuador;

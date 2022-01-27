@@ -9,10 +9,11 @@ const LocalidadSelect = ({
 }) => {
   return (
     <Box>
-      <FormControl sx={{ m: 1, width: "30ch" }}>
+      <FormControl sx={{ width: "30ch" }}>
         <InputLabel id="demo-simple-select-autowidth-label">Colonia</InputLabel>
         <Select
           //defaultValue=""
+          size="small"
           value={valuesConfigStudio.city}
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"

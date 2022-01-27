@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Box, Typography, Modal } from "@mui/material";
+import { Snackbar, Box, Typography, Modal, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,13 +8,15 @@ import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { AuthContext } from "../../Context/AuthContext";
-import { format } from "date-fns";
+import { differenceInHours, differenceInDays } from "date-fns";
 
 const ModalViewDate = ({
   openViewModal,
   setOpenViewModal,
   infoDate,
   cargaDates,
+  cargaDatesClient,
+  cargaDatesStaff,
 }) => {
   const style = {
     position: "absolute",
@@ -28,6 +30,11 @@ const ModalViewDate = ({
     p: 4,
   };
   const router = useRouter();
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
   const [openAlert, setopenAlert] = useState(false);
   const { auth } = useContext(AuthContext);
   const handleClose = () => {
@@ -35,51 +42,70 @@ const ModalViewDate = ({
   };
 
   const handleDeleteAlert = () => {
-    console.log(infoDate);
-
-    //  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
     const tiempoTranscurrido = Date.now();
     const hoy = new Date(tiempoTranscurrido);
-    //const hrActual = hoy.getHours() + ":" + hoy.getMinutes();
-    const startCita = infoDate.startStr;
-
-    console.log(format(hoy, "MM/dd/yyyy"));
-
-    //   console.log(infoDate);
-    //const horaCita = startCita.getHours() + ":" + startCita.getMinutes();
-
-    //console.log(fecha2.diff(fecha1, "days"));
-
-    // var fecha2 = moment("2016-08-01");
-
-    // console.log(fecha2.diff(fecha1, "days"), " dias de diferencia");
-
-    // console.log(horaCita + "-" + hrActual);
-    // cita;
-    //setopenAlert(true);
+    const startCita = infoDate.start;
+    let result = differenceInHours(startCita, hoy);
+    if (result >= 24) {
+      setopenAlert(true);
+    } else {
+      setAlert({
+        open: true,
+        message: "no se pueden eliminar citas con menos de 24hrs",
+        backgroundColor: "#DD4A48",
+        //#519259
+      });
+    }
   };
 
   const handleEdit = () => {
-    router.push(`/agenda/${infoDate?._id}`);
+    const tiempoTranscurrido = Date.now();
+    const hoy = new Date(tiempoTranscurrido);
+    const startCita = infoDate.start;
+    let result = differenceInDays(startCita, hoy);
+    if (result >= 0) {
+      router.push(`/agenda/${infoDate?._id}`);
+    } else {
+      setAlert({
+        open: true,
+        message: "no se pueden Editar citas anteriores",
+        backgroundColor: "#DD4A48",
+        //#519259
+      });
+    }
   };
 
   const deleteDate = async () => {
     try {
-      console.log("Delete");
       clienteAxios
         .delete(`/dateTatoo/${infoDate?._id}`, {
           headers: { apitoken: auth.token },
         })
         .then((response) => {
           if (response.data.ok) {
-            cargaDates();
+            if (auth.infoUser.rol === "Administrador") {
+              cargaDates();
+            }
+            if (auth.infoUser.rol === "Cliente") {
+              cargaDatesClient();
+            }
+            if (auth.infoUser.rol === "tatuador") {
+              cargaDatesStaff();
+            }
+
             setOpenViewModal(false);
             setopenAlert(false);
           }
         })
         .catch((error) => {
           if (error.response) {
-            console.log(error.response.data);
+            //console.log(error.response.data);
+            setAlert({
+              open: true,
+              message: "no se pueden Elimar la cita",
+              backgroundColor: "#DD4A48",
+              //#519259
+            });
           } else {
             console.log(error);
           }
@@ -89,16 +115,24 @@ const ModalViewDate = ({
     }
   };
   //console.log(infoDate);
-  //const ruta = "image="{`http://localhost:8000/${infoDate.picture}`}";
-  //return `http://localhost:8000/${src}?w=${width}&q=${quality || 75}`;
   const myLoader = ({ src, width, quality }) => {
     return `${process.env.NEXT_PUBLIC_BASE_URL}/${src}?w=${width}&q=${
       quality || 75
     }`;
   };
+  //console.log(auth);
 
   return (
     <div>
+      <Snackbar
+        open={alert.open}
+        style={{ height: "100%" }}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        // anchorOrigin={{ vertical, horizontal }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={1000}
+      />
       <Modal
         open={openViewModal}
         onClose={handleClose}
@@ -113,7 +147,7 @@ const ModalViewDate = ({
           <Box>
             <Box>
               <Typography variant="body2" color="text.primary">
-                {infoDate.title}
+                {infoDate.title}/{infoDate.name} {infoDate.lastName}
               </Typography>
             </Box>
 
@@ -121,7 +155,7 @@ const ModalViewDate = ({
               <Image
                 loader={myLoader}
                 src={infoDate?.desPhotoTatoo}
-                alt="Picture of the author"
+                alt="infoDate."
                 width={500}
                 height={500}
               />
@@ -132,25 +166,62 @@ const ModalViewDate = ({
                 {infoDate?.description}
               </Typography>
             </Box>
-
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
               }}
             >
-              <Box>
-                <DeleteForeverIcon color="error" onClick={handleDeleteAlert} />
-                <AlertDelete
-                  openAlert={openAlert}
-                  setopenAlert={setopenAlert}
-                  texto={"¿Realmente deseas eliminar la cita?"}
-                  deleteDate={deleteDate}
-                />
-              </Box>
-              <Box>
-                <EditIcon color="secondary" onClick={handleEdit} />
+              {!infoDate.statusPago ? (
+                <form
+                  action={`${process.env.NEXT_PUBLIC_BASE_URL}/checkout`}
+                  method="post"
+                >
+                  <input
+                    type="hidden"
+                    name="price"
+                    value={infoDate.estimated}
+                  />
+                  <input type="hidden" name="reference" value={infoDate._id} />
+                  <input
+                    type="hidden"
+                    name="title"
+                    value={infoDate.description}
+                  />
+                  {auth?.infoUser.rol === "Cliente" ? (
+                    <Button variant="outlined" type="submit" value="pagar">
+                      PAGAR ANTICIPO
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </form>
+              ) : (
+                <Typography>Anticipo pagado</Typography>
+              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Box>
+                  <DeleteForeverIcon
+                    color="error"
+                    onClick={handleDeleteAlert}
+                  />
+                  <AlertDelete
+                    openAlert={openAlert}
+                    setopenAlert={setopenAlert}
+                    texto={"¿Realmente deseas eliminar la cita?"}
+                    deleteDate={deleteDate}
+                  />
+                </Box>
+                <Box>
+                  <EditIcon color="secondary" onClick={handleEdit} />
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -161,3 +232,4 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
+//http://localhost:8000/checkout

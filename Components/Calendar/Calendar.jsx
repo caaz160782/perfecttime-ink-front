@@ -6,20 +6,33 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import ModalDate from "./ModalDate";
+import ModalDateTatuador from "./ModalDateTatuador";
+import ModalDateClient from "./ModalDateClient";
 import ModalViewDate from "./ModalViewDate";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
-import { isBefore } from "date-fns";
+import { isSameDay, parseISO } from "date-fns";
 
-const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
+const Calendar = ({
+  timeToOpen,
+  timeToClose,
+  dayNotAvailables,
+  reloadDate,
+  setReloadDate,
+}) => {
   const { auth } = useContext(AuthContext);
+  console.log("del auth", auth);
   const [open, setOpen] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [fechaHoy, setFecha] = useState("");
   const [even, setEven] = useState([]);
+  const [evenByDay, setEvenByDay] = useState([]);
   const [valueDate, setValuDate] = useState({
-    id_studio: auth.infoStudio.id,
+    id_studio: auth?.infoStudio.id,
     picture: "",
+    hourTatooStart: "00:00",
+    hourTatooFinish: "00:00",
+    id_size: -1,
   });
   const [infoDate, setinfoDate] = useState({});
   const [alert, setAlert] = useState({
@@ -35,7 +48,20 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
     fechaSelec.setHours(0, 0, 0, 0);
     hoy.setHours(0, 0, 0, 0);
     if (fechaSelec.getTime() >= hoy.getTime()) {
-      setValuDate({ ...valueDate, addDate: arg.dateStr });
+      if (even !== undefined) {
+        const pruv = even.filter((dates) =>
+          isSameDay(parseISO(dates.start), fechaSelec)
+        );
+        setEvenByDay(pruv);
+      }
+      setValuDate({
+        ...valueDate,
+        id_tatuador: "",
+        addDate: arg.dateStr,
+        start: arg.dateStr + "T" + timeToOpen,
+        hourTatooStart: timeToOpen,
+        hourTatooFinish: timeToOpen,
+      });
       setFecha(arg.dateStr);
       setOpen(true);
     } else {
@@ -49,7 +75,6 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const HandleEventClick = (info) => {
-    console.log(info);
     let dateTatooInfo = {};
     dateTatooInfo = {
       ...dateTatooInfo,
@@ -61,9 +86,13 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       id_cliente: info.event.extendedProps.id_cliente,
       id_size: info.event.extendedProps.id_size,
       id_studio: info.event.extendedProps.id_studio,
-      id_tatuador: info.event.extendedProps.id_tatuador,
+      id_tatuador: info.event.extendedProps._id,
+      name: info.event.extendedProps.id_tatuador.name,
+      lastName: info.event.extendedProps.id_tatuador.lastName,
       statusPago: info.event.extendedProps.statusPago,
       tipoTatoo: info.event.extendedProps.tipoTatoo,
+      hourTatooStart: info.event.extendedProps.hourTatooStart,
+      hourTatooFinish: info.event.extendedProps.hourTatooFinish,
       title: info.event.title,
       _id: info.event.extendedProps._id,
       end: info.event.end,
@@ -76,6 +105,8 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const cargaDates = async () => {
+    console.log("acaaaaaaaaaaaaaaaaaa");
+
     try {
       clienteAxios
         .get(`/dateTatooByStudio/${auth.infoStudio.id}`, {
@@ -97,10 +128,87 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       console.log(error);
     }
   };
+  // useEffect(() => {
+  //   if (reloadDate) {
+  //     cargaDates();
+  //     setReloadDate(false);
+  //   }
+  // }, [reloadDate]);
+
+  const cargaDatesStaff = async () => {
+    try {
+      clienteAxios
+        .post(
+          `/staffDate/${auth.infoStudio.id}`,
+          { idStaff: auth.infoUser._id },
+          {
+            headers: { apitoken: auth.token },
+          }
+        )
+        .then((response) => {
+          if (response.data.code) {
+            setEven(response.data.payload.dates);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+          } else {
+            console.log(error);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cargaDatesClient = async () => {
+    try {
+      console.log(auth);
+      clienteAxios
+        .post(
+          `/clientDate/${auth.infoStudio.id}`,
+          { idClient: auth?.infoUser._id },
+          {
+            headers: { apitoken: auth.token },
+          }
+        )
+        .then((response) => {
+          if (response.data.code) {
+            //console.log(response.data.payload.dates);
+            setEven(response.data.payload.dates);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+          } else {
+            console.log(error);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    cargaDates();
-  }, []);
+    if (reloadDate) {
+      switch (auth.infoUser.rol) {
+        case "Administrador":
+          cargaDates();
+          break;
+        case "Cliente":
+          cargaDatesClient();
+          break;
+        case "tatuador":
+          cargaDatesStaff();
+          break;
+        default:
+          console.log("example");
+      }
+      setReloadDate(false);
+    }
+  }, [auth.infoUser.rol, reloadDate]);
 
   return (
     <div>
@@ -114,16 +222,57 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         autoHideDuration={1000}
       />
       <div>
-        <ModalDate
-          open={open}
-          setOpen={setOpen}
-          fechaHoy={fechaHoy}
-          setValuDate={setValuDate}
-          setOpenViewModal={setOpenViewModal}
-          valueDate={valueDate}
-          cargaDates={cargaDates}
-          setinfoDate={setinfoDate}
-        />
+        {auth.infoUser.rol === "Administrador" ? (
+          <ModalDate
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDates={cargaDates}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
+        {auth.infoUser.rol === "tatuador" ? (
+          <ModalDateTatuador
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDatesStaff={cargaDatesStaff}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
+        {auth.infoUser.rol === "Cliente" ? (
+          <ModalDateClient
+            open={open}
+            setOpen={setOpen}
+            evenByDay={evenByDay}
+            fechaHoy={fechaHoy}
+            setValuDate={setValuDate}
+            setOpenViewModal={setOpenViewModal}
+            valueDate={valueDate}
+            cargaDatesClient={cargaDatesClient}
+            setinfoDate={setinfoDate}
+            timeToOpen={timeToOpen}
+            timeToClose={timeToClose}
+          />
+        ) : (
+          ""
+        )}
       </div>
       <div>
         <ModalViewDate
@@ -134,6 +283,8 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
           setinfoDate={setinfoDate}
           // valueDate={valueDate}
           cargaDates={cargaDates}
+          cargaDatesClient={cargaDatesClient}
+          cargaDatesStaff={cargaDatesStaff}
         />
       </div>
       <FullCalendar
@@ -204,6 +355,7 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
         //eventTextColor="#378006"
         //eventDurationEditable={true}
         //
+        //editable={true}
       />
     </div>
   );

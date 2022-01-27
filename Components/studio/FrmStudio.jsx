@@ -6,6 +6,7 @@ import {
   IconButton,
   styled,
   Button,
+  Snackbar,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -75,9 +76,9 @@ const FrmStudio = ({
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data);
+          console.log("ddddd", error.response.data);
         } else {
-          console.log(error);
+          console.log("dddd", error);
         }
       });
   };
@@ -88,7 +89,11 @@ const FrmStudio = ({
       postaCodeFind(valuesConfigStudio.postalCode);
     }
   }, [valuesConfigStudio.postalCode]);
-
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
   return (
     <Box
       sx={{
@@ -100,11 +105,19 @@ const FrmStudio = ({
         //m: 18,
       }}
     >
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <Typography component="h5" variant="h5">
         {title} Datos del Estudio
       </Typography>
       <form id="form" onSubmit={handlerSubmit}>
-        <Box>
+        <Box sx={{ m: 1 }}>
           <TextField
             sx={{ width: "30ch" }}
             size="small"
@@ -117,9 +130,9 @@ const FrmStudio = ({
             onChange={handleChange("name")}
           ></TextField>
         </Box>
-        <Box>
+        <Box sx={{ m: 1 }}>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
             required
             size="small"
             id="description"
@@ -130,9 +143,9 @@ const FrmStudio = ({
             onChange={handleChange("description")}
           ></TextField>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box sx={{ display: "flex", flexDirection: "row", m: 1 }}>
           <TextField
-            sx={{ m: 1, width: "175px" }}
+            sx={{ width: "175px" }}
             id="picture"
             size="small"
             //required
@@ -142,12 +155,12 @@ const FrmStudio = ({
           ></TextField>
           <Box></Box>
         </Box>
-
-        <Box>
+        <Box sx={{ m: 1 }}>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
             required
             id="rfc"
+            size="small"
             label="RFC"
             name="rfc"
             value={valuesConfigStudio.rfc}
@@ -155,11 +168,11 @@ const FrmStudio = ({
             onChange={handleChange("rfc")}
           ></TextField>
         </Box>
-
-        <Box>
+        <Box sx={{ m: 1 }}>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
             required
+            size="small"
             id="phoneStudio"
             label="Telefono"
             name="phoneStudio"
@@ -169,9 +182,9 @@ const FrmStudio = ({
           ></TextField>
         </Box>
 
-        <Box>
+        <Box sx={{ m: 1 }}>
           <TextField
-            sx={{ m: 1, width: "30ch" }}
+            sx={{ width: "30ch" }}
             required
             size="small"
             id="phoneWhatsApp"
@@ -183,7 +196,7 @@ const FrmStudio = ({
           ></TextField>
         </Box>
 
-        <Box>
+        {/* <Box>
           <TextField
             sx={{ m: 1, width: "30ch" }}
             required
@@ -194,15 +207,21 @@ const FrmStudio = ({
             value={valuesConfigStudio.social}
             onChange={handleChange("social")}
           ></TextField>
-        </Box>
+        </Box> */}
 
         <Box
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            m: 1,
+          }}
         >
           <TextField
-            sx={{ m: 1, width: "20ch" }}
+            sx={{ width: "30ch" }}
             required
             id="postalCode"
+            size="small"
             label="Codigo Postal"
             name="postalCode"
             inputProps={{ type: "text" }}
@@ -210,34 +229,34 @@ const FrmStudio = ({
             onChange={handleChange("postalCode")}
           ></TextField>
         </Box>
-
         <Box>
-          <Box>
+          <Box sx={{ m: 1 }}>
             <TextField
-              sx={{ m: 1, width: "30ch" }}
+              sx={{ width: "30ch" }}
               required
               label="Estado"
               id="state"
+              size="small"
               name="state"
               value={valuesConfigStudio.state}
               inputProps={{ type: "text" }}
               onChange={handleChange("state")}
             ></TextField>
           </Box>
-          <Box>
+          <Box sx={{ m: 1 }}>
             <TextField
-              sx={{ m: 1, width: "30ch" }}
+              sx={{ width: "30ch" }}
               required
               id="municipality"
               label="Municipio"
               name="municipality"
+              size="small"
               value={valuesConfigStudio.municipality}
               inputProps={{ type: "text" }}
               onChange={handleChange("municipality")}
             ></TextField>
           </Box>
-
-          <Box>
+          <Box sx={{ m: 1 }}>
             <LocalidadSelect
               handleChange={handleChange}
               setLocalidad={setLocalidad}
@@ -245,11 +264,11 @@ const FrmStudio = ({
               valuesConfigStudio={valuesConfigStudio}
             />
           </Box>
-
-          <Box>
+          <Box sx={{ m: 1 }}>
             <TextField
-              sx={{ m: 1, width: "30ch" }}
+              sx={{ width: "30ch" }}
               required
+              size="small"
               id="address"
               label="Domicilio"
               name="address"

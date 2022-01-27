@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import clienteAxios from "../../utils/axios";
 import MediaCard from "../../Components/staff/CardStaff";
-import Detalle from "../../Components/staff/Detalle";
 import { Container, Button, Link } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@mui/styles";
@@ -15,6 +14,11 @@ const OneStaff = () => {
       color: "#fff",
       textTransform: "none",
       fontSize: "1.4rem",
+    },
+
+    spanes: {
+      // textTransform: "none",
+      //  fontSize: "0.8rem",
     },
     foto: {
       border: "2px solid rgb(173, 173, 173)",
@@ -59,26 +63,31 @@ const OneStaff = () => {
 
   return (
     <div>
-      <Container align="center" maxWidth="600">
+      <Container align="center" maxWidth={600}>
         {loading ? (
           <div align="center">
             <CircularProgress size={40}></CircularProgress>
           </div>
         ) : (
-          <>
-            <Detalle
-              atras={"/staff"}
-              classes={classes}
-              staffMember={staffMember}
-              reload={() => {
-                setReload(true);
-              }}
-            ></Detalle>
-          </>
+          <MediaCard
+            atras={"/staff"}
+            classes={classes}
+            staffMember={staffMember}
+            reload={() => {
+              setReload(true);
+            }}
+          ></MediaCard>
         )}
       </Container>
     </div>
   );
 };
+
+//  export async function getServerSideProps (ctx) {
+//      const clienteConsulta = await clienteAxios.get(`/staff/${ctx.query.id}`);
+//      const staffMember = clienteConsulta.data.listUser.userFound;
+//      console.log(clienteConsulta.data.listUser.userFound);
+//     return { props: { staffMember } };
+//   };
 
 export default OneStaff;

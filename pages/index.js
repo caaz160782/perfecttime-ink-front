@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import backIma from '../public/images/background.jpg'
+import Image from "next/image";
+import backIma from "../public/images/background.jpg";
 import {
   Typography,
   Box,
@@ -12,7 +12,7 @@ import {
   CardMedia,
   CssBaseline,
 } from "@mui/material";
-import useStyles from '../Components/landing/style.js';
+import useStyles from "../Components/landing/style.js";
 // import Image from '../public/images/backgroundtest.jpg'
 // import useStyles from '../Components/landing/style.js'
 
@@ -34,14 +34,28 @@ export default function Home() {
             <Typography variant="h4" className={classes.blogsTitle}>
               ¿Por qué elegir Perfect Time INK?
             </Typography>
-            <Grid 
-              container
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={1}
+            <Button
+              className={classes.btn}
+              variant="contained"
+              color="primary"
+              href="/servicios"
             >
-              <Grid item sm={12} md={6}>
+              Conoce más de nuestros servicios
+            </Button>
+          </Box>
+
+        <Box maxWidth="lg" className={classes.blogsContainer}>
+          <Typography variant="h4" className={classes.blogsTitle}>
+            Por que elegir Perfect Time INK?
+          </Typography>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={1}
+          >
+            <Grid item sm={12} md={6}>
               <Typography variant="body1">
                 Perfect Time INK es una aplicación que busca acompañar a los administradores de estudios de tatuaje en el control y organización de la agenda, brindándoles la visibilidad de todas las citas agendadas del estudio, dándoles un control de los miembros de su staff, y facilitando el registro de sus Clientes para un seguimiento de los trabajos realizados.
               </Typography>
@@ -118,4 +132,3 @@ export default function Home() {
       </>
   )
 }
-

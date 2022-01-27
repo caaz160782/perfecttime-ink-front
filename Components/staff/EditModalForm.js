@@ -121,7 +121,7 @@ export default function EditCustomizedDialogs({
         reload();
         setAlert({
           open: true,
-          message: respuesta.data.message.toUpperCase(),
+          message: respuesta.data.message,
           backgroundColor: "#519259",
         });
 
@@ -133,23 +133,31 @@ export default function EditCustomizedDialogs({
 
         setAlert({
           open: true,
-          message: err.respuesta.data.error.toUpperCase(),
+          message: err.response.data.error,
           backgroundColor: "#DD4A48",
         });
       });
   };
 
   return (
-    <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        <EditIcon></EditIcon> Editar
+    <>
+      <Button
+        style={{ color: "#fff" }}
+        fullWidth
+        variant="contained"
+        color="secondary"
+        onClick={handleClickOpen}
+      >
+        {/* <EditIcon></EditIcon> */}
+        Editar
       </Button>
+
       <Snackbar
         open={alert.open}
-        style={{ height: "100%" }}
+        //  style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
@@ -297,6 +305,6 @@ export default function EditCustomizedDialogs({
           </form>
         </DialogContent>
       </BootstrapDialog>
-    </div>
+    </>
   );
 }

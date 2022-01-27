@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import EditCustomizedDialogs from "../client/EditModalForm";
+import EditCustomizedDialogs from "./EditModalForm";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import NextLink from "next/link";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -30,9 +30,10 @@ export default function MediaCard({
     <Card sx={{ maxWidth: 500 }} align="center">
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt={staffMember.name}
         height="auto"
-        image={`http://localhost:8000/${staffMember.picture}`}
+        //image={`http://localhost:8000/${staffMember.picture}`}
+        image={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
       />
 
       <CardContent align="center">
@@ -62,22 +63,25 @@ export default function MediaCard({
           {` ${staffMember.age}`}
         </Typography>
       </CardContent>
-      <CardActions align="center">
-        <div style={{ border: "" }}>
-          <EditCustomizedDialogs
-            staffMember={staffMember}
-            classes={classes}
-            reload={reload}
-            role={role}
-          ></EditCustomizedDialogs>
-          <NextLink href={atras} passHref>
-            <Link className={classes.tab}>
-              <Button color="primary">
-                <ArrowBackIcon></ArrowBackIcon> ATRAS
-              </Button>
-            </Link>
-          </NextLink>
-        </div>
+      <CardActions
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <NextLink href={atras} passHref>
+          <Link className={classes.tab}>
+            <Button color="primary">
+              <ArrowBackIcon></ArrowBackIcon> ATRAS
+            </Button>
+          </Link>
+        </NextLink>
+        <EditCustomizedDialogs
+          staffMember={staffMember}
+          classes={classes}
+          reload={reload}
+          role={role}
+        ></EditCustomizedDialogs>
       </CardActions>
     </Card>
   );

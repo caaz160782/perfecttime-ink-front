@@ -27,15 +27,14 @@ import {
   OutlinedInput,
   Snackbar,
 } from "@mui/material";
-
-const ModalDate = ({
+const ModalDateClient = ({
   open,
   setOpen,
   fechaHoy,
   valueDate,
   setValuDate,
   evenByDay,
-  cargaDates,
+  cargaDatesClient,
   setOpenViewModal,
   setinfoDate,
   timeToOpen,
@@ -45,13 +44,23 @@ const ModalDate = ({
   const [loading, setLoading] = useState(false);
   const [archivo, guardarArchivo] = useState("");
   const [adelanto, setAdelanto] = useState(0);
-  const [sizeValue, setSizeTatuador] = useState([]);
+  const [costo, setCosto] = useState(0);
   const { auth } = useContext(AuthContext);
+  const [sizeValue, setSizeTatuador] = useState([]);
   const [alert, setAlert] = useState({
     open: false,
     message: "",
     backgroundColor: "",
   });
+
+  const handleClose = () => {
+    setOpen(false);
+    setAdelanto(0);
+  };
+
+  const leerArchivo = (e) => {
+    guardarArchivo(e.target.files[0]);
+  };
 
   const llenarSize = () => {
     clienteAxios
@@ -74,15 +83,6 @@ const ModalDate = ({
     }
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-    setAdelanto(0);
-  };
-
-  const leerArchivo = (e) => {
-    guardarArchivo(e.target.files[0]);
-  };
-
   const handleChangeDate = (prop) => (event) => {
     setValuDate({
       ...valueDate,
@@ -94,10 +94,8 @@ const ModalDate = ({
       );
       const finDate = tatoo.length > 0 ? tatoo.pop() : {};
       if (Object.keys(finDate).length !== 0) {
-        console.log(finDate);
         const newDateEqualDay = addHours(parseISO(finDate.end), 1);
         const NewDareFinhish = addHours(parseISO(finDate.end), 2);
-        console.log("_______________", newDateEqualDay);
         setValuDate({
           ...valueDate,
           id_tatuador: event.target.value,
@@ -111,7 +109,6 @@ const ModalDate = ({
         });
       }
     }
-
     if (prop === "hourTatooStart") {
       setValuDate({
         ...valueDate,
@@ -119,20 +116,189 @@ const ModalDate = ({
         start: valueDate.addDate + "T" + event.target.value,
       });
     }
-    if (prop === "hourTatooFinish") {
+    //console.log(prop);
+    if (prop === "tipoTatoo") {
+      setAdelanto(0);
+      setCosto(0);
       setValuDate({
         ...valueDate,
-        hourTatooFinish: event.target.value,
-        end: valueDate.addDate + "T" + event.target.value,
+        tipoTatoo: event.target.value,
+        id_size: -1,
       });
     }
-    if (prop === "cost") {
-      let cost = event.target.value;
-      let cal = parseInt(cost) * 0.2;
-      setAdelanto(cal);
-      setValuDate({ ...valueDate, cost: event.target.value, estimated: cal });
+    //console.log(prop);
+    if (prop === "id_size") {
+      //console.log(event.target.value);
+      switch (event.target.value) {
+        case "61de763ac5ac1b41c7bea24a":
+          if (valueDate.tipoTatoo === "color") {
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 2);
+            let cost = 1200;
+            let cal = parseInt(cost) * 0.2;
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          if (valueDate.tipoTatoo === "Blanco&Negro") {
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 1);
+            let cost = 950;
+            let cal = parseInt(cost) * 0.2;
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          break;
+        case "61de76fbc5ac1b41c7bea24b":
+          // console.log("< 15 cm");
+          if (valueDate.tipoTatoo === "color") {
+            let cost = 1800;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 2);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          if (valueDate.tipoTatoo === "Blanco&Negro") {
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 1);
+            let cost = 1200;
+            let cal = parseInt(cost) * 0.2;
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          break;
+        case "61de775ec5ac1b41c7bea24c":
+          //console.log("< 40 cm");
+          if (valueDate.tipoTatoo === "color") {
+            let cost = 2500;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 2);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          if (valueDate.tipoTatoo === "Blanco&Negro") {
+            let cost = 1800;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 1);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          break;
+        case "61de77b9c5ac1b41c7bea24d":
+          //console.log("< 60 cm");
+          if (valueDate.tipoTatoo === "color") {
+            let cost = 4000;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 3);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          if (valueDate.tipoTatoo === "Blanco&Negro") {
+            let cost = 2000;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 2);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          break;
+        case "61de77f6c5ac1b41c7bea24e":
+          //console.log("> 60 cm");
+          if (valueDate.tipoTatoo === "color") {
+            let cost = 6000;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 4);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          if (valueDate.tipoTatoo === "Blanco&Negro") {
+            let cost = 3000;
+            let cal = parseInt(cost) * 0.2;
+            const NewDareFinhish = addHours(parseISO(valueDate.start), 3);
+            setAdelanto(cal);
+            setCosto(cost);
+            setValuDate({
+              ...valueDate,
+              id_size: event.target.value,
+              cost: cost,
+              estimated: cal,
+              hourTatooFinish: format(NewDareFinhish, "HH:mm"),
+              end: valueDate.addDate + "T" + format(NewDareFinhish, "HH:mm"),
+            });
+          }
+          break;
+      }
     }
   };
+
+  //console.log(valueDate);
 
   const handleGuardar = (e) => {
     e.preventDefault();
@@ -140,7 +306,7 @@ const ModalDate = ({
     formData.append("id_studio", auth.infoStudio.id);
     formData.append("title", valueDate.title);
     formData.append("id_tatuador", valueDate.id_tatuador);
-    formData.append("id_cliente", valueDate.id_cliente);
+    formData.append("id_cliente", auth?.infoUser._id);
     formData.append("id_size", valueDate.id_size);
     formData.append("start", valueDate.start);
     formData.append("end", valueDate.end);
@@ -161,7 +327,8 @@ const ModalDate = ({
       .then((response) => {
         const { code } = response.data;
         if (code === "Created") {
-          cargaDates();
+          //cargaDates();
+          cargaDatesClient();
           setOpen(false);
           setinfoDate(response.data.payload);
           setLoading(false);
@@ -199,20 +366,6 @@ const ModalDate = ({
           Agendar {fechaHoy.split("-").reverse().join("/")}
         </DialogTitle>
         <form id="form" onSubmit={handleGuardar}>
-<<<<<<< HEAD
-          <DialogContent>
-            <Box
-              sx={{
-                width: 260,
-                height: 600,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box>
-=======
           <Box
             sx={{
               width: 360,
@@ -225,7 +378,6 @@ const ModalDate = ({
           >
             <DialogContent>
               <Box sx={{ m: 1 }}>
->>>>>>> develop
                 <TextField
                   sx={{ width: "26ch" }}
                   id="title"
@@ -239,9 +391,9 @@ const ModalDate = ({
               <Box sx={{ m: 1 }}>
                 <SelectTatuador handleChangeDate={handleChangeDate} />
               </Box>
-              <Box sx={{ m: 1 }}>
+              {/* <Box sx={{ m: 1 }}>
                 <SelectClient handleChangeDate={handleChangeDate} />
-              </Box>
+              </Box> */}
               <Box sx={{ m: 1 }}>
                 <TextField
                   sx={{ width: "26ch" }}
@@ -276,13 +428,21 @@ const ModalDate = ({
                       onChange={handleChangeDate("tipoTatoo")}
                     />
                     <FormControlLabel
-                      value="Blanco y Negro"
+                      value="Blanco&Negro"
                       control={<Radio />}
                       label="Blanco y Negro"
                       onChange={handleChangeDate("tipoTatoo")}
                     />
                   </RadioGroup>
                 </FormControl>
+              </Box>
+              <Box sx={{ m: 1 }}>
+                <SelectSize
+                  sizeValue={sizeValue}
+                  setSizeTatuador={setSizeTatuador}
+                  valueDate={valueDate}
+                  handleChangeDate={handleChangeDate}
+                />
               </Box>
               <Box sx={{ m: 1 }}>
                 <TextField
@@ -296,13 +456,6 @@ const ModalDate = ({
                 />
               </Box>
               <Box sx={{ m: 1 }}>
-                <SelectSize
-                  sizeValue={sizeValue}
-                  setSizeTatuador={setSizeTatuador}
-                  handleChangeDate={handleChangeDate}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
                   <TextField
                     sx={{ width: "26ch" }}
@@ -312,15 +465,16 @@ const ModalDate = ({
                     inputProps={{ type: "file" }}
                     onChange={leerArchivo}
                   ></TextField>
-                  <Box></Box>
                 </Box>
               </Box>
+
               <Box sx={{ m: 1 }}>
                 <TextField
                   sx={{ width: "26ch" }}
                   id="hourTatooFinish"
                   required
                   size="small"
+                  disabled
                   label="Hora Fin"
                   type="time"
                   value={valueDate.hourTatooFinish}
@@ -340,9 +494,11 @@ const ModalDate = ({
                   </InputLabel>
                   <OutlinedInput
                     id="cost"
+                    disabled
                     size="small"
                     type="text"
-                    onChange={handleChangeDate("cost")}
+                    value={costo}
+                    //onChange={handleChangeDate("cost")}
                     startAdornment={
                       <InputAdornment position="start">$</InputAdornment>
                     }
@@ -396,4 +552,4 @@ const ModalDate = ({
     </div>
   );
 };
-export default ModalDate;
+export default ModalDateClient;

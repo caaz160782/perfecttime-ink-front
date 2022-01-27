@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
 import FrmConfig from "./FrmConfig";
@@ -18,6 +18,11 @@ const Config = () => {
     timeToClose: "19:00",
     dayNotAvailables: [],
     notifications: "",
+  });
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
   });
 
   const cargarSetting = async () => {
@@ -78,12 +83,11 @@ const Config = () => {
         if (status) {
           cargarSetting();
           setLoading(false);
-          MySwal.fire({
-            position: "center",
-            icon: "success",
-            title: "Actualizado Correctamente",
-            showConfirmButton: false,
-            timer: 1500,
+          setAlert({
+            open: true,
+            message: "Estudio actualizado correctamente",
+            backgroundColor: "#519259",
+            fontWeight: "500",
           });
         }
       })
@@ -101,6 +105,21 @@ const Config = () => {
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
+      {" "}
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        style={{ height: "70%" }}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.backgroundColor,
+            fontWeight: alert.fontWeight,
+          },
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <FrmConfig
         title={title}
         handlerSubmit={handlerSubmit}

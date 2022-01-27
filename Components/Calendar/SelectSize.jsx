@@ -3,34 +3,15 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import clienteAxios from "../../utils/axios";
 
-const SelectSize = ({ handleChangeDate }) => {
-  const [valToken, setToken] = useLocalStorage("userVal", "");
-  const [sizeValue, setSizeTatuador] = useState([]);
-
-  useEffect(() => {
-    clienteAxios
-      .get(`/sizes`)
-      .then((response) => {
-        setSizeTatuador(response.data.payload);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-        } else {
-          console.log(error);
-        }
-      });
-    return () => {
-      //   cleanup
-    };
-  }, []);
-
+const SelectSize = ({ handleChangeDate, sizeValue, valueDate }) => {
+  //console.log(sizeValue);
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 230 }}>
+      <FormControl sx={{ width: "26ch" }}>
         <InputLabel id="lblInpSize">Tamaño</InputLabel>
         <Select
-          defaultValue=""
+          //defaultValue=""
+          value={valueDate?.id_size}
           size="small"
           labelId="lblInpSize"
           id="size"
@@ -38,7 +19,7 @@ const SelectSize = ({ handleChangeDate }) => {
           autoWidth
           label="Tamaño"
         >
-          <MenuItem value="">
+          <MenuItem value="-1">
             <em>Selecciona el tamaño</em>
           </MenuItem>
           {sizeValue.map((sv) => (

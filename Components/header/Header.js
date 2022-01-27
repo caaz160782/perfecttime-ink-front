@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import Image from "next/image";
 import React, { useState, useContext } from "react";
 
 import { useScrollTrigger } from "@mui/material";
@@ -16,11 +15,11 @@ import {
 import useMediaQuery from "@mui/material/useMediaQuery";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 
 import theme from "./../../utils/temaConfig";
 import { Nav } from "./Nav";
 import useStyles from "./style";
+import { useRouter, userRouter } from "next/router";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -42,6 +41,7 @@ const Header = (props) => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const classes = useStyles();
+  const router = useRouter();
 
   const [value, setValue] = useState(0);
   const handleChange = (e, value) => {
@@ -66,7 +66,15 @@ const Header = (props) => {
             onClick={() => setValue(0)}
           >
             <NextLink href="/" passHref>
-              <Link className={classes.linkDrawer}>Inicio</Link>
+              <Link
+                className={
+                  router.pathname == "/"
+                    ? classes.activeDrawer
+                    : classes.linkDrawer
+                }
+              >
+                Inicio
+              </Link>
             </NextLink>
           </ListItem>
           <ListItem
@@ -76,7 +84,15 @@ const Header = (props) => {
             onClick={() => setValue(1)}
           >
             <NextLink href="/servicios" passHref>
-              <Link className={classes.linkDrawer}>Servicios</Link>
+              <Link
+                className={
+                  router.pathname == "/servicios"
+                    ? classes.activeDrawer
+                    : classes.linkDrawer
+                }
+              >
+                Servicios
+              </Link>
             </NextLink>
           </ListItem>
           <ListItem
@@ -86,7 +102,15 @@ const Header = (props) => {
             onClick={() => setValue(2)}
           >
             <NextLink href="/galeria" passHref>
-              <Link className={classes.linkDrawer}>Galeria</Link>
+              <Link
+                className={
+                  router.pathname == "/galeria"
+                    ? classes.activeDrawer
+                    : classes.linkDrawer
+                }
+              >
+                Galeria
+              </Link>
             </NextLink>
           </ListItem>
           <ListItem
@@ -96,7 +120,15 @@ const Header = (props) => {
             onClick={() => setValue(3)}
           >
             <NextLink href="/contacto" passHref>
-              <Link className={classes.linkDrawer}>Contacto</Link>
+              <Link
+                className={
+                  router.pathname == "/contacto"
+                    ? classes.activeDrawer
+                    : classes.linkDrawer
+                }
+              >
+                Contacto
+              </Link>
             </NextLink>
           </ListItem>
           <ListItem
@@ -132,11 +164,9 @@ const Header = (props) => {
               <Link>
                 <img
                   style={{ borderRadius: "50%" }}
-                  // className={classes.logo}
+                  className={classes.logo}
                   src="/images/logo.jfif"
                   alt="logo"
-                  width={110}
-                  height={120}
                 />
               </Link>
             </NextLink>

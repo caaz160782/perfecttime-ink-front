@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import FrmLogin from "../../Components/Login/FrmLogin";
-import NextLink from "next/link";
 
 const Login = () => {
   return (

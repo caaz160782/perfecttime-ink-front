@@ -134,8 +134,7 @@ export const Nav = ({ logOut }) => {
               </Link>
             </NextLink>
             {/* <img
-              className={classes.imgUrl}
-              src={`http://localhost:8000/${imgUrl}`}
+              className={classes.imgUrl}              
             ></img> */}
           </>
         )}

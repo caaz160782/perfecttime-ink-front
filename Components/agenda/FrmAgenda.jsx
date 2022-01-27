@@ -8,7 +8,6 @@ import { route } from "next/dist/server/router";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
-  console.log(auth);
   const [config, setConfig] = useState({});
   const [reload, setReload] = useState("true");
   const router = useRouter();
@@ -30,7 +29,7 @@ const FrmAgenda = () => {
       clienteAxios
         .post(`/feedback`, { paymentId })
         .then((response) => {
-          console.log("=========", response);
+          //    console.log("=========", response);
           setReloadDate(true);
           // router.push("/agenda");
           setAlert({

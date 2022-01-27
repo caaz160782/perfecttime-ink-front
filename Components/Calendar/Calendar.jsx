@@ -21,7 +21,6 @@ const Calendar = ({
   setReloadDate,
 }) => {
   const { auth } = useContext(AuthContext);
-  console.log("del auth", auth);
   const [open, setOpen] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [fechaHoy, setFecha] = useState("");
@@ -105,8 +104,6 @@ const Calendar = ({
   };
 
   const cargaDates = async () => {
-    console.log("acaaaaaaaaaaaaaaaaaa");
-
     try {
       clienteAxios
         .get(`/dateTatooByStudio/${auth.infoStudio.id}`, {

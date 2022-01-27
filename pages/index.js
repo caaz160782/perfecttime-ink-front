@@ -59,60 +59,60 @@ export default function Home() {
             </Grid>  
           </Box>
 
-          <Box maxWidth="lg" className={classes.blogsContainer}>
+          <Box maxWidth="xlg" className={classes.blogsContainer}>
             <Typography variant="h4" className={classes.blogsTitle}>
               Contactanos
             </Typography> 
-            <Grid 
-              container
-              direction="row"
-              justifyContent="space-around"
-              alignItems="center"
-              spacing={12}
-            >
-              <Grid item sm={12} md={6}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    component="img"
-                    alt="studioTatoo"
-                    height="140"
-                    image="https://i.pinimg.com/736x/77/88/e5/7788e5d43f2903cf60e04290ef049187.jpg"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Tienes un estudio de Tatuaje?
-                    </Typography>
-                    <Typography variant="body2">
-                      Descubre porque Perfect Time Ink es la mejor herramienta para llevar un control de tu agenda
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button className={classes.cardBtn} variant="contained" color="primary">Mas informacion</Button>
-                  </CardActions>
-                </Card>
+              <Grid 
+                container
+                direction="row"
+                justifyContent="space-around"
+                alignItems="center"
+                spacing={12}
+              >
+                <Grid item sm={12} md={6}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      component="img"
+                      alt="studioTatoo"
+                      height="140"
+                      image="https://i.pinimg.com/736x/77/88/e5/7788e5d43f2903cf60e04290ef049187.jpg"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Tienes un estudio de Tatuaje?
+                      </Typography>
+                      <Typography variant="body2">
+                        Descubre porque Perfect Time Ink es la mejor herramienta para llevar un control de tu agenda
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button className={classes.cardBtn} variant="contained" color="primary">Mas informacion</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+                <Grid item sm={12} md={6}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      component="img"
+                      alt="studioTatoo"
+                      height="140"
+                      image="https://d16myyh7jc1kpd.cloudfront.net/mx/business_placeholders/tatuajes-07c9c673c3ec4fc6b99121d93e2b50ce.tattoo-artists"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Deseas hacerte un tatuaje?
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Dale un vistazo a nuestra galeria 
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button className={classes.cardBtn} variant="contained" color="primary" href="/galeria">Galeria</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
               </Grid>
-              <Grid item sm={12} md={6}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    component="img"
-                    alt="studioTatoo"
-                    height="140"
-                    image="https://d16myyh7jc1kpd.cloudfront.net/mx/business_placeholders/tatuajes-07c9c673c3ec4fc6b99121d93e2b50ce.tattoo-artists"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Deseas hacerte un tatuaje?
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Descubre lo sencillo que es agendar una cita en nuestro sistema 
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button className={classes.cardBtn} variant="contained" color="primary">Mas informacion</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            </Grid>
           </Box>
         </Container>  
       </>

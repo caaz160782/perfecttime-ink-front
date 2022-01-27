@@ -33,7 +33,8 @@ export default function MediaCard({ staffMember, classes, atras, reload }) {
         component="img"
         alt="foto"
         height="auto"
-        image={`http://localhost:8000/${staffMember.picture}`}
+        //image={`http://localhost:8000/${staffMember.picture}`}
+        image={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
       />
       <CardActionArea>
         <CardContent align="center">

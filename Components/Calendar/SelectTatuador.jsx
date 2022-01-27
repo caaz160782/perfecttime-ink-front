@@ -29,7 +29,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ width: "26ch" }}>
+      <FormControl sx={{ width: "280px" }}>
         <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
           size="small"

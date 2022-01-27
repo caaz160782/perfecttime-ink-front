@@ -118,7 +118,7 @@ const FrmLogin = () => {
   const handleEnviaEmail = (e) => {
     e.preventDefault();
     clienteAxios
-      .post(`/findByEmail/`, valueEmail)
+      .post(`findByEmail/`, valueEmail)
       .then((response) => {
         //  console.log(response.data);
         const { code } = response.data;
@@ -191,8 +191,7 @@ const FrmLogin = () => {
           >
             {" "}
             <Typography
-              color={"#fff"}
-              sx={{ m: 1 }}
+              sx={{ m: 1, color: "#FFF" }}
               component="h6"
               variant="h6"
             >

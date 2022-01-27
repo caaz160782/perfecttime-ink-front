@@ -232,3 +232,4 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
+//http://localhost:8000/checkout

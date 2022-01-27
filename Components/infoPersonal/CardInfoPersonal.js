@@ -32,7 +32,8 @@ export default function MediaCard({
         component="img"
         alt={staffMember.name}
         height="auto"
-        image={`http://localhost:8000/${staffMember.picture}`}
+        //image={`http://localhost:8000/${staffMember.picture}`}
+        image={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
       />
 
       <CardContent align="center">

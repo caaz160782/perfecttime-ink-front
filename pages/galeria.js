@@ -6,8 +6,6 @@ import Gallery from "../Components/galeria/gallery";
 
 const Galeria = () => {
   const classes = useStyles();
-  // const imagen = {Gallery};
-  // console.log( muestras )
   return (
     <div>
       <Box className={classes.title}>

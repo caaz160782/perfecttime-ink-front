@@ -20,22 +20,12 @@ import { useContext } from "react";
 
 export default function MediaCard({ staffMember, classes, atras, reload }) {
   const { auth, guardarAuth } = useContext(AuthContext);
-  //console.log("auth desde card", auth.infoUser);
-  //console.log("clientt", staffMember);
-  //console.log(role);
-
-  // let typeRol = {};
-  // if (auth.infoUser.rol === "Cliente") {
-  //   typeRol.ruta = "clientModified";
-  //   typeRol.titulo = "Cliente";
-  // }
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
       <CardMedia
         component="img"
         alt="foto"
         height="auto"
-        //  image={`http://localhost:8000/${staffMember.picture}`}
         image={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
       />
       <CardActionArea>

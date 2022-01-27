@@ -118,19 +118,7 @@ const Header = (props) => {
             button
             selected={value === 3}
             onClick={() => setValue(3)}
-          >
-            <NextLink href="/contacto" passHref>
-              <Link
-                className={
-                  router.pathname == "/contacto"
-                    ? classes.activeDrawer
-                    : classes.linkDrawer
-                }
-              >
-                Contacto
-              </Link>
-            </NextLink>
-          </ListItem>
+          ></ListItem>
           <ListItem
             divider
             button

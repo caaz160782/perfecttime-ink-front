@@ -120,8 +120,7 @@ const ModalViewDate = ({
       quality || 75
     }`;
   };
-  //console.log(auth);
-
+  console.log("next public base url", process.env.NEXT_PUBLIC_BASE_URL);
   return (
     <div>
       <Snackbar
@@ -176,6 +175,7 @@ const ModalViewDate = ({
               {!infoDate.statusPago ? (
                 <form
                   action={`${process.env.NEXT_PUBLIC_BASE_URL}checkout`}
+                  //action="/checkout"
                   method="post"
                 >
                   <input
@@ -232,4 +232,3 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
-//http://localhost:8000/checkout

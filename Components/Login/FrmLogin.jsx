@@ -60,7 +60,7 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
-        console.log("-------", response.data);
+        //console.log("-------", response.data);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,
@@ -204,7 +204,7 @@ const FrmLogin = () => {
                 <Box sx={{ m: 1 }}>
                   <TextField
                     required
-                    sx={{ width: "30ch" }}
+                    sx={{ width: "100%" }}
                     id="email"
                     label="Email"
                     inputProps={{ type: "email" }}
@@ -213,7 +213,7 @@ const FrmLogin = () => {
                 </Box>
                 <Box sx={{ mt: 3 }}>
                   {" "}
-                  <FormControl sx={{ width: "30ch" }} variant="outlined">
+                  <FormControl sx={{ width: "95%" }} variant="outlined">
                     <InputLabel htmlFor="msg-password">Password</InputLabel>
                     <OutlinedInput
                       id="msg-password"
@@ -243,7 +243,7 @@ const FrmLogin = () => {
                 </Box>
                 <Box sx={{ mt: 3 }}>
                   <LoadingButton
-                    sx={{ width: "34ch" }}
+                    sx={{ width: "95%" }}
                     endIcon={<SendIcon />}
                     loading={loading}
                     loadingPosition="end"

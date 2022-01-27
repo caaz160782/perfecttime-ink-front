@@ -32,6 +32,8 @@ const Calendar = ({
     hourTatooStart: "00:00",
     hourTatooFinish: "00:00",
     id_size: -1,
+    id_cliente: "",
+    cost: "",
   });
   const [infoDate, setinfoDate] = useState({});
   const [alert, setAlert] = useState({
@@ -125,12 +127,6 @@ const Calendar = ({
       console.log(error);
     }
   };
-  // useEffect(() => {
-  //   if (reloadDate) {
-  //     cargaDates();
-  //     setReloadDate(false);
-  //   }
-  // }, [reloadDate]);
 
   const cargaDatesStaff = async () => {
     try {

@@ -60,6 +60,7 @@ const FrmLogin = () => {
     clienteAxios
       .post("/login", values)
       .then((response) => {
+        console.log("-------", response.data);
         const { token, infoUser, infoStudio, autenticado } = response.data;
         guardarAuth({
           token,
@@ -94,9 +95,7 @@ const FrmLogin = () => {
           setAlert({
             open: true,
             message: error.response.data.error.toUpperCase(),
-            //message: "No se pueden generar citas en dias anteriores",
             backgroundColor: "#DD4A48",
-            //#519259
           });
         } else {
           console.log(error);
@@ -152,12 +151,12 @@ const FrmLogin = () => {
     <Container fixed>
       <Snackbar
         open={alert.open}
-        style={{ height: "100%" }}
+        //   style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
-        // anchorOrigin={{ vertical: "center", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
       />
       <Box
         sx={{

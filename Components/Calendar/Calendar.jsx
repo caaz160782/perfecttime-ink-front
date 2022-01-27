@@ -13,8 +13,15 @@ import clienteAxios from "../../utils/axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { isSameDay, parseISO } from "date-fns";
 
-const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
+const Calendar = ({
+  timeToOpen,
+  timeToClose,
+  dayNotAvailables,
+  reloadDate,
+  setReloadDate,
+}) => {
   const { auth } = useContext(AuthContext);
+  console.log("del auth", auth);
   const [open, setOpen] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [fechaHoy, setFecha] = useState("");
@@ -98,6 +105,8 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   const cargaDates = async () => {
+    console.log("acaaaaaaaaaaaaaaaaaa");
+
     try {
       clienteAxios
         .get(`/dateTatooByStudio/${auth.infoStudio.id}`, {
@@ -119,6 +128,12 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
       console.log(error);
     }
   };
+  // useEffect(() => {
+  //   if (reloadDate) {
+  //     cargaDates();
+  //     setReloadDate(false);
+  //   }
+  // }, [reloadDate]);
 
   const cargaDatesStaff = async () => {
     try {
@@ -177,20 +192,23 @@ const Calendar = ({ timeToOpen, timeToClose, dayNotAvailables }) => {
   };
 
   useEffect(() => {
-    switch (auth.infoUser.rol) {
-      case "Administrador":
-        cargaDates();
-        break;
-      case "Cliente":
-        cargaDatesClient();
-        break;
-      case "tatuador":
-        cargaDatesStaff();
-        break;
-      default:
-        console.log("example");
+    if (reloadDate) {
+      switch (auth.infoUser.rol) {
+        case "Administrador":
+          cargaDates();
+          break;
+        case "Cliente":
+          cargaDatesClient();
+          break;
+        case "tatuador":
+          cargaDatesStaff();
+          break;
+        default:
+          console.log("example");
+      }
+      setReloadDate(false);
     }
-  }, [auth.infoUser.rol]);
+  }, [auth.infoUser.rol, reloadDate]);
 
   return (
     <div>

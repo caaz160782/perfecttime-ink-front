@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import FrmStudio from "./FrmStudio";
 import { useRouter } from "next/router";
 
@@ -9,6 +9,11 @@ const StudioConfig = () => {
   const { auth, saveinfoStudio } = useContext(AuthContext);
   const [titleButton, setTitleButton] = useState("");
   const router = useRouter();
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const [valuesConfigStudio, setvaluesConfigStudio] = useState({
     //id_user: auth?.infoUser._id,
@@ -79,8 +84,18 @@ const StudioConfig = () => {
       .catch((error) => {
         setLoading(false);
         if (error.response) {
+          console.log("aaca");
+
           console.log(error.response.data);
+          setAlert({
+            open: true,
+            message: error.response.data.error,
+            //message: "No se pueden generar citas en dias anteriores",
+            backgroundColor: "#DD4A48",
+            //#519259
+          });
         } else {
+          console.log("aaca");
           console.log(error);
         }
       });
@@ -98,6 +113,14 @@ const StudioConfig = () => {
         // m: 15,
       }}
     >
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       <FrmStudio
         title={title}
         //cp={cp}

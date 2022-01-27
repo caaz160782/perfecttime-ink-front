@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import FrmStudio from "./FrmStudio";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -27,6 +27,11 @@ const StudioModif = () => {
   const [archivo, guardarArchivo] = useState("");
   const [title, setTitle] = useState("");
   const [titleButton, setTitleButton] = useState("");
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   const leerArchivo = (e) => {
     guardarArchivo(e.target.files[0]);
@@ -86,18 +91,21 @@ const StudioModif = () => {
       .then((response) => {
         cargarStudioInfo();
         setLoading(false);
-        MySwal.fire({
-          position: "center",
-          icon: "success",
-          title: "Actualizado Correctamente",
-          showConfirmButton: false,
-          timer: 1500,
+        setAlert({
+          open: true,
+          message: "estudio actualizado correctamente",
+          backgroundColor: "#519259",
         });
       })
       .catch((error) => {
         setLoading(false);
         if (error.response) {
           console.log(error.response.data);
+          setAlert({
+            open: true,
+            message: error.response.data.error,
+            backgroundColor: "#DD4A48",
+          });
         } else {
           console.log(error);
         }
@@ -113,6 +121,14 @@ const StudioModif = () => {
         //m: 15,
       }}
     >
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
       {
         <FrmStudio
           title={title}

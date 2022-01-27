@@ -175,7 +175,7 @@ const ModalViewDate = ({
             >
               {!infoDate.statusPago ? (
                 <form
-                  action={`${process.env.NEXT_PUBLIC_BASE_URL}/checkout`}
+                  action={`${process.env.NEXT_PUBLIC_BASE_URL}checkout`}
                   method="post"
                 >
                   <input

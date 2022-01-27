@@ -25,14 +25,14 @@ export default function Home() {
             <Box >
               <Typography className={classes.Title}> Bienvenido a la mejor opcion de control de agenda para tatuajes</Typography>
               <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
-                Conoce mas de nuestros servicios
+                Conoce más de nuestros servicios
               </Button>
             </Box>
           </Box>
 
           <Box maxWidth="lg" className={classes.blogsContainer}>
             <Typography variant="h4" className={classes.blogsTitle}>
-              Por que elegir Perfect Time INK?
+              ¿Por qué elegir Perfect Time INK?
             </Typography>
             <Grid 
               container
@@ -61,7 +61,7 @@ export default function Home() {
 
           <Box maxWidth="xlg" className={classes.blogsContainer}>
             <Typography variant="h4" className={classes.blogsTitle}>
-              Contactanos
+              Contáctanos
             </Typography> 
               <Grid 
                 container
@@ -80,14 +80,14 @@ export default function Home() {
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        Tienes un estudio de Tatuaje?
+                        ¿Tienes un estudio de Tatuaje?
                       </Typography>
                       <Typography variant="body2">
-                        Descubre porque Perfect Time Ink es la mejor herramienta para llevar un control de tu agenda
+                        Descubre porque Perfect Time INK es la mejor herramienta para llevar un control de tu agenda
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button className={classes.cardBtn} variant="contained" color="primary">Mas informacion</Button>
+                      <Button className={classes.cardBtn} variant="contained" color="primary">Mas información</Button>
                     </CardActions>
                   </Card>
                 </Grid>
@@ -101,10 +101,10 @@ export default function Home() {
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        Deseas hacerte un tatuaje?
+                        ¿Deseas hacerte un tatuaje?
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        Dale un vistazo a nuestra galeria 
+                        Dale un vistazo a nuestra galería 
                       </Typography>
                     </CardContent>
                     <CardActions>

@@ -23,7 +23,7 @@ export default function Home() {
         <Container className={classes.Container}>       
           <Box className={classes.hero}>
             <Box >
-              <Typography className={classes.Title}> Bienvenido a la mejor opcion de control de agenda para tatuajes</Typography>
+              <Typography className={classes.Title}> Bienvenido a la mejor opción de control de agenda para tatuajes</Typography>
               <Button className={classes.btn} variant="contained" color="primary" href="/servicios">
                 Conoce más de nuestros servicios
               </Button>

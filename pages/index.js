@@ -13,8 +13,6 @@ import {
   CssBaseline,
 } from "@mui/material";
 import useStyles from "../Components/landing/style.js";
-// import Image from '../public/images/backgroundtest.jpg'
-// import useStyles from '../Components/landing/style.js'
 
 export default function Home() {
   const classes = useStyles();

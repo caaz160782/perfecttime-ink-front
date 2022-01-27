@@ -89,12 +89,9 @@ export default function CustomizedDialogs({ classes, reload }) {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    //console.log("auth***", auth.infoStudio);
-    //const userEnviar = user;
-    // userEnviar.idStudio = auth.infoStudio.id;
-    //console.log("user", userEnviar);
     const idStudio = auth.infoStudio.id;
     const formData = new FormData();
+    
     formData.append("name", user.name);
     formData.append("lastName", user.lastName);
     formData.append("age", user.age);

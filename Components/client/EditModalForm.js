@@ -138,7 +138,8 @@ export default function EditCustomizedDialogs({
   return (
     <div>
       <Button color="primary" onClick={handleClickOpen}>
-        <EditIcon></EditIcon> Editar
+        {/* <EditIcon></EditIcon>  */}
+        Editar
       </Button>
       <Snackbar
         open={alert.open}

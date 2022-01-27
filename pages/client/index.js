@@ -14,7 +14,7 @@ const Staff = () => {
   const useStyles = makeStyles((theme) => ({
     btnLogin: {
       color: "#fff",
-      fontFamily: "Pacifico",
+      //fontFamily: "Pacifico",
       textTransform: "none",
       fontSize: "1.6rem",
     },
@@ -125,10 +125,10 @@ const Staff = () => {
   const verInactivos = () => {
     setSwitchStatus(!switchStatus);
     if (switchStatus) {
-      const staffAct = staffMentira.filter((x) => x.statusUser === true);
+      staffAct = staffMentira.filter((x) => x.statusUser === true);
       setStaff(staffAct);
     } else {
-      const staffInact = staffMentira.filter((x) => x.statusUser !== true);
+      staffInact = staffMentira.filter((x) => x.statusUser !== true);
       setStaff(staffInact);
     }
   };

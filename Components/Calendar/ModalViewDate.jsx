@@ -174,7 +174,10 @@ const ModalViewDate = ({
               }}
             >
               {!infoDate.statusPago ? (
-                <form action="http://localhost:8000/checkout" method="post">
+                <form
+                  action={`${process.env.NEXT_PUBLIC_BASE_URL}/checkout`}
+                  method="post"
+                >
                   <input
                     type="hidden"
                     name="price"
@@ -229,3 +232,4 @@ const ModalViewDate = ({
 };
 
 export default ModalViewDate;
+//http://localhost:8000/checkout

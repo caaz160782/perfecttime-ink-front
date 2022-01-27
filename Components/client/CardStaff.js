@@ -18,12 +18,7 @@ import Image from "next/image";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 
-export default function MediaCard({
-  staffMember,
-  classes,
-  atras,
-  reload,
-}) {
+export default function MediaCard({ staffMember, classes, atras, reload }) {
   const { auth, guardarAuth } = useContext(AuthContext);
   //console.log("auth desde card", auth.infoUser);
   //console.log("clientt", staffMember);
@@ -37,10 +32,11 @@ export default function MediaCard({
   return (
     <Card sx={{ maxWidth: 500 }} align="center">
       <CardMedia
-        component= "img"
+        component="img"
         alt="foto"
         height="auto"
-        image={`http://localhost:8000/${staffMember.picture}`}
+        //  image={`http://localhost:8000/${staffMember.picture}`}
+        image={`${process.env.NEXT_PUBLIC_BASE_URL}${staffMember.picture}`}
       />
       <CardActionArea>
         <CardContent align="center">
@@ -71,24 +67,24 @@ export default function MediaCard({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions 
-        style={{ 
+      <CardActions
+        style={{
           display: "flex",
           justifyContent: "space-between",
         }}
       >
         <NextLink href={atras} passHref>
-            <Link className={classes.tab}>
-              <Button color="primary">
-                <ArrowBackIcon></ArrowBackIcon> ATRAS
-              </Button>
-            </Link>
-          </NextLink>
-          <EditCustomizedDialogs
-            staffMember={staffMember}
-            classes={classes}
-            reload={reload}
-          ></EditCustomizedDialogs>
+          <Link className={classes.tab}>
+            <Button color="primary">
+              <ArrowBackIcon></ArrowBackIcon> ATRAS
+            </Button>
+          </Link>
+        </NextLink>
+        <EditCustomizedDialogs
+          staffMember={staffMember}
+          classes={classes}
+          reload={reload}
+        ></EditCustomizedDialogs>
       </CardActions>
     </Card>
   );

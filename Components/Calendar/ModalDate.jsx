@@ -94,10 +94,10 @@ const ModalDate = ({
       );
       const finDate = tatoo.length > 0 ? tatoo.pop() : {};
       if (Object.keys(finDate).length !== 0) {
-        console.log(finDate);
+        //   console.log(finDate);
         const newDateEqualDay = addHours(parseISO(finDate.end), 1);
         const NewDareFinhish = addHours(parseISO(finDate.end), 2);
-        console.log("_______________", newDateEqualDay);
+        // console.log("_______________", newDateEqualDay);
         setValuDate({
           ...valueDate,
           id_tatuador: event.target.value,
@@ -194,189 +194,223 @@ const ModalDate = ({
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={1000}
       />
-      <Dialog open={open} fullScreen={fullScreen} onClose={handleClose}>
-        <DialogTitle sx={{ textAlign: "center" }}>
-          Agendar {fechaHoy.split("-").reverse().join("/")}
-        </DialogTitle>
-        <form id="form" onSubmit={handleGuardar}>
+      <Dialog open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            textAlign: "center",
+            flexWrap: "wrap",
+            p: 1,
+          }}
+        >
           <Box
             sx={{
-              width: 360,
-              height: 650,
+              border: 1,
+              borderRadius: 2,
+              borderColor: "secondary.main",
+              boxShadow: 1,
+              width: 380,
+              height: 750,
+              minWidth: 200,
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
-            <DialogContent>
-              <Box sx={{ m: 1 }}>
-                <TextField
-                  sx={{ width: "26ch" }}
-                  id="title"
-                  size="small"
-                  required
-                  label="Titulo"
-                  type="text"
-                  onChange={handleChangeDate("title")}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <SelectTatuador handleChangeDate={handleChangeDate} />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <SelectClient handleChangeDate={handleChangeDate} />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <TextField
-                  sx={{ width: "26ch" }}
-                  id="hourTatooStart"
-                  size="small"
-                  required
-                  label="Hora Cita"
-                  type="time"
-                  value={valueDate.hourTatooStart}
-                  onChange={handleChangeDate("hourTatooStart")}
-                  InputLabelProps={{
-                    shrink: true,
+            <Box
+              sx={{
+                backgroundColor: "secondary.main",
+                borderRadiusTop: 2,
+                height: 50,
+                textAlign: "center",
+              }}
+            >
+              {" "}
+              <DialogTitle sx={{ textAlign: "center", color: "#FFF" }}>
+                Agendar {fechaHoy.split("-").reverse().join("/")}
+              </DialogTitle>
+            </Box>
+            <Box>
+              <form id="form" onSubmit={handleGuardar}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                  inputProps={{
-                    step: 300, // 5 min
-                  }}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">Tipo Tatuaje</FormLabel>
-                  <RadioGroup
-                    row
-                    size="small"
-                    aria-label="tipeTattoo"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="color"
-                      control={<Radio />}
-                      label="Color"
-                      onChange={handleChangeDate("tipoTatoo")}
-                    />
-                    <FormControlLabel
-                      value="Blanco y Negro"
-                      control={<Radio />}
-                      label="Blanco y Negro"
-                      onChange={handleChangeDate("tipoTatoo")}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <TextField
-                  sx={{ width: "26ch" }}
-                  required
-                  size="small"
-                  id="description"
-                  label="Descripcion Tatuaje"
-                  type="text"
-                  onChange={handleChangeDate("description")}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <SelectSize
-                  sizeValue={sizeValue}
-                  setSizeTatuador={setSizeTatuador}
-                  handleChangeDate={handleChangeDate}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                  <TextField
-                    sx={{ width: "26ch" }}
-                    size="small"
-                    id="desPhotoTatoo"
-                    name="desPhotoTatoo"
-                    inputProps={{ type: "file" }}
-                    onChange={leerArchivo}
-                  ></TextField>
-                  <Box></Box>
-                </Box>
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <TextField
-                  sx={{ width: "26ch" }}
-                  id="hourTatooFinish"
-                  required
-                  size="small"
-                  label="Hora Fin"
-                  type="time"
-                  value={valueDate.hourTatooFinish}
-                  onChange={handleChangeDate("hourTatooFinish")}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    step: 300, // 5 min
-                  }}
-                />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <FormControl fullWidth sx={{ width: "26ch" }}>
-                  <InputLabel htmlFor="outlined-adornment-amount">
-                    Costo Aprox*
-                  </InputLabel>
-                  <OutlinedInput
-                    id="cost"
-                    size="small"
-                    type="text"
-                    onChange={handleChangeDate("cost")}
-                    startAdornment={
-                      <InputAdornment position="start">$</InputAdornment>
-                    }
-                    label="Amount"
-                  />
-                </FormControl>
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <FormControl sx={{ width: "26ch" }}>
-                  <InputLabel htmlFor="outlined-adornment-amount">
-                    Adelanto*
-                  </InputLabel>
-                  <OutlinedInput
-                    id="estimated"
-                    size="small"
-                    disabled
-                    type="text"
-                    value={adelanto}
-                    startAdornment={
-                      <InputAdornment position="start">$</InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  m: 1,
-                }}
-              >
-                <Button color="error" onClick={handleClose}>
-                  Cerrar
-                </Button>
-                <LoadingButton
-                  endIcon={<SendIcon />}
-                  loading={loading}
-                  loadingPosition="end"
-                  variant="contained"
-                  type="submit"
                 >
-                  Enviar
-                </LoadingButton>
-              </Box>
-            </DialogContent>
+                  {" "}
+                  <DialogContent>
+                    <Box sx={{ m: 1 }}>
+                      <TextField
+                        sx={{ width: "280px" }}
+                        id="title"
+                        size="small"
+                        required
+                        label="Titulo"
+                        type="text"
+                        onChange={handleChangeDate("title")}
+                      />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <SelectTatuador handleChangeDate={handleChangeDate} />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <SelectClient handleChangeDate={handleChangeDate} />
+                    </Box>
+                    <Box sx={{ m: 2 }}>
+                      <TextField
+                        sx={{ width: "280px" }}
+                        id="hourTatooStart"
+                        size="small"
+                        required
+                        label="Hora Cita"
+                        type="time"
+                        value={valueDate.hourTatooStart}
+                        onChange={handleChangeDate("hourTatooStart")}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        inputProps={{
+                          step: 300, // 5 min
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <FormControl component="fieldset">
+                        <FormLabel component="legend">Tipo Tatuaje</FormLabel>
+                        <RadioGroup
+                          row
+                          size="small"
+                          aria-label="tipeTattoo"
+                          name="row-radio-buttons-group"
+                        >
+                          <FormControlLabel
+                            value="color"
+                            control={<Radio />}
+                            label="Color"
+                            onChange={handleChangeDate("tipoTatoo")}
+                          />
+                          <FormControlLabel
+                            value="Blanco y Negro"
+                            control={<Radio />}
+                            label="Blanco y Negro"
+                            onChange={handleChangeDate("tipoTatoo")}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <TextField
+                        sx={{ width: "280px" }}
+                        required
+                        size="small"
+                        id="description"
+                        label="Descripcion Tatuaje"
+                        type="text"
+                        onChange={handleChangeDate("description")}
+                      />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <SelectSize
+                        sizeValue={sizeValue}
+                        setSizeTatuador={setSizeTatuador}
+                        handleChangeDate={handleChangeDate}
+                      />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <TextField
+                        sx={{ width: "280px" }}
+                        size="small"
+                        id="desPhotoTatoo"
+                        name="desPhotoTatoo"
+                        inputProps={{ type: "file" }}
+                        onChange={leerArchivo}
+                      ></TextField>
+                    </Box>
+                    <Box sx={{ m: 2 }}>
+                      <TextField
+                        sx={{ width: "280px" }}
+                        id="hourTatooFinish"
+                        required
+                        size="small"
+                        label="Hora Fin"
+                        type="time"
+                        value={valueDate.hourTatooFinish}
+                        onChange={handleChangeDate("hourTatooFinish")}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        inputProps={{
+                          step: 300, // 5 min
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <FormControl fullWidth sx={{ width: "280px" }}>
+                        <InputLabel htmlFor="outlined-adornment-amount">
+                          Costo Aprox*
+                        </InputLabel>
+                        <OutlinedInput
+                          id="cost"
+                          size="small"
+                          type="text"
+                          onChange={handleChangeDate("cost")}
+                          startAdornment={
+                            <InputAdornment position="start">$</InputAdornment>
+                          }
+                          label="Amount"
+                        />
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ m: 1 }}>
+                      <FormControl sx={{ width: "280px" }}>
+                        <InputLabel htmlFor="outlined-adornment-amount">
+                          Adelanto*
+                        </InputLabel>
+                        <OutlinedInput
+                          id="estimated"
+                          size="small"
+                          disabled
+                          type="text"
+                          value={adelanto}
+                          startAdornment={
+                            <InputAdornment position="start">$</InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        m: 1,
+                      }}
+                    >
+                      <Button color="error" onClick={handleClose}>
+                        Cerrar
+                      </Button>
+                      <LoadingButton
+                        endIcon={<SendIcon />}
+                        loading={loading}
+                        loadingPosition="end"
+                        variant="contained"
+                        type="submit"
+                      >
+                        Enviar
+                      </LoadingButton>
+                    </Box>
+                  </DialogContent>
+                </Box>
+              </form>
+            </Box>
           </Box>
-        </form>
+        </Box>
       </Dialog>
     </div>
   );

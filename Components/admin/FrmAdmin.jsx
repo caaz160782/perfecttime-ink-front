@@ -82,8 +82,7 @@ const FrmAdmin = () => {
           if (error.response) {
             setAlert({
               open: true,
-              message: error.response.data.errors[0].msg,
-              //message: "No se pueden generar citas en dias anteriores",
+              message: error.response.data.message,
               backgroundColor: "#DD4A48",
               //#519259
             });
@@ -144,7 +143,11 @@ const FrmAdmin = () => {
             }}
           >
             {" "}
-            <Typography sx={{ m: 1 }} component="h6" variant="h6">
+            <Typography
+              sx={{ m: 1, color: "#FFF" }}
+              component="h6"
+              variant="h6"
+            >
               Crea una Cuenta{" "}
             </Typography>
           </Box>
@@ -241,6 +244,13 @@ const FrmAdmin = () => {
                       required
                     />
                   </FormControl>
+                  <Box>
+                    <Typography variant="caption" display="block" gutterBottom>
+                      el password debe tener un mínimo de 8 caracteres,
+                      incluidos un número, mayúscula, minúscula y un carácter
+                      especial
+                    </Typography>
+                  </Box>
                 </Box>
                 <Box sx={{ mt: 2 }}>
                   <LoadingButton

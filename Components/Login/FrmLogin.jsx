@@ -190,7 +190,12 @@ const FrmLogin = () => {
             }}
           >
             {" "}
-            <Typography sx={{ m: 1 }} component="h6" variant="h6">
+            <Typography
+              color={"#fff"}
+              sx={{ m: 1 }}
+              component="h6"
+              variant="h6"
+            >
               Inicia Sesión{" "}
             </Typography>
           </Box>

@@ -128,7 +128,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
     fontWeight: "600",
     fontSize: "1.4rem",
-    marginLeft: "50px",
+    marginLeft: "80px",
+    transition: "all 0.5s ease",
     "&:hover": {
       color: "rgb(123, 136, 146)",
     },

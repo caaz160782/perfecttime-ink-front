@@ -7,6 +7,7 @@ import {
   styled,
   Button,
   Snackbar,
+  Container,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -95,16 +96,7 @@ const FrmStudio = ({
     backgroundColor: "",
   });
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        textAlign: "center",
-        flexWrap: "wrap",
-        alignItems: "center",
-        //m: 18,
-      }}
-    >
+    <Container fixed>
       <Snackbar
         open={alert.open}
         message={alert.message}
@@ -113,90 +105,125 @@ const FrmStudio = ({
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={4000}
       />
-      <Typography component="h5" variant="h5">
-        {title} Datos del Estudio
-      </Typography>
-      <form id="form" onSubmit={handlerSubmit}>
-        <Box sx={{ m: 1 }}>
-          <TextField
-            sx={{ width: "30ch" }}
-            size="small"
-            required
-            label="Nombre del estudio"
-            name="name"
-            id="name"
-            value={valuesConfigStudio.name}
-            inputProps={{ type: "text" }}
-            onChange={handleChange("name")}
-          ></TextField>
-        </Box>
-        <Box sx={{ m: 1 }}>
-          <TextField
-            sx={{ width: "30ch" }}
-            required
-            size="small"
-            id="description"
-            label="Description"
-            name="description"
-            value={valuesConfigStudio.description}
-            inputProps={{ type: "text" }}
-            onChange={handleChange("description")}
-          ></TextField>
-        </Box>
-        <Box sx={{ display: "flex", flexDirection: "row", m: 1 }}>
-          <TextField
-            sx={{ width: "175px" }}
-            id="picture"
-            size="small"
-            //required
-            name="picture"
-            inputProps={{ type: "file" }}
-            onChange={leerArchivo}
-          ></TextField>
-          <Box></Box>
-        </Box>
-        <Box sx={{ m: 1 }}>
-          <TextField
-            sx={{ width: "30ch" }}
-            required
-            id="rfc"
-            size="small"
-            label="RFC"
-            name="rfc"
-            value={valuesConfigStudio.rfc}
-            inputProps={{ type: "text" }}
-            onChange={handleChange("rfc")}
-          ></TextField>
-        </Box>
-        <Box sx={{ m: 1 }}>
-          <TextField
-            sx={{ width: "30ch" }}
-            required
-            size="small"
-            id="phoneStudio"
-            label="Telefono"
-            name="phoneStudio"
-            value={valuesConfigStudio.phoneStudio}
-            inputProps={{ type: "text" }}
-            onChange={handleChange("phoneStudio")}
-          ></TextField>
-        </Box>
-
-        <Box sx={{ m: 1 }}>
-          <TextField
-            sx={{ width: "30ch" }}
-            required
-            size="small"
-            id="phoneWhatsApp"
-            label="Whatsapp"
-            name="phoneWhatsApp"
-            inputProps={{ type: "text" }}
-            value={valuesConfigStudio.phoneWhatsApp}
-            onChange={handleChange("phoneWhatsApp")}
-          ></TextField>
-        </Box>
-
-        {/* <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+          flexWrap: "wrap",
+          alignItems: "center",
+          //m: 18,
+        }}
+      >
+        <Box
+          sx={{
+            border: 1,
+            borderRadius: 2,
+            borderColor: "secondary.main",
+            boxShadow: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "secondary.main",
+              borderRadiusTop: 2,
+              height: 50,
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{ m: 1, color: "#FFF" }}
+              component="h6"
+              variant="h6"
+            >
+              {title} Datos del Estudio
+            </Typography>
+          </Box>
+          <Box>
+            <form id="form" onSubmit={handlerSubmit}>
+              <Box sx={{ m: 4 }}>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    size="small"
+                    required
+                    label="Nombre del estudio"
+                    name="name"
+                    id="name"
+                    value={valuesConfigStudio.name}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("name")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    size="small"
+                    id="description"
+                    label="Description"
+                    name="description"
+                    value={valuesConfigStudio.description}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("description")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Suba Permiso de Cofepris (jpg,png)
+                  </Typography>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    id="picture"
+                    size="small"
+                    //required
+                    name="picture"
+                    inputProps={{ type: "file" }}
+                    onChange={leerArchivo}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    id="rfc"
+                    size="small"
+                    label="RFC"
+                    name="rfc"
+                    value={valuesConfigStudio.rfc}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("rfc")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    size="small"
+                    id="phoneStudio"
+                    label="Telefono"
+                    name="phoneStudio"
+                    value={valuesConfigStudio.phoneStudio}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("phoneStudio")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    size="small"
+                    id="phoneWhatsApp"
+                    label="Whatsapp"
+                    name="phoneWhatsApp"
+                    inputProps={{ type: "text" }}
+                    value={valuesConfigStudio.phoneWhatsApp}
+                    onChange={handleChange("phoneWhatsApp")}
+                  ></TextField>
+                </Box>
+                {/* <Box>
           <TextField
             sx={{ m: 1, width: "30ch" }}
             required
@@ -207,91 +234,86 @@ const FrmStudio = ({
             value={valuesConfigStudio.social}
             onChange={handleChange("social")}
           ></TextField>
+
         </Box> */}
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            m: 1,
-          }}
-        >
-          <TextField
-            sx={{ width: "30ch" }}
-            required
-            id="postalCode"
-            size="small"
-            label="Codigo Postal"
-            name="postalCode"
-            inputProps={{ type: "text" }}
-            value={valuesConfigStudio.postalCode}
-            onChange={handleChange("postalCode")}
-          ></TextField>
-        </Box>
-        <Box>
-          <Box sx={{ m: 1 }}>
-            <TextField
-              sx={{ width: "30ch" }}
-              required
-              label="Estado"
-              id="state"
-              size="small"
-              name="state"
-              value={valuesConfigStudio.state}
-              inputProps={{ type: "text" }}
-              onChange={handleChange("state")}
-            ></TextField>
-          </Box>
-          <Box sx={{ m: 1 }}>
-            <TextField
-              sx={{ width: "30ch" }}
-              required
-              id="municipality"
-              label="Municipio"
-              name="municipality"
-              size="small"
-              value={valuesConfigStudio.municipality}
-              inputProps={{ type: "text" }}
-              onChange={handleChange("municipality")}
-            ></TextField>
-          </Box>
-          <Box sx={{ m: 1 }}>
-            <LocalidadSelect
-              handleChange={handleChange}
-              setLocalidad={setLocalidad}
-              localidad={localidad}
-              valuesConfigStudio={valuesConfigStudio}
-            />
-          </Box>
-          <Box sx={{ m: 1 }}>
-            <TextField
-              sx={{ width: "30ch" }}
-              required
-              size="small"
-              id="address"
-              label="Domicilio"
-              name="address"
-              value={valuesConfigStudio.address}
-              inputProps={{ type: "text" }}
-              onChange={handleChange("address")}
-            ></TextField>
-          </Box>
-
-          <Box sx={{ m: 2 }}>
-            <LoadingButton
-              endIcon={<SendIcon />}
-              loading={loading}
-              loadingPosition="end"
-              variant="contained"
-              type="submit"
-            >
-              {butonLabel}
-            </LoadingButton>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    id="postalCode"
+                    size="small"
+                    label="Codigo Postal"
+                    name="postalCode"
+                    inputProps={{ type: "text" }}
+                    value={valuesConfigStudio.postalCode}
+                    onChange={handleChange("postalCode")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    label="Estado"
+                    id="state"
+                    size="small"
+                    name="state"
+                    value={valuesConfigStudio.state}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("state")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    id="municipality"
+                    label="Municipio"
+                    name="municipality"
+                    size="small"
+                    value={valuesConfigStudio.municipality}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("municipality")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <LocalidadSelect
+                    handleChange={handleChange}
+                    setLocalidad={setLocalidad}
+                    localidad={localidad}
+                    valuesConfigStudio={valuesConfigStudio}
+                  />
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <TextField
+                    sx={{ width: "300px" }}
+                    required
+                    size="small"
+                    id="address"
+                    label="Domicilio"
+                    name="address"
+                    value={valuesConfigStudio.address}
+                    inputProps={{ type: "text" }}
+                    onChange={handleChange("address")}
+                  ></TextField>
+                </Box>
+                <Box sx={{ m: 2 }}>
+                  <LoadingButton
+                    sx={{ width: "300px" }}
+                    endIcon={<SendIcon />}
+                    loading={loading}
+                    loadingPosition="end"
+                    variant="contained"
+                    type="submit"
+                  >
+                    {butonLabel}
+                  </LoadingButton>
+                </Box>
+              </Box>
+            </form>
           </Box>
         </Box>
-      </form>
-    </Box>
+      </Box>
+    </Container>
   );
 };
 

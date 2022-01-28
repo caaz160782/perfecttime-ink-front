@@ -3,8 +3,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import Calendar from "../Calendar/Calendar";
 import clienteAxios from "../../utils/axios";
 import { useRouter } from "next/router";
-import { Snackbar } from "@mui/material";
-import { route } from "next/dist/server/router";
+import { Snackbar, CircularProgress, Box } from "@mui/material";
 
 const FrmAgenda = () => {
   const { auth } = useContext(AuthContext);
@@ -105,7 +104,11 @@ const FrmAgenda = () => {
       </div>
     );
   } else {
-    return <div> </div>;
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 };
 export default FrmAgenda;

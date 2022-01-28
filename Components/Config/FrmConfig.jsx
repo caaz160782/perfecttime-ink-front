@@ -1,4 +1,5 @@
 import React from "react";
+import React, { useState, useContext } from "react";
 import { Typography, TextField, Box } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
@@ -14,11 +15,6 @@ const FrmConfig = ({
   valuesConfig,
   loading,
 }) => {
-  const [alert, setAlert] = useState({
-    open: false,
-    message: "",
-    backgroundColor: "",
-  });
   return (
     <Box
       sx={{

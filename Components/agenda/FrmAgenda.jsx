@@ -92,7 +92,7 @@ const FrmAgenda = () => {
           ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           onClose={() => setAlert({ ...alert, open: false })}
-          autoHideDuration={4000}
+          autoHideDuration={2000}
         />
         <Calendar
           timeToOpen={timeToOpen}

@@ -107,9 +107,10 @@ const FrmPassword = ({ hash }) => {
         open={alert.open}
         style={{ height: "100%" }}
         message={alert.message}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={4000}
+        autoHideDuration={2000}
       />
       <Box
         sx={{

@@ -151,12 +151,11 @@ const FrmLogin = () => {
     <Container fixed>
       <Snackbar
         open={alert.open}
-        //   style={{ height: "100%" }}
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
       />
       <Box
         sx={{

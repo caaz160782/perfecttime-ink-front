@@ -109,7 +109,7 @@ const FrmAdmin = () => {
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={4000}
+        autoHideDuration={2000}
       />
       <Box
         sx={{

@@ -27,9 +27,9 @@ const FrmConfig = ({
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
       />
-      <Box sx={{ mt: 4, display: "flex" }}>
+      <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
         {" "}
         <Box
           sx={{
@@ -39,6 +39,7 @@ const FrmConfig = ({
             boxShadow: 1,
             width: 390,
             display: "flex",
+            justifyContent: "center",
             flexDirection: "column",
           }}
         >

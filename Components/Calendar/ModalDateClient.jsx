@@ -45,6 +45,7 @@ const ModalDateClient = ({
   const [costo, setCosto] = useState(0);
   const { auth } = useContext(AuthContext);
   const [sizeValue, setSizeTatuador] = useState([]);
+  const [tatuadorValue, setValueTatuador] = useState([]);
   const [alert, setAlert] = useState({
     open: false,
     message: "",
@@ -387,7 +388,11 @@ const ModalDateClient = ({
                 />
               </Box>
               <Box sx={{ m: 1 }}>
-                <SelectTatuador handleChangeDate={handleChangeDate} />
+                <SelectTatuador
+                  tatuadorValue={tatuadorValue}
+                  setValueTatuador={setValueTatuador}
+                  handleChangeDate={handleChangeDate}
+                />
               </Box>
               {/* <Box sx={{ m: 1 }}>
                 <SelectClient handleChangeDate={handleChangeDate} />

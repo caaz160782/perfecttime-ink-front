@@ -14,6 +14,11 @@ const FrmConfig = ({
   valuesConfig,
   loading,
 }) => {
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
   return (
     <Box
       sx={{

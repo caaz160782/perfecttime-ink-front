@@ -34,7 +34,7 @@ const DaysSelect = ({ handleChange, valuesConfig }) => {
   //console.log(valuesConfig.dayNotAvailables);
   return (
     <div>
-      <FormControl sx={{ m: 1, width: "30ch" }}>
+      <FormControl sx={{ width: "300px" }}>
         <InputLabel id="chip-label">Días No Laborales</InputLabel>
         <Select
           labelId="chip-label"

@@ -9,7 +9,7 @@ const LocalidadSelect = ({
 }) => {
   return (
     <Box>
-      <FormControl sx={{ width: "30ch" }}>
+      <FormControl sx={{ width: "300px" }}>
         <InputLabel id="demo-simple-select-autowidth-label">Colonia</InputLabel>
         <Select
           //defaultValue=""

@@ -29,7 +29,7 @@ const FrmConfig = ({
         onClose={() => setAlert({ ...alert, open: false })}
         autoHideDuration={3000}
       />
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 4, display: "flex" }}>
         {" "}
         <Box
           sx={{
@@ -37,6 +37,7 @@ const FrmConfig = ({
             borderRadius: 2,
             borderColor: "secondary.main",
             boxShadow: 1,
+            width: 390,
             display: "flex",
             flexDirection: "column",
           }}
@@ -45,6 +46,7 @@ const FrmConfig = ({
             sx={{
               backgroundColor: "secondary.main",
               borderRadiusTop: 2,
+
               height: 50,
               textAlign: "center",
             }}

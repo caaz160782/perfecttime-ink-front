@@ -26,6 +26,7 @@ import {
   InputAdornment,
   OutlinedInput,
   Snackbar,
+  Typography,
 } from "@mui/material";
 
 const ModalDate = ({
@@ -46,6 +47,8 @@ const ModalDate = ({
   const [archivo, guardarArchivo] = useState("");
   const [adelanto, setAdelanto] = useState(0);
   const [sizeValue, setSizeTatuador] = useState([]);
+  const [tatuadorValue, setValueTatuador] = useState([]);
+  const [clientValue, setclientValue] = useState([]);
   const { auth } = useContext(AuthContext);
   const [alert, setAlert] = useState({
     open: false,
@@ -72,11 +75,25 @@ const ModalDate = ({
     if (sizeValue.length === 0) {
       llenarSize();
     }
+    setAdelanto(0);
+    guardarArchivo("");
+    setValueTatuador([]);
+    setclientValue([]);
+    setValuDate({
+      picture: "",
+      hourTatooStart: "00:00",
+      hourTatooFinish: "00:00",
+      cost: 0,
+    });
   }, []);
 
   const handleClose = () => {
     setOpen(false);
     setAdelanto(0);
+    guardarArchivo("");
+    setValueTatuador([]);
+    setValuDate({ ...valueDate, id_cliente: "" });
+    guardarArchivo("");
   };
 
   const leerArchivo = (e) => {
@@ -151,37 +168,82 @@ const ModalDate = ({
     formData.append("cost", valueDate.cost);
     formData.append("estimated", valueDate.estimated);
     formData.append("picture", archivo);
-    clienteAxios
-      .post("/dateTatoo", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          apitoken: auth?.token,
-        },
-      })
-      .then((response) => {
-        const { code } = response.data;
-        if (code === "Created") {
-          cargaDates();
-          setOpen(false);
-          setinfoDate(response.data.payload);
-          setLoading(false);
-          setAdelanto(0);
-          setOpenViewModal(true);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.response) {
-          console.log(error.response.data);
-          setAlert({
-            open: true,
-            message: error.response.data.message.toUpperCase(),
-            backgroundColor: "#519259",
-          });
-        } else {
-          console.log(error);
-        }
+
+    if (valueDate.id_tatuador === "") {
+      setAlert({
+        open: true,
+        message: "seleccione a un tatuador",
+        backgroundColor: "#DD4A48",
       });
+    } else if (valueDate.id_cliente === "") {
+      setAlert({
+        open: true,
+        message: "seleccione a un cliente",
+        backgroundColor: "#DD4A48",
+      });
+    } else if (valueDate.id_size === -1) {
+      setAlert({
+        open: true,
+        message: "seleccione el Tamaño",
+        backgroundColor: "#DD4A48",
+      });
+    } else if (archivo === "") {
+      setAlert({
+        open: true,
+        message: "seleccione una imagen",
+        backgroundColor: "#DD4A48",
+      });
+    } else if (valueDate.cost === "") {
+      setAlert({
+        open: true,
+        message: "Ingrese el costo",
+        backgroundColor: "#DD4A48",
+      });
+    } else if (valueDate.hourTatooStart === valueDate.hourTatooFinish) {
+      setAlert({
+        open: true,
+        message: "La hora fin debe ser diferente a la de inicio",
+        backgroundColor: "#DD4A48",
+      });
+    } else {
+      clienteAxios
+        .post("/dateTatoo", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            apitoken: auth?.token,
+          },
+        })
+        .then((response) => {
+          const { code } = response.data;
+          if (code === "Created") {
+            cargaDates();
+            setOpen(false);
+            setinfoDate(response.data.payload);
+            setLoading(false);
+            llenarSize();
+            setAdelanto(0);
+            guardarArchivo("");
+            setValueTatuador([]);
+            setValuDate({ ...valueDate, cost: "" });
+            setValuDate({ ...valueDate, id_cliente: "" });
+            setOpenViewModal(true);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error.response);
+          if (error.response) {
+            console.log(error.response.data);
+            setAlert({
+              open: true,
+              message: error.response.data.message.toUpperCase(),
+              backgroundColor: "#519259",
+            });
+          } else {
+            console.log(error);
+          }
+        });
+    }
   };
 
   return (
@@ -198,10 +260,9 @@ const ModalDate = ({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: { sm: "flex-start", md: "center" },
+            alignItems: { sm: "flex-start", md: "center" },
             flexDirection: "column",
-            textAlign: "center",
             flexWrap: "wrap",
             p: 1,
           }}
@@ -212,11 +273,9 @@ const ModalDate = ({
               borderRadius: 2,
               borderColor: "secondary.main",
               boxShadow: 1,
-              width: 380,
+              width: 350,
               height: 750,
               minWidth: 200,
-              display: "flex",
-              flexDirection: "column",
             }}
           >
             <Box
@@ -234,19 +293,12 @@ const ModalDate = ({
             </Box>
             <Box>
               <form id="form" onSubmit={handleGuardar}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <Box sx={{}}>
                   {" "}
                   <DialogContent>
-                    <Box sx={{ m: 1 }}>
+                    <Box sx={{ mt: 1 }}>
                       <TextField
-                        sx={{ width: "280px" }}
+                        sx={{ width: "300px" }}
                         id="title"
                         size="small"
                         required
@@ -255,15 +307,23 @@ const ModalDate = ({
                         onChange={handleChangeDate("title")}
                       />
                     </Box>
-                    <Box sx={{ m: 1 }}>
-                      <SelectTatuador handleChangeDate={handleChangeDate} />
+                    <Box sx={{ mt: 1 }}>
+                      <SelectTatuador
+                        tatuadorValue={tatuadorValue}
+                        setValueTatuador={setValueTatuador}
+                        handleChangeDate={handleChangeDate}
+                      />
                     </Box>
-                    <Box sx={{ m: 1 }}>
-                      <SelectClient handleChangeDate={handleChangeDate} />
+                    <Box sx={{ mt: 1 }}>
+                      <SelectClient
+                        clientValue={clientValue}
+                        setclientValue={setclientValue}
+                        handleChangeDate={handleChangeDate}
+                      />
                     </Box>
-                    <Box sx={{ m: 2 }}>
+                    <Box sx={{ mt: 2 }}>
                       <TextField
-                        sx={{ width: "280px" }}
+                        sx={{ width: "300px" }}
                         id="hourTatooStart"
                         size="small"
                         required
@@ -279,7 +339,7 @@ const ModalDate = ({
                         }}
                       />
                     </Box>
-                    <Box sx={{ m: 1 }}>
+                    <Box sx={{ mt: 1 }}>
                       <FormControl component="fieldset">
                         <FormLabel component="legend">Tipo Tatuaje</FormLabel>
                         <RadioGroup
@@ -303,9 +363,9 @@ const ModalDate = ({
                         </RadioGroup>
                       </FormControl>
                     </Box>
-                    <Box sx={{ m: 1 }}>
+                    <Box sx={{ mt: 1 }}>
                       <TextField
-                        sx={{ width: "280px" }}
+                        sx={{ width: "300px" }}
                         required
                         size="small"
                         id="description"
@@ -314,16 +374,23 @@ const ModalDate = ({
                         onChange={handleChangeDate("description")}
                       />
                     </Box>
-                    <Box sx={{ m: 1 }}>
+                    <Box sx={{ mt: 1 }}>
                       <SelectSize
                         sizeValue={sizeValue}
                         setSizeTatuador={setSizeTatuador}
                         handleChangeDate={handleChangeDate}
                       />
                     </Box>
-                    <Box sx={{ m: 1 }}>
+                    <Box sx={{ mt: 1 }}>
+                      <Typography
+                        variant="caption"
+                        display="block"
+                        gutterBottom
+                      >
+                        Seleccione una imagen de Muestra (jpg,png)
+                      </Typography>
                       <TextField
-                        sx={{ width: "280px" }}
+                        sx={{ width: "300px" }}
                         size="small"
                         id="desPhotoTatoo"
                         name="desPhotoTatoo"
@@ -331,9 +398,9 @@ const ModalDate = ({
                         onChange={leerArchivo}
                       ></TextField>
                     </Box>
-                    <Box sx={{ m: 2 }}>
+                    <Box sx={{ mt: 2 }}>
                       <TextField
-                        sx={{ width: "280px" }}
+                        sx={{ width: "300px" }}
                         id="hourTatooFinish"
                         required
                         size="small"
@@ -349,8 +416,8 @@ const ModalDate = ({
                         }}
                       />
                     </Box>
-                    <Box sx={{ m: 1 }}>
-                      <FormControl fullWidth sx={{ width: "280px" }}>
+                    <Box sx={{ mt: 1 }}>
+                      <FormControl fullWidth sx={{ width: "300px" }}>
                         <InputLabel htmlFor="outlined-adornment-amount">
                           Costo Aprox*
                         </InputLabel>
@@ -366,8 +433,8 @@ const ModalDate = ({
                         />
                       </FormControl>
                     </Box>
-                    <Box sx={{ m: 1 }}>
-                      <FormControl sx={{ width: "280px" }}>
+                    <Box sx={{ mt: 1 }}>
+                      <FormControl sx={{ width: "300px" }}>
                         <InputLabel htmlFor="outlined-adornment-amount">
                           Adelanto*
                         </InputLabel>
@@ -385,11 +452,11 @@ const ModalDate = ({
                     </Box>
                     <Box
                       sx={{
+                        mt: 2,
                         display: "flex",
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        m: 1,
                       }}
                     >
                       <Button color="error" onClick={handleClose}>

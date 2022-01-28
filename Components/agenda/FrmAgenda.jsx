@@ -12,26 +12,18 @@ const FrmAgenda = () => {
   const [reload, setReload] = useState("true");
   const router = useRouter();
   const paymentId = router.query.payment_id ? router.query.payment_id : "";
-
   const [reloadDate, setReloadDate] = useState(true);
-  //const paymentStatus = router.query.status ? router.query.status : "";
-  // const reference = router.query.external_reference
-  //   ? router.query.external_reference
-  //   : "";
   const [alert, setAlert] = useState({
     open: false,
     message: "",
     backgroundColor: "",
   });
-  //console.log("id pago", paymentId, reload);
   useEffect(() => {
     if (paymentId !== "") {
       clienteAxios
         .post(`/feedback`, { paymentId })
         .then((response) => {
-          //    console.log("=========", response);
           setReloadDate(true);
-          // router.push("/agenda");
           setAlert({
             open: true,
             message: "anticipo recibido",

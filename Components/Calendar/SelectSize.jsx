@@ -7,7 +7,7 @@ const SelectSize = ({ handleChangeDate, sizeValue, valueDate }) => {
   //console.log(sizeValue);
   return (
     <div>
-      <FormControl sx={{ width: "280px" }}>
+      <FormControl sx={{ width: "300px" }}>
         <InputLabel id="lblInpSize">Tamaño</InputLabel>
         <Select
           //defaultValue=""

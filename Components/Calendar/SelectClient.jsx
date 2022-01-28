@@ -3,10 +3,8 @@ import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
 
-const SelectClient = ({ handleChangeDate }) => {
+const SelectClient = ({ handleChangeDate, clientValue, setclientValue }) => {
   const { auth } = useContext(AuthContext);
-  const [clientValue, setclientValue] = useState([]);
-
   useEffect(() => {
     clienteAxios
       .get(`/findClientByStudy/${auth.infoStudio.id}`)
@@ -28,7 +26,7 @@ const SelectClient = ({ handleChangeDate }) => {
 
   return (
     <div>
-      <FormControl sx={{ width: "280px" }}>
+      <FormControl sx={{ width: "300px" }}>
         <InputLabel id="lblInpCli">Cliente</InputLabel>
         <Select
           size="small"

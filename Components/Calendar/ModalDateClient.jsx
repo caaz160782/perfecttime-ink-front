@@ -6,7 +6,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import SelectTatuador from "./SelectTatuador";
-import SelectClient from "./SelectClient";
 import SelectSize from "./SelectSize";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
@@ -37,7 +36,6 @@ const ModalDateClient = ({
   cargaDatesClient,
   setOpenViewModal,
   setinfoDate,
-  timeToOpen,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));

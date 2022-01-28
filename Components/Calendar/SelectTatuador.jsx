@@ -3,11 +3,13 @@ import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { AuthContext } from "../../Context/AuthContext";
 import clienteAxios from "../../utils/axios";
 
-const SelectTatuador = ({ handleChangeDate }) => {
+const SelectTatuador = ({
+  tatuadorValue,
+  setValueTatuador,
+  handleChangeDate,
+}) => {
   const { auth } = useContext(AuthContext);
-  const [tatuadorValue, setValueTatuador] = useState([]);
 
-  //.get("/findStaffByStudy", { headers: { apitoken: valToken.token } })
   useEffect(() => {
     clienteAxios
       .get(`/findStaffByStudy/${auth.infoStudio.id}`)
@@ -25,11 +27,11 @@ const SelectTatuador = ({ handleChangeDate }) => {
     return () => {
       //   cleanup
     };
-  }, [auth.infoStudio.id]);
+  }, [auth?.infoStudio.id]);
 
   return (
     <div>
-      <FormControl sx={{ width: "280px" }}>
+      <FormControl sx={{ width: "300px" }}>
         <InputLabel id="lblInpTat">Tatuador</InputLabel>
         <Select
           size="small"
@@ -40,7 +42,7 @@ const SelectTatuador = ({ handleChangeDate }) => {
           autoWidth
           label="tatuador"
         >
-          <MenuItem value="">
+          <MenuItem value="-1">
             <em>Selecciona un tatuador</em>
           </MenuItem>
           {tatuadorValue.map((t) => (
